@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#7558ff" />
+  <title>Kebijakan Privasi — CHARISNA Money Management</title>
+  <style>
+    :root{font-family:Inter,system-ui,sans-serif;color:#252338;background:#f6f6fc}body{margin:0;padding:32px 18px}main{max-width:820px;margin:auto;padding:32px;border:1px solid #e5e2f1;border-radius:26px;background:white;box-shadow:0 20px 50px rgba(40,35,70,.08)}h1,h2{letter-spacing:-.035em}p,li{line-height:1.7;color:#615d75}code{padding:2px 6px;border-radius:7px;background:#f0eff9}a{color:#7558ff}@media(max-width:600px){main{padding:22px}}</style>
+</head>
+<body><main>
+  <h1>Kebijakan Privasi</h1>
+  <p><strong>CHARISNA Money Management</strong> dirancang sebagai aplikasi local-first. Data keuangan dienkripsi di perangkat sebelum disimpan atau dikirim ke cloud.</p>
+  <h2>Data yang disimpan</h2>
+  <p>Aplikasi dapat menyimpan akun, transaksi, budget, tujuan, utang, investasi, shared wallet, pengaturan, lampiran terenkripsi, dan log teknis. Data lokal berada di penyimpanan browser. Apabila cloud sync aktif, blob terenkripsi disimpan pada proyek Supabase pemilik aplikasi.</p>
+  <h2>Enkripsi</h2>
+  <p>Sandi brankas diproses di browser menggunakan Web Crypto. Server cloud tidak memerlukan isi sandi brankas. Recovery key dapat membuka brankas dan harus disimpan secara rahasia.</p>
+  <h2>Akun cloud</h2>
+  <p>Email dan sesi autentikasi dikelola melalui Supabase Auth. Sandi akun cloud berbeda dari sandi brankas.</p>
+  <h2>Pengingat push</h2>
+  <p>Jika background push diaktifkan, aplikasi menyimpan subscription endpoint dan jadwal pengingat pada Supabase. Mode generik tidak menyertakan nama atau nominal tagihan dalam jadwal push; mode detail menyertakannya agar notifikasi dapat menampilkan informasi tersebut. Pengguna dapat menonaktifkan push dan menghapus subscription perangkat kapan saja.</p>
+  <h2>Layanan pihak ketiga</h2>
+  <p>Aplikasi memuat pustaka dari CDN dan dapat menggunakan Supabase, Netlify, layanan kurs, endpoint bank feed, cloud endpoint, atau webhook yang dikonfigurasi pengguna. Kebijakan masing-masing layanan berlaku pada koneksi tersebut.</p>
+  <h2>Kontrol pengguna</h2>
+  <ul><li>Data dapat diekspor sebagai backup terenkripsi.</li><li>Data lokal dapat dihapus dari menu Setting.</li><li>Akun cloud dapat dikeluarkan dari perangkat.</li><li>Pengguna bertanggung jawab menyimpan sandi brankas dan recovery key.</li></ul>
+  <h2>Batasan</h2>
+  <p>Aplikasi ini bukan layanan bank, penasihat investasi, akuntan, atau konsultan pajak. Verifikasi laporan sebelum digunakan untuk keputusan penting.</p>
+  <p><small>Pembaruan: 18 Juli 2026 · Dokumen ini merupakan template aplikasi pribadi dan dapat disesuaikan sebelum penggunaan publik.</small></p>
+  <p><a href="./index.html">← Kembali ke aplikasi</a></p>
+</main></body></html>

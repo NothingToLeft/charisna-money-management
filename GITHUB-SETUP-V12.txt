@@ -1,0 +1,43 @@
+GITHUB + NETLIFY + SUPABASE — STRUKTUR YANG DISARANKAN
+====================================================
+
+Jangan pindahkan semuanya dari Netlify atau Supabase.
+
+- Netlify: tetap menjadi host situs/PWA.
+- Supabase: tetap menangani akun, database cloud, realtime, dan push schedule.
+- GitHub: menyimpan source, menjalankan build otomatis, dan menampung APK/EXE pada
+  Releases. Installer Windows sekitar 90 MB terlalu besar untuk CDN deploy Netlify.
+
+LANGKAH SEKALI SAJA
+1. Buat repository GitHub private untuk source CHARISNA.
+2. Upload isi Full-Source.zip ke repository tersebut. Jangan upload folder
+   native/signing, keystore, password, atau file PRIVATE-SIGNING-INFO.txt.
+3. Hubungkan project Netlify charisna-money ke repository itu dan pilih publish
+   directory: work
+4. Workflow .github/workflows/windows-release.yml akan membangun installer pada
+   runner Windows saat tag v* dibuat atau saat Run workflow ditekan.
+5. Setelah release pertama terbit, edit file berikut pada folder work:
+   desktop-updates/windows/provider.json
+6. Isi:
+   {
+     "enabled": true,
+     "url": "https://github.com/OWNER/REPOSITORY/releases/latest/download"
+   }
+7. Commit/push. Netlify akan deploy file konfigurasi kecil tersebut.
+8. Aplikasi Windows v12 akan membaca konfigurasi Netlify, lalu mengambil update
+   dari GitHub Releases tiap 4 jam. Tidak perlu memasang ulang v12.
+
+CATATAN REPOSITORY PRIVATE
+- Untuk update aplikasi tanpa menyimpan token GitHub pada setiap PC, Release asset
+  sebaiknya dapat diakses publik. Pilihan paling sederhana adalah repository rilis
+  publik terpisah tanpa source/data pribadi.
+- Source utama tetap boleh private.
+- Jangan pernah memasukkan Supabase service-role key, keystore Android, password
+  signing, atau backup keuangan ke GitHub publik.
+
+ANDROID
+- APK tetap dapat dibangun tanpa Android Studio melalui GitHub Actions/Gradle.
+- Penandatanganan Android harus memakai keystore CHARISNA yang sama dan disimpan
+  sebagai GitHub Actions Secret, bukan file repository.
+- Android tidak mengizinkan aplikasi biasa memasang update diam-diam; pengguna
+  tetap perlu mengonfirmasi instalasi APK, kecuali distribusi melalui Play Store.

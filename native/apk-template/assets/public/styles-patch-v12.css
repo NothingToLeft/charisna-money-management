@@ -1,0 +1,84 @@
+.pin-security-note {
+  margin: -2px 0 2px;
+  padding: 10px 12px;
+  border: 1px solid color-mix(in srgb, var(--primary, #7558ff) 24%, transparent);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--primary, #7558ff) 8%, transparent);
+  color: var(--muted, #77778b);
+  font-size: 0.82rem;
+  line-height: 1.45;
+}
+
+.pin-pad {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 9px;
+  width: min(100%, 300px);
+  margin: 2px auto 4px;
+}
+
+.pin-pad[hidden] {
+  display: none !important;
+}
+
+.pin-pad button {
+  min-height: 48px;
+  border: 1px solid color-mix(in srgb, var(--border, #dddded) 86%, transparent);
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--surface, #ffffff) 94%, var(--primary, #7558ff));
+  color: var(--text, #242432);
+  font: inherit;
+  font-size: 1.08rem;
+  font-weight: 750;
+  cursor: pointer;
+  box-shadow: 0 5px 13px rgba(27, 27, 52, 0.05);
+  transition: transform 120ms ease, border-color 120ms ease, background 120ms ease;
+}
+
+.pin-pad button:hover,
+.pin-pad button:focus-visible {
+  border-color: var(--primary, #7558ff);
+  background: color-mix(in srgb, var(--primary, #7558ff) 11%, var(--surface, #ffffff));
+  outline: none;
+}
+
+.pin-pad button:active {
+  transform: scale(0.96);
+}
+
+#loginPassword,
+#setupPassword,
+#setupPasswordConfirm,
+#oldPassword,
+#newPassword,
+#newPasswordConfirm,
+#migrationPin,
+#migrationPinConfirm {
+  letter-spacing: 0.16em;
+  font-variant-numeric: tabular-nums;
+}
+
+.cloud-always-latest-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 10px;
+  padding: 7px 10px;
+  border-radius: 999px;
+  background: rgba(19, 184, 136, 0.12);
+  color: #0b8c68;
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+@media (min-width: 720px) {
+  .pin-pad button {
+    min-height: 52px;
+  }
+}
+
+@media (max-width: 480px) {
+  .pin-pad {
+    width: 100%;
+  }
+}

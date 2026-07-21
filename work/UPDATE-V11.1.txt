@@ -1,0 +1,12 @@
+CARA UPDATE KE CHARISNA MONEY MANAGEMENT v11.1
+
+1. Buka aplikasi lama dan buat Backup Terenkripsi.
+2. Buka Netlify -> project charisna-money -> Production deploys.
+3. Unggah ZIP v11.1 ini.
+4. Tunggu status Published.
+5. Buka https://charisna-money.netlify.app
+6. Komputer: tekan Ctrl + F5.
+7. Tablet/HP: tutup seluruh tab aplikasi, lalu buka kembali alamat situs.
+8. Tes cepat: buka Tambah Transaksi dan ketik 1000000. Tampilan yang benar adalah 1.000.000.
+
+Tidak perlu menjalankan SQL Supabase baru.

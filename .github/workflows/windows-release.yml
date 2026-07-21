@@ -1,0 +1,54 @@
+name: Build CHARISNA Windows Release
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  windows-release:
+    runs-on: windows-latest
+    defaults:
+      run:
+        working-directory: native/desktop
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Use Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: native/desktop/package-lock.json
+
+      - name: Install exact dependencies
+        run: npm ci
+
+      - name: Build signed-hash NSIS update files
+        run: npm run dist:win
+
+      - name: Read application version
+        id: app_version
+        shell: pwsh
+        run: |
+          $version = node -p "require('./package.json').version"
+          "version=$version" >> $env:GITHUB_OUTPUT
+
+      - name: Publish GitHub Release assets
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ steps.app_version.outputs.version }}
+          name: CHARISNA Money Management v${{ steps.app_version.outputs.version }}
+          generate_release_notes: true
+          make_latest: true
+          files: |
+            native/desktop/dist/*.exe
+            native/desktop/dist/latest.yml
+            native/desktop/dist/*.blockmap
+

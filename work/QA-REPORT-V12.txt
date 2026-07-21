@@ -1,0 +1,56 @@
+CHARISNA MONEY MANAGEMENT v12 — QA REPORT
+=========================================
+
+Tanggal: 21 Juli 2026
+Target: Web/Netlify, Android HP/Tablet, Windows x64
+
+HASIL UJI RUNTIME
+- Membuat brankas baru dengan PIN 6 digit: LULUS
+- Panel angka lock/unlock: LULUS
+- Mengubah PIN menjadi 4 digit: LULUS
+- Migrasi sandi alfanumerik lama menjadi PIN 8 digit: LULUS
+- Metadata PIN dan PBKDF2 600.000 iterasi: LULUS
+- Mengambil cloud versi 42 otomatis: LULUS
+- Recovery terenkripsi sebelum mengganti data lokal: LULUS
+- Pemeriksaan sintaks seluruh script utama: LULUS
+
+UJI CLOUD
+- Autosave setiap encrypt/perubahan dengan debounce: LULUS (simulasi/runtime)
+- Flush saat lock/logout/hidden/reconnect: LULUS (audit kode + runtime)
+- Single-flight queue mencegah upload saling menimpa: LULUS (audit kode)
+- Remote dengan versi lebih tinggi diterapkan otomatis: LULUS
+- Remote revisi sama tetapi timestamp/checksum lebih baru: LULUS (audit kode)
+- SQL v12 menambah revisi atomik memakai waktu server: DISEDIAKAN; perlu
+  dijalankan satu kali pada project Supabase produksi.
+
+UJI ANDROID
+- Package ID com.charisna.moneymanagement: LULUS
+- Minimum Android 7/API 24; target API 36: LULUS
+- Layout portrait/landscape, resizeable HP/Tablet: LULUS (manifest/CSS)
+- APK ZIP alignment 4-byte: LULUS
+- APK Signature Scheme v2: LULUS
+- APK Signature Scheme v3: LULUS
+- Sertifikat sama dengan APK v11.1 FIXED: LULUS
+- Permission Android 13+ POST_NOTIFICATIONS: LULUS
+- Receiver pengingat native: LULUS (manifest/smali/build)
+- Capacitor LocalNotifications menjadwal lalu membatalkan saat dimatikan: LULUS
+- Acara kalender yang dibuat oleh scheduler native: 0
+
+UJI WINDOWS
+- Aplikasi memuat bundle lokal; webviewTag dinonaktifkan: LULUS
+- Context isolation + sandbox; Node renderer dinonaktifkan: LULUS
+- Tray, lock saat jendela ditutup, pengingat background: LULUS (audit kode)
+- Flush cloud sebelum keluar penuh: LULUS (audit kode)
+- Pemeriksaan konfigurasi kanal dan update otomatis tiap 4 jam: LULUS (audit kode)
+- Paket Windows x64 dibangun dari Electron 37.2.6: LULUS
+
+BATAS UJI
+- APK tidak dijalankan pada perangkat fisik di lingkungan build ini; struktur,
+  signature, manifest, assets, dan alur JavaScript telah diverifikasi.
+- EXE Windows tidak dapat dieksekusi pada host Linux ini; paket, app.asar, script,
+  dan integritas berkas diperiksa secara statis.
+- Login Supabase produksi dan deploy Netlify tidak diubah tanpa akses akun pemilik.
+- Installer Windows belum memakai sertifikat code-signing komersial; Windows
+  SmartScreen dapat menampilkan peringatan pada pemasangan pertama.
+- Kanal GitHub Releases harus dibuat dan provider.json diaktifkan oleh pemilik
+  repository sebelum update software desktop dapat diunduh otomatis.

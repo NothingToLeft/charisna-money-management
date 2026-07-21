@@ -1,0 +1,64 @@
+{
+  "name": "charisna-money-management-desktop",
+  "version": "12.0.0",
+  "private": true,
+  "description": "CHARISNA Money Management desktop application for Windows",
+  "main": "main.cjs",
+  "author": "CHARISNA",
+  "license": "UNLICENSED",
+  "scripts": {
+    "start": "electron .",
+    "dist:win": "electron-builder --win nsis --x64 --publish never"
+  },
+  "dependencies": {
+    "electron-updater": "6.6.2"
+  },
+  "devDependencies": {
+    "electron": "37.2.6",
+    "electron-builder": "26.0.12"
+  },
+  "build": {
+    "appId": "com.charisna.moneymanagement.desktop",
+    "productName": "CHARISNA Money Management",
+    "copyright": "Copyright © 2026 CHARISNA",
+    "asar": true,
+    "directories": {
+      "output": "dist",
+      "buildResources": "build"
+    },
+    "files": [
+      "main.cjs",
+      "preload.cjs",
+      "build/icon.png",
+      "app/**/*",
+      "package.json"
+    ],
+    "win": {
+      "icon": "build/icon.png",
+      "signAndEditExecutable": false,
+      "target": [
+        {
+          "target": "nsis",
+          "arch": ["x64"]
+        }
+      ],
+      "artifactName": "CHARISNA-Money-Management-Setup-v${version}-${arch}.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "CHARISNA Money Management",
+      "deleteAppDataOnUninstall": false,
+      "runAfterFinish": true,
+      "differentialPackage": true
+    },
+    "publish": [
+      {
+        "provider": "generic",
+        "url": "https://charisna-money.netlify.app/desktop-updates/windows"
+      }
+    ]
+  }
+}

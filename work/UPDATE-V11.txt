@@ -1,0 +1,11 @@
+CARA UPDATE KE v11
+
+1. Buka versi lama dan buat Backup Terenkripsi.
+2. Buka Netlify -> project charisna-money -> Production deploys.
+3. Unggah file ZIP v11 atau folder hasil ekstraknya.
+4. Tunggu status Published.
+5. Buka https://charisna-money.netlify.app
+6. Di komputer tekan Ctrl + F5. Di tablet tutup tab lama lalu buka lagi.
+7. Buka menu Kategori untuk menambahkan kategori custom seperti Kos.
+
+Tidak perlu menjalankan SQL Supabase baru.

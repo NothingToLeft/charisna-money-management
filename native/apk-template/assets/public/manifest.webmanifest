@@ -1,0 +1,17 @@
+{
+  "name": "CHARISNA Money Management v12",
+  "short_name": "CHARISNA Money",
+  "description": "Money management terenkripsi dengan PIN angka, autosave, dan cloud always-latest untuk Web, Android, tablet, dan PC.",
+  "start_url": "./index.html?v=12-pin-cloud",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#101019",
+  "theme_color": "#7558ff",
+  "orientation": "any",
+  "lang": "id",
+  "categories": ["finance", "productivity"],
+  "icons": [
+    { "src": "./icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "./icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}

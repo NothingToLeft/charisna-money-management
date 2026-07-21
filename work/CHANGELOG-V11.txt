@@ -1,0 +1,54 @@
+CHARISNA Money Management v11.1
+Stability & Input Fix
+Tanggal: 18 Juli 2026
+
+FITUR BARU
+1. Category Studio
+   - Tambah kategori pemasukan, pengeluaran, atau keduanya.
+   - Contoh kategori custom: Kos, Pendapatan Sewa, Unit A, dan Bisnis.
+   - Edit nama, ikon, warna, kategori induk, dan status favorit.
+   - Atur urutan kategori.
+   - Arsipkan kategori tanpa menghapus riwayat.
+   - Gabungkan kategori dan pindahkan semua referensi transaksi, split, budget, langganan, template, serta aturan otomatis.
+   - Hapus kategori custom yang belum pernah digunakan.
+
+2. Tag Manager
+   - Tambah, edit, arsip, dan hapus tag.
+   - Rename tag otomatis memperbarui transaksi, budget, aturan, dan langganan.
+
+3. Smart Number Formatting
+   - Angka 1000 langsung tampil sebagai 1.000 saat diketik.
+   - Berlaku pada nominal transaksi, transfer, fee, saldo, budget, goals, langganan, utang, investasi, dan form keuangan lain.
+   - Nilai internal tetap disimpan sebagai angka murni agar perhitungan tidak berubah.
+
+4. Autocomplete Transaksi & Merchant
+   - Saran muncul setelah mengetik minimal dua huruf.
+   - Sumber saran berasal dari transaksi lama, template, dan pembayaran rutin.
+   - Menampilkan frekuensi penggunaan dan kategori sebelumnya.
+
+5. Smart Transaction Assistant
+   - Saran kategori berdasarkan merchant dan riwayat transaksi.
+   - Peringatan transaksi duplikat.
+   - Estimasi nominal tujuan untuk transfer beda mata uang.
+
+6. Currency Workbench
+   - Kalkulator konversi dengan nominal langsung.
+   - Hasil konversi dan rate satuan tampil setelah kurs disinkronkan.
+   - Ringkasan kurs mata uang favorit.
+
+7. Excel Profesional
+   - Sheet baru: Kategori dan Tags.
+   - Menampilkan jenis, induk, status, sumber, favorit, jumlah pemakaian, dan warna.
+
+8. Audit v11
+   - Deteksi ID duplikat.
+   - Nominal transaksi tidak valid.
+   - Transaksi tanpa akun.
+   - Split transaction tidak seimbang.
+   - Kategori tidak terdaftar atau nama duplikat.
+   - Kurs mata uang utama kosong.
+
+KOMPATIBILITAS
+- Data v10 tetap kompatibel.
+- Migrasi category catalog dan tag catalog berjalan otomatis.
+- Tidak memerlukan SQL Supabase baru.

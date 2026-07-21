@@ -1,0 +1,32 @@
+CHARISNA MONEY MANAGEMENT v12.0.0 — 21 JULI 2026
+================================================
+
+KEAMANAN
+- Brankas baru memakai PIN angka tepat 4, 6, 8, atau 12 digit.
+- Panel angka tersedia pada login HP, tablet, web, dan Windows.
+- PBKDF2 untuk PIN ditingkatkan dari skema legacy 250.000 menjadi 600.000 iterasi.
+- Brankas bersandi lama kompatibel dan dapat dimigrasikan satu kali ke PIN.
+
+CLOUD
+- Kebijakan Always-Latest menggantikan dialog konflik lokal/cloud.
+- Autosave 500 ms setelah perubahan dengan antrean single-flight.
+- Flush cloud saat lock, logout, tab disembunyikan, internet kembali, dan PC keluar.
+- Realtime menerima revisi lebih tinggi maupun revisi sama yang lebih baru.
+- Snapshot recovery terenkripsi disimpan sebelum cloud baru diterapkan.
+- SQL v12 menyediakan revisi server atomik dan timestamp server.
+
+ANDROID/TABLET
+- APK responsif tanpa orientasi paksa.
+- Notifikasi native terjadwal, termasuk dukungan Capacitor Local Notifications.
+- Jadwal lama dibatalkan saat berubah/dimatikan agar tidak menumpuk.
+- APK ditandatangani v2/v3 dengan sertifikat update yang sama seperti v11.1.
+
+WINDOWS
+- Aplikasi desktop lokal, tanpa elemen webview dan tanpa membuka browser.
+- System tray, lock otomatis saat ditutup, autostart untuk reminder background.
+- Autosave cloud sebelum keluar penuh.
+- Pemeriksaan update otomatis setiap 4 jam dan instalasi saat aplikasi ditutup.
+
+WEB/NETLIFY
+- PWA dan cache dinaikkan ke v12-pin-cloud.
+- Web tetap dapat digunakan bersamaan dengan APK dan EXE melalui akun Supabase.

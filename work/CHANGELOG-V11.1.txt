@@ -1,0 +1,45 @@
+CHARISNA MONEY MANAGEMENT v11.1 — STABILITY & INPUT FIX
+Tanggal: 18 Juli 2026
+
+PERBAIKAN KRITIS
+1. Formatter nominal
+- Memperbaiki masalah setelah 1.000: digit berikutnya tidak lagi mengubah nilai menjadi 1.
+- Mendukung 10.000, 1.000.000, 1.000.000.000, dan nominal lebih besar.
+- Mendukung desimal Indonesia dengan koma.
+- Tombol titik/numpad decimal diperlakukan sebagai pemisah desimal.
+- Mendukung paste format Indonesia dan Inggris.
+- Mendukung angka negatif pada kolom yang mengizinkannya.
+- Backspace/Delete di sekitar titik ribuan tidak lagi terasa macet.
+- Posisi kursor dipertahankan saat angka diformat.
+- Kolom kosong tidak lagi berubah otomatis menjadi 0.
+
+2. Validasi nominal
+- Batas minimum dan maksimum tetap diperiksa setelah input diubah menjadi tampilan bertitik.
+- Nilai kosong, tidak valid, di bawah minimum, atau di atas maksimum dicegah sebelum disimpan.
+- Nilai yang disimpan tetap angka murni tanpa titik pemisah ribuan.
+
+3. Template dan Smart Input
+- Nominal dari template transaksi langsung diformat ulang dengan benar.
+- Nama transaksi dan merchant dari template memicu autocomplete, saran kategori, dan pengecekan duplikat.
+- Autocomplete dapat dinavigasi dengan panah atas/bawah dan Enter.
+
+4. Kategori
+- Kategori legacy yang belum terdaftar tetap terlihat ketika transaksi lama diedit.
+- Alias kategori bawaan dipertahankan agar fallback seperti “Lainnya” tidak rusak setelah rename.
+- Rename/merge kategori juga memperbarui referensi kategori induk.
+- Pemeriksaan kategori menggunakan pencocokan yang tidak sensitif huruf besar/kecil.
+
+5. Mata uang
+- Kurs kosong sekarang tampil sebagai “—”, bukan 0.
+- Nilai kurs manual bertitik tidak lagi salah dibaca saat halaman dirender ulang.
+- Account opening rate dan quantity investasi kini mendapat input formatter yang konsisten.
+
+6. Launcher Windows
+- Launcher sekarang membuka URL cache v11.1, bukan v10.
+- Judul launcher diperbarui.
+- Validasi path server lokal diperketat agar tidak dapat membaca file di luar folder aplikasi.
+
+KOMPATIBILITAS
+- Data v11 dan v10 tetap kompatibel.
+- Tidak memerlukan SQL Supabase baru.
+- Gunakan Backup Terenkripsi sebelum update.
