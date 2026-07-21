@@ -1,0 +1,25 @@
+PANDUAN UPDATE GITHUB — CHARISNA v12.1.0
+
+1. Ekstrak ZIP Full Source v12.1.0.
+2. Buka folder repository lokal:
+   Documents\GitHub\charisna-money-management
+3. Salin seluruh isi hasil ekstrak v12.1.0 ke folder repository lokal.
+4. Saat Windows bertanya Replace files, pilih Replace the files in the destination.
+5. Jangan menghapus folder .git.
+6. Buka GitHub Desktop.
+7. Pastikan repository: charisna-money-management.
+8. Isi Summary:
+   Update Windows secure session v12.1.0
+9. Klik Commit to main.
+10. Klik Push origin.
+11. Buka GitHub > Actions > Build CHARISNA Windows Release.
+12. Klik Run workflow > branch main > Run workflow.
+13. Setelah hijau, GitHub Release v12.1.0 dibuat otomatis.
+14. Unduh:
+   CHARISNA-Money-Management-Setup-v12.1.0-x64.exe
+
+PENTING
+- Jangan membuat release manual sebelum Actions selesai.
+- Repository tetap Private.
+- File .jks/.keystore/signing tidak boleh dimasukkan.
+- Android/HP/tablet tidak perlu dibangun ulang untuk perubahan ini.

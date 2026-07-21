@@ -10,6 +10,7 @@ const {
   net,
   Notification,
   powerMonitor,
+  safeStorage,
   shell,
   Tray
 } = require("electron");
@@ -17,6 +18,8 @@ const { autoUpdater } = require("electron-updater");
 
 const UPDATE_CONFIG_URL = "https://charisna-money.netlify.app/desktop-updates/windows/provider.json";
 const MAX_REMINDERS = 250;
+const SECURE_AUTH_STORE_FILE = "secure-cloud-session.bin";
+const MAX_AUTH_VALUE_LENGTH = 250000;
 let mainWindow = null;
 let tray = null;
 let isQuitting = false;
@@ -46,6 +49,65 @@ function writeJson(file, value) {
     fs.writeFileSync(file, JSON.stringify(value, null, 2), "utf8");
   } catch (error) {
     console.warn("Desktop state could not be saved:", error);
+  }
+}
+
+function secureAuthStorePath() {
+  return userFile(SECURE_AUTH_STORE_FILE);
+}
+
+function normalizeAuthStorageKey(value) {
+  const key = String(value || "");
+  if (!key || key.length > 300) {
+    throw new Error("Kunci penyimpanan sesi tidak valid.");
+  }
+  return key;
+}
+
+function readSecureAuthStore() {
+  const target = secureAuthStorePath();
+
+  try {
+    if (!fs.existsSync(target)) return {};
+    if (!safeStorage.isEncryptionAvailable()) {
+      throw new Error("Enkripsi Windows belum tersedia.");
+    }
+
+    const decrypted = safeStorage.decryptString(fs.readFileSync(target));
+    const parsed = JSON.parse(decrypted);
+
+    return parsed && typeof parsed === "object" && !Array.isArray(parsed)
+      ? parsed
+      : {};
+  } catch (error) {
+    if (error?.code !== "ENOENT") {
+      console.warn("Sesi cloud terenkripsi tidak dapat dibaca:", error.message);
+    }
+    return {};
+  }
+}
+
+function writeSecureAuthStore(store) {
+  if (!safeStorage.isEncryptionAvailable()) {
+    throw new Error("Enkripsi Windows belum tersedia.");
+  }
+
+  const target = secureAuthStorePath();
+  const temporary = `${target}.tmp`;
+
+  fs.mkdirSync(path.dirname(target), { recursive: true });
+
+  const encrypted = safeStorage.encryptString(JSON.stringify(store || {}));
+  fs.writeFileSync(temporary, encrypted);
+  fs.rmSync(target, { force: true });
+  fs.renameSync(temporary, target);
+}
+
+function removeSecureAuthStoreFile() {
+  try {
+    fs.rmSync(secureAuthStorePath(), { force: true });
+  } catch (error) {
+    console.warn("Sesi cloud terenkripsi tidak dapat dihapus:", error.message);
   }
 }
 
@@ -285,6 +347,56 @@ if (!instanceLock) {
     configureUpdater();
   });
 }
+
+ipcMain.handle("auth-storage:status", () => ({
+  available: safeStorage.isEncryptionAvailable(),
+  backend: process.platform === "win32"
+    ? "Windows secure storage"
+    : "OS secure storage"
+}));
+
+ipcMain.handle("auth-storage:get", (_event, rawKey) => {
+  const key = normalizeAuthStorageKey(rawKey);
+  const store = readSecureAuthStore();
+
+  return Object.prototype.hasOwnProperty.call(store, key)
+    ? String(store[key])
+    : null;
+});
+
+ipcMain.handle("auth-storage:set", (_event, rawKey, rawValue) => {
+  const key = normalizeAuthStorageKey(rawKey);
+  const value = String(rawValue ?? "");
+
+  if (value.length > MAX_AUTH_VALUE_LENGTH) {
+    throw new Error("Data sesi terlalu besar.");
+  }
+
+  const store = readSecureAuthStore();
+  store[key] = value;
+  writeSecureAuthStore(store);
+  return true;
+});
+
+ipcMain.handle("auth-storage:remove", (_event, rawKey) => {
+  const key = normalizeAuthStorageKey(rawKey);
+  const store = readSecureAuthStore();
+
+  delete store[key];
+
+  if (Object.keys(store).length) {
+    writeSecureAuthStore(store);
+  } else {
+    removeSecureAuthStoreFile();
+  }
+
+  return true;
+});
+
+ipcMain.handle("auth-storage:clear", () => {
+  removeSecureAuthStoreFile();
+  return true;
+});
 
 ipcMain.handle("app:version", () => app.getVersion());
 ipcMain.handle("window:hide", () => mainWindow?.hide());

@@ -13,6 +13,7 @@ const SUPABASE_URL = "https://ankctkfybpepwpdnswwe.supabase.co";
 const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_M-qTmK2xHIkxr3M6TaJKmw_p6mEZsmF";
 const CLOUD_TABLE = "moniflow_vaults";
 const DEVICE_ID_KEY = "moniflow-cloud-device-id";
+const DESKTOP_AUTH_FALLBACK_PREFIX = "charisna-desktop-auth-fallback:";
 
 const encoder = new TextEncoder();
 const decoder = new TextDecoder();
@@ -143,6 +144,165 @@ let cloudConflict = null;
 let cloudAuthMode = "login";
 let cloudLastMessage = "Belum tersinkron.";
 let cloudLastTone = "offline";
+
+function isDesktopRuntime() {
+  return Boolean(window.CharisnaDesktop?.isDesktop);
+}
+
+function delay(milliseconds) {
+  return new Promise((resolve) => window.setTimeout(resolve, milliseconds));
+}
+
+function setDesktopStartupStep(step, stateValue) {
+  const element = document.querySelector(
+    `[data-desktop-startup-step="${step}"]`
+  );
+
+  if (!element) return;
+  element.dataset.state = stateValue;
+}
+
+function showDesktopStartup(
+  title = "Mempersiapkan CHARISNA",
+  message = "Memeriksa pembaruan dan sesi akun..."
+) {
+  if (!isDesktopRuntime()) return;
+
+  const overlay = document.getElementById("desktopStartupOverlay");
+  const titleElement = document.getElementById("desktopStartupTitle");
+  const messageElement = document.getElementById("desktopStartupMessage");
+
+  if (!overlay) return;
+
+  overlay.hidden = false;
+  document.documentElement.classList.add("charisna-desktop");
+  document.body.classList.add("desktop-starting");
+
+  if (titleElement) titleElement.textContent = title;
+  if (messageElement) messageElement.textContent = message;
+}
+
+function updateDesktopStartup(message, step = "", stateValue = "active") {
+  if (!isDesktopRuntime()) return;
+
+  const messageElement = document.getElementById("desktopStartupMessage");
+  if (messageElement) messageElement.textContent = message;
+
+  if (step) setDesktopStartupStep(step, stateValue);
+}
+
+async function hideDesktopStartup({ minimumDelay = 260 } = {}) {
+  if (!isDesktopRuntime()) return;
+
+  await delay(minimumDelay);
+
+  const overlay = document.getElementById("desktopStartupOverlay");
+  if (overlay) overlay.hidden = true;
+
+  document.body.classList.remove("desktop-starting");
+}
+
+function createDesktopAuthStorage() {
+  const secureStorage = window.CharisnaDesktop?.authStorage;
+
+  if (
+    !isDesktopRuntime() ||
+    !secureStorage?.getItem ||
+    !secureStorage?.setItem ||
+    !secureStorage?.removeItem
+  ) {
+    return null;
+  }
+
+  return {
+    getItem: async (key) => {
+      try {
+        const secureValue = await secureStorage.getItem(key);
+
+        if (secureValue !== null && secureValue !== undefined) {
+          return secureValue;
+        }
+
+        // Migrasi otomatis sesi v12 lama dari localStorage ke
+        // penyimpanan terenkripsi Windows tanpa meminta login ulang.
+        const legacyValue = localStorage.getItem(key);
+
+        if (legacyValue !== null) {
+          await secureStorage.setItem(key, legacyValue);
+          localStorage.removeItem(key);
+          return legacyValue;
+        }
+
+        return localStorage.getItem(
+          `${DESKTOP_AUTH_FALLBACK_PREFIX}${key}`
+        );
+      } catch (error) {
+        console.warn(
+          "Secure auth storage get gagal, memakai fallback lokal:",
+          error
+        );
+
+        return (
+          localStorage.getItem(
+            `${DESKTOP_AUTH_FALLBACK_PREFIX}${key}`
+          ) ||
+          localStorage.getItem(key)
+        );
+      }
+    },
+
+    setItem: async (key, value) => {
+      try {
+        await secureStorage.setItem(key, value);
+        localStorage.removeItem(key);
+        localStorage.removeItem(
+          `${DESKTOP_AUTH_FALLBACK_PREFIX}${key}`
+        );
+      } catch (error) {
+        console.warn(
+          "Secure auth storage set gagal, memakai fallback lokal:",
+          error
+        );
+
+        localStorage.setItem(
+          `${DESKTOP_AUTH_FALLBACK_PREFIX}${key}`,
+          String(value)
+        );
+      }
+    },
+
+    removeItem: async (key) => {
+      try {
+        await secureStorage.removeItem(key);
+      } catch (error) {
+        console.warn("Secure auth storage remove gagal:", error);
+      }
+
+      localStorage.removeItem(key);
+      localStorage.removeItem(
+        `${DESKTOP_AUTH_FALLBACK_PREFIX}${key}`
+      );
+    }
+  };
+}
+
+async function checkDesktopUpdateAtStartup() {
+  if (
+    !isDesktopRuntime() ||
+    !window.CharisnaDesktop?.checkForUpdates
+  ) {
+    return;
+  }
+
+  try {
+    await Promise.race([
+      window.CharisnaDesktop.checkForUpdates(),
+      delay(2200)
+    ]);
+  } catch (error) {
+    console.warn("Pemeriksaan pembaruan awal tertunda:", error);
+  }
+}
 
 const currencyCodes = getCurrencyCodes();
 const currencyNames = new Intl.DisplayNames(["id"], {
@@ -5889,6 +6049,17 @@ async function cloudLogout() {
     throw error;
   }
 
+  if (isDesktopRuntime()) {
+    try {
+      await window.CharisnaDesktop.authStorage?.clear?.();
+    } catch (storageError) {
+      console.warn(
+        "Sesi Windows tidak dapat dibersihkan sepenuhnya:",
+        storageError
+      );
+    }
+  }
+
   cloudSession = null;
   sessionStorage.removeItem(SESSION_KEY);
   lockApplication();
@@ -6187,35 +6358,74 @@ async function initialize() {
   vault = loadVault();
   registerServiceWorker();
 
+  const desktopStorage = createDesktopAuthStorage();
+
+  if (isDesktopRuntime()) {
+    showDesktopStartup(
+      "Mempersiapkan CHARISNA",
+      "Memeriksa pembaruan aplikasi..."
+    );
+
+    setDesktopStartupStep("update", "active");
+    await checkDesktopUpdateAtStartup();
+    setDesktopStartupStep("update", "complete");
+
+    updateDesktopStartup(
+      "Memulihkan sesi akun Windows...",
+      "session",
+      "active"
+    );
+  }
+
   if (!window.supabase?.createClient) {
     setCloudMessage(
       "Library cloud tidak dapat dimuat. Data lokal tetap dapat digunakan.",
       "error"
     );
+
     showVaultGate(
       "Cloud tidak tersedia. Periksa internet jika ingin melakukan sinkronisasi."
     );
+
+    await hideDesktopStartup();
     return;
+  }
+
+  const authOptions = {
+    persistSession: true,
+    autoRefreshToken: true,
+    detectSessionInUrl: true
+  };
+
+  if (desktopStorage) {
+    authOptions.storage = desktopStorage;
   }
 
   supabaseClient = window.supabase.createClient(
     SUPABASE_URL,
     SUPABASE_PUBLISHABLE_KEY,
-    {
-      auth: {
-        persistSession: true,
-        autoRefreshToken: true,
-        detectSessionInUrl: true
-      }
-    }
+    { auth: authOptions }
   );
 
   const { data, error } = await supabaseClient.auth.getSession();
 
   if (error) {
     console.error(error);
-    setCloudMessage(`Login cloud gagal diperiksa: ${error.message}`, "error");
+
+    setCloudMessage(
+      `Login cloud gagal diperiksa: ${error.message}`,
+      "error"
+    );
+
     showCloudGate();
+
+    updateDesktopStartup(
+      "Sesi akun perlu dimasukkan kembali.",
+      "session",
+      "error"
+    );
+
+    await hideDesktopStartup();
     return;
   }
 
@@ -6231,16 +6441,45 @@ async function initialize() {
   });
 
   if (!cloudSession) {
+    updateDesktopStartup(
+      "Belum ada sesi tersimpan. Silakan masuk satu kali.",
+      "session",
+      "idle"
+    );
+
     if (!navigator.onLine && vault) {
       setCloudMessage("Offline · menggunakan data lokal.", "offline");
-      showVaultGate("Mode offline: cloud akan tersambung kembali saat login tersedia.");
+
+      showVaultGate(
+        "Mode offline: cloud akan tersambung kembali saat login tersedia."
+      );
     } else {
       showCloudGate();
     }
+
+    await hideDesktopStartup();
     return;
   }
 
+  setDesktopStartupStep("session", "complete");
+
+  updateDesktopStartup(
+    "Mengambil cloud terbaru dan menyiapkan brankas...",
+    "cloud",
+    "active"
+  );
+
   await prepareVaultAfterCloudLogin();
+
+  setDesktopStartupStep("cloud", "complete");
+
+  updateDesktopStartup(
+    "Selesai. Masukkan PIN untuk membuka brankas.",
+    "ready",
+    "complete"
+  );
+
+  await hideDesktopStartup({ minimumDelay: 420 });
 }
 
 async function registerServiceWorker() {

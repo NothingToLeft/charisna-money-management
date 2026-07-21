@@ -43,6 +43,63 @@
 </head>
 
 <body class="locked">
+  <section
+    class="desktop-startup-overlay"
+    id="desktopStartupOverlay"
+    aria-live="polite"
+    aria-busy="true"
+    hidden
+  >
+    <article class="desktop-startup-card">
+      <div class="desktop-startup-brand">
+        <div class="desktop-startup-logo">C</div>
+  
+        <div>
+          <strong>CHARISNA Money Management</strong>
+          <small>Windows Secure Session</small>
+        </div>
+      </div>
+  
+      <div class="desktop-startup-spinner" aria-hidden="true"></div>
+  
+      <h2 id="desktopStartupTitle">Mempersiapkan CHARISNA</h2>
+  
+      <p id="desktopStartupMessage">
+        Memeriksa pembaruan dan sesi akun...
+      </p>
+  
+      <div class="desktop-startup-progress" aria-hidden="true">
+        <span></span>
+      </div>
+  
+      <div class="desktop-startup-steps">
+        <div data-desktop-startup-step="update" data-state="idle">
+          <i></i>
+          <span>Memeriksa pembaruan</span>
+        </div>
+  
+        <div data-desktop-startup-step="session" data-state="idle">
+          <i></i>
+          <span>Memulihkan sesi akun</span>
+        </div>
+  
+        <div data-desktop-startup-step="cloud" data-state="idle">
+          <i></i>
+          <span>Mengambil cloud terbaru</span>
+        </div>
+  
+        <div data-desktop-startup-step="ready" data-state="idle">
+          <i></i>
+          <span>Siap membuka brankas</span>
+        </div>
+      </div>
+  
+      <small class="desktop-startup-security">
+        Sesi login disimpan terenkripsi oleh Windows.
+        PIN brankas tetap diperlukan.
+      </small>
+    </article>
+  </section>
   <section class="auth-screen" id="authScreen">
     <div class="auth-decoration decoration-one"></div>
     <div class="auth-decoration decoration-two"></div>
