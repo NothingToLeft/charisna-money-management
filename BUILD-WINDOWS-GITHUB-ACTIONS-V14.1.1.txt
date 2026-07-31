@@ -1,0 +1,56 @@
+CHARISNA MONEY MANAGEMENT v14.1.1
+PANDUAN BUILD WINDOWS MELALUI GITHUB ACTIONS
+============================================================
+
+STATUS SOURCE WINDOWS
+---------------------
+Folder windows/ adalah aplikasi desktop Electron v14.1.1.
+Output build resmi:
+  CHARISNA-Money-Management-Setup-v14.1.1-x64.exe
+
+Workflow:
+  .github/workflows/build-windows-v14.yml
+
+Workflow memakai GitHub Windows runner dan mengunggah hasil langsung
+ke GitHub Releases agar tidak memakai kuota Actions Artifact.
+
+CARA MENJALANKAN
+----------------
+1. Upload/push source terbaru ke branch main.
+2. Buka repository GitHub.
+3. Buka tab Actions.
+4. Pilih "Build Windows EXE v14.1.1".
+5. Tekan "Run workflow" lalu pilih branch main.
+6. Tunggu seluruh langkah berwarna hijau.
+7. Buka halaman repository -> Releases -> v14.1.1.
+8. Download:
+   CHARISNA-Money-Management-Setup-v14.1.1-x64.exe
+9. Cocokkan checksum dengan file .sha256 sebelum memasang.
+
+CARA MEMASANG / MEMPERBARUI
+---------------------------
+1. Pastikan sinkronisasi cloud selesai.
+2. Tutup aplikasi sepenuhnya, termasuk dari system tray.
+3. Jalankan installer EXE.
+4. Pilih folder instalasi atau gunakan folder yang disarankan.
+5. Jika versi lama terdeteksi, installer akan memasang versi baru.
+6. Data aplikasi tidak dihapus saat uninstall karena konfigurasi
+   deleteAppDataOnUninstall=false, tetapi backup cloud tetap disarankan.
+
+CATATAN KEAMANAN
+----------------
+Installer saat ini belum ditandatangani dengan sertifikat code-signing.
+Windows SmartScreen dapat menampilkan peringatan "Windows protected your PC".
+Pastikan file berasal dari repository milik sendiri dan checksum sesuai.
+Untuk melanjutkan, pilih More info -> Run anyway.
+
+Jangan memakai file windows/installer.nsi sebagai jalur build utama.
+File itu adalah installer legacy v13 dan tidak dipakai oleh npm run dist:win.
+Build resmi v14.1.1 menggunakan electron-builder dari windows/package.json.
+
+AUTO UPDATE
+-----------
+Aplikasi desktop memiliki electron-updater, tetapi kanal update otomatis
+baru aktif apabila provider.json dan file latest.yml/setup/blockmap tersedia
+pada URL update yang dikonfigurasi. GitHub Release pada repository private
+utamanya dipakai untuk download manual oleh pemilik repository.

@@ -1,0 +1,35 @@
+CHARISNA Money Management v14.1.1 - GitHub Actions Quota Fix
+================================================================
+
+Root cause
+----------
+Build Android berhasil mencapai tahap pembuatan APK, tetapi gagal pada langkah
+upload-artifact karena kuota storage GitHub Actions akun telah penuh.
+
+Perubahan
+---------
+1. APK tidak lagi disimpan sebagai GitHub Actions artifact.
+2. APK dan checksum SHA-256 dipublikasikan ke GitHub Releases tag v14.1.1.
+3. Workflow permissions dinaikkan secara minimum menjadi contents: write agar
+   GITHUB_TOKEN dapat membuat/memperbarui Release pada repository yang sama.
+4. Official GitHub actions diperbarui ke runtime Node 24 (checkout/setup-node/
+   setup-java v5), sedangkan Node.js proyek menggunakan Node 22 LTS.
+5. Concurrency ditambahkan agar build lama dibatalkan ketika build baru untuk
+   branch yang sama dimulai.
+6. APK diverifikasi tidak kosong dan checksum SHA-256 dibuat sebelum publikasi.
+
+Dampak
+------
+- Tidak memakai kuota Actions artifact untuk APK.
+- Hasil build diunduh melalui menu Releases, bukan bagian Artifacts.
+- Tidak ada perubahan pada aplikasi, database, Supabase, atau data pengguna.
+- Version name dan version code tetap 14.1.1 / 140101.
+
+Cara pakai
+----------
+1. Ganti file .github/workflows/build-android-v14.yml di repository.
+2. Commit dan push ke branch main.
+3. Buka Actions > Build Android APK v14.1.1.
+4. Jalankan workflow atau tunggu build otomatis.
+5. Setelah hijau, buka Releases > CHARISNA Money Management v14.1.1.
+6. Unduh APK dan file .sha256.
