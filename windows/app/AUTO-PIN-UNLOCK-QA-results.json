@@ -1,0 +1,39 @@
+{
+  "version": "14.1.1",
+  "feature": "Automatic PIN unlock",
+  "testedAt": "2026-07-31T16:48:35.565282+00:00",
+  "status": "PASS",
+  "cases": {
+    "wrongPin": {
+      "unlocked": false,
+      "inputCleared": true,
+      "message": "PIN salah. Silakan masukkan kembali.",
+      "attempts": 1,
+      "busyReset": true
+    },
+    "physicalKeyboardOrAutofill": {
+      "unlockedBeforeComplete": false,
+      "unlockedAfterComplete": true,
+      "stateLoaded": true,
+      "sessionStored": true,
+      "attempts": 1
+    },
+    "onScreenKeypad": {
+      "unlocked": true,
+      "inputValue": "1234",
+      "attempts": 1
+    },
+    "duplicateSubmitProtection": {
+      "unlocked": true,
+      "attempts": 1
+    },
+    "slowDeviceLoginGuard": {
+      "simulatedDecryptionDelayMs": 1100,
+      "failedAttemptsRecorded": 1,
+      "lockUntil": 0,
+      "busyReset": true,
+      "status": "PASS"
+    }
+  },
+  "pageErrors": []
+}

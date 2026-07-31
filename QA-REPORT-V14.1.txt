@@ -1,0 +1,36 @@
+QA REPORT — CHARISNA MONEY MANAGEMENT v14.1.0
+Tanggal: 31 Juli 2026
+
+STATUS: LULUS
+
+SKENARIO UTAMA
+1. Membuat akun keuangan Business dan Personal.
+2. Saldo awal Business: Rp8.000.000.
+3. Transfer Business -> Personal: Rp1.000.000, biaya Rp6.500.
+4. Hasil saldo Business: Rp6.993.500.
+5. Hasil saldo Personal bertambah: Rp1.000.000.
+6. Tepat dua transaksi dengan ID transfer terhubung tercipta.
+7. Business hanya melihat sisi keluar; Personal hanya melihat sisi masuk.
+8. Total pemasukan/pengeluaran operasional tidak berubah.
+9. Edit dari akun tujuan tetap mempertahankan tepat dua sisi.
+10. Transfer IDR -> USD dengan received amount USD 50 berhasil.
+11. Hapus menghapus dua sisi dan mengembalikan saldo.
+12. Clear akun tujuan ikut membersihkan pasangan pada akun sumber.
+
+REGRESI MULTI-USER
+- Pergantian akun berulang: lulus.
+- Isolasi dashboard, transaksi, rekening, kategori, budget, target, dan laporan: lulus.
+- Migrasi data lama ke akun utama: lulus.
+- Penghapusan aman akun berisi data: lulus.
+- Lifecycle grafik setelah pergantian cepat: lulus.
+
+RESPONSIVE
+- Android phone/Infinix Note 40 Pro+: lulus pada viewport simulasi.
+- Android tablet/Huawei MatePad SE 11: lulus pada viewport simulasi.
+- Desktop/web: lulus.
+- Tidak ada horizontal overflow pada layar mobile.
+
+TEKNIS
+- Pemeriksaan sintaks JavaScript: lulus.
+- Console error/page error pada skenario uji: tidak ditemukan.
+- Tidak memerlukan SQL Supabase baru.

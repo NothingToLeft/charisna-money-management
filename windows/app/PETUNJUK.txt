@@ -1,0 +1,72 @@
+CHARISNA MONEY MANAGEMENT v12 — PIN & ALWAYS-LATEST CLOUD
+
+CARA UPDATE NETLIFY
+1. Backup terenkripsi dari versi lama.
+2. Buka Netlify project charisna-money.
+3. Masuk ke Production deploys.
+4. Jalankan SUPABASE-SETUP-V12.sql satu kali melalui Supabase SQL Editor.
+5. Upload CHARISNA-Money-Management-v12.0.0-Netlify-Web.zip.
+6. Tunggu Published.
+7. Buka https://charisna-money.netlify.app lalu refresh penuh.
+
+CARA MEMBUKA DI WINDOWS
+1. Jalankan CHARISNA-Money-Management-Setup-v12.0.0-x64.exe.
+2. Selesaikan instalasi lalu buka dari Desktop/Start Menu.
+3. Aplikasi berjalan dari bundle lokal, tidak perlu membuka browser.
+4. Versi web di https://charisna-money.netlify.app tetap dapat digunakan.
+5. Jika SmartScreen muncul, pilih Info selengkapnya > Tetap jalankan. Installer
+   pribadi ini belum menggunakan sertifikat code-signing Windows komersial.
+
+LOGIN DAN PIN
+- Login pertama memakai email + password akun cloud.
+- Brankas dibuka memakai panel PIN angka tepat 4, 6, 8, atau 12 digit.
+- Brankas lama dibuka sekali memakai sandi lama lalu dimigrasikan ke PIN.
+- PIN 6/8 angka disarankan dan PIN tidak dapat dipulihkan oleh server.
+
+CLOUD ALWAYS-LATEST
+- Cloud terbaru dipakai otomatis saat berpindah perangkat.
+- Autosave berjalan setiap perubahan, lock, logout, hidden, reconnect, dan quit.
+- Versi lokal lama dicadangkan terenkripsi sebelum cloud baru diterapkan.
+
+MENU SYSTEM
+- Update Center: cek update, backup, install, dan bersihkan cache.
+- System Health: diagnosa browser, cloud, RLS, storage, dan data.
+- Push Reminder: notifikasi ketika aplikasi tertutup.
+- Smart Cleanup: periksa dan perbaiki kualitas data.
+- Excel Profesional: opsi laporan Excel.
+
+SUBSCRIPTION INTELLIGENCE
+Buka menu Langganan. Panel analisis menampilkan biaya bulanan/tahunan, potensi hemat, trial, kenaikan harga, eksposur kurs, dan kartu kedaluwarsa.
+Saat menambah/edit langganan, isi Tingkat penggunaan, terakhir digunakan, kartu kedaluwarsa, dan kandidat dihentikan.
+
+EXCEL PROFESIONAL
+Buka Laporan lalu klik Excel Profesional, atau System → Excel Profesional.
+File berisi dashboard dan sheet terpisah untuk transaksi, akun, budget, goals, langganan, utang, investasi, dan audit.
+
+BACKGROUND PUSH
+Fitur ini memerlukan backend Supabase tambahan.
+1. Jalankan SUPABASE-SETUP-V10.sql.
+2. Buat VAPID key lewat VAPID-KEY-GENERATOR.html.
+3. Deploy Supabase Edge Function yang disertakan.
+4. Atur Cron setiap 15 menit.
+5. Masukkan VAPID public key ke aplikasi dan aktifkan push.
+Baca UPDATE-V12.txt untuk update aplikasi. Setup push tetap menggunakan file
+backend v10 dan folder supabase/functions/send-bill-reminders.
+
+KEAMANAN
+- Jangan bagikan PIN brankas, recovery key, Supabase secret/service-role key, atau VAPID private key.
+- VAPID public key boleh dimasukkan ke aplikasi.
+- Smart Cleanup mengunduh backup sebelum tindakan berisiko.
+- Data laporan Excel dibuat lokal di browser.
+
+PEMBARUAN v11
+- Menu baru: Kategori.
+- Tambahkan kategori pemasukan seperti Kos melalui Kategori -> + Kategori.
+- Nominal otomatis memakai titik ribuan ketika diketik.
+- Nama transaksi dan merchant menampilkan saran dari riwayat.
+- Setting -> Mata Uang & Kurs kini memiliki kalkulator dan nominal hasil konversi.
+- Untuk v12, jalankan SUPABASE-SETUP-V12.sql satu kali.
+
+
+TES FORMAT NOMINAL
+Buka Tambah Transaksi dan ketik 1000000. Hasil yang benar: 1.000.000.

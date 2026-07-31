@@ -1,0 +1,18 @@
+IMPLEMENTATION NOTES — CHARISNA v14.1.1 AUTO PIN UNLOCK
+
+ROOT CAUSE
+Alur login sebelumnya hanya menjalankan verifikasi PIN pada event submit formulir. Keypad angka hanya mengisi nilai input sehingga pengguna tetap harus menekan tombol Buka Dashboard.
+
+SOLUTION
+1. Event input login memeriksa apakah jumlah digit sudah sama dengan panjang PIN brankas.
+2. Ketika lengkap, form.requestSubmit() dipanggil otomatis sehingga seluruh validasi dan login guard lama tetap digunakan.
+3. Flag loginAttemptInProgress mencegah dekripsi ganda apabila pengguna menekan Enter/tombol pada saat auto-submit berjalan.
+4. Input, tombol keypad, dan tombol submit dibuat busy sementara proses PBKDF2/dekripsi berlangsung.
+5. PIN salah mengosongkan input dan mengembalikan fokus tanpa membuka dashboard.
+
+IMPACT
+- Tidak ada perubahan skema data.
+- Tidak ada migrasi Supabase.
+- Tidak ada layanan berbayar baru.
+- Tidak mengubah struktur multi-user atau pasangan transfer antar akun.
+- Kompatibel dengan Web, PWA/Netlify, Android Capacitor, dan Windows Desktop.

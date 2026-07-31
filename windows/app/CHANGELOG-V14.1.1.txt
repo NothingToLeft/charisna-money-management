@@ -1,0 +1,18 @@
+CHARISNA MONEY MANAGEMENT v14.1.1
+PATCH: AUTO PIN UNLOCK
+
+PERUBAHAN
+- Dashboard sekarang terbuka otomatis segera setelah PIN lengkap dan benar.
+- Berlaku untuk keypad angka di layar, keyboard fisik, dan autofill Android/browser.
+- Tombol Buka Dashboard tetap tersedia sebagai fallback aksesibilitas dan kompatibilitas.
+- Saat proses verifikasi berlangsung, input dan keypad dikunci sementara untuk mencegah percobaan ganda.
+- Jika PIN salah, kolom otomatis dikosongkan dan fokus dikembalikan agar pengguna dapat langsung mencoba lagi.
+- Pesan bantuan login diperjelas bahwa dashboard akan terbuka otomatis.
+
+KEAMANAN DAN KOMPATIBILITAS
+- Panjang PIN 4, 6, 8, dan 12 digit tetap didukung.
+- Login guard/rate limit tetap aktif.
+- Enkripsi, cloud vault, multi-user, dan transfer antar akun tidak diubah.
+- Cache PWA dinaikkan agar perangkat memperoleh file JavaScript terbaru.
+- Android versionCode: 140101.
+- Android/Desktop/Web version: 14.1.1.

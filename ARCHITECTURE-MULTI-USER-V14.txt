@@ -1,0 +1,54 @@
+ARSITEKTUR MULTI-USER INTERNAL — v14
+=====================================
+
+[Supabase Auth]
+       |
+       v
+[1 Cloud User]
+       |
+       v
+[Encrypted Vault + Main PIN]
+       |
+       +-- [Akun Keuangan: Saya]
+       |      +-- Accounts
+       |      +-- Transactions
+       |      +-- Budgets / Goals / Reports
+       |
+       +-- [Akun Keuangan: Pasangan]
+       |      +-- Data terpisah dengan profileId
+       |
+       +-- [Akun Keuangan: Usaha A]
+       |      +-- Data terpisah dengan profileId
+       |
+       +-- [Akun Keuangan: Usaha B]
+              +-- Data terpisah dengan profileId
+
+ALUR PERGANTIAN AKUN
+1. Pengguna memilih profil pada header.
+2. Preferensi profil aktif disimpan ke profile.preferences.
+3. activeFinancialUserId dan activeBookId diperbarui.
+4. Preferensi profil tujuan dimuat.
+5. Semua renderer memakai financialItems().
+6. Perubahan disimpan kembali ke encrypted vault cloud.
+
+FOLDER UTAMA
+charisna_src/
+├── web/                         Source web/Netlify dan aset bersama
+│   ├── app.js                   Core aplikasi
+│   ├── app-pro.js               Modul finansial lanjutan
+│   ├── app-patch-v9..v13.js     Patch kompatibilitas lama
+│   ├── app-patch-v14.js         Orkestrasi multi-user internal
+│   ├── styles-patch-v14.css     UI pemilih dan pengelola akun
+│   └── service-worker.js        Cache/update PWA
+├── android/                     Native wrapper Capacitor Android
+├── windows/                     Native wrapper Electron Windows
+├── www/                         Salinan webDir untuk Capacitor
+├── capacitor.config.json
+├── package.json
+└── dokumentasi v14
+
+SKALABILITAS
+profileId dapat digunakan untuk jumlah akun internal yang lebih banyak tanpa
+perubahan skema cloud. Untuk kolaborasi multi-login nyata, arsitektur berikutnya
+perlu membership table, invitations, role permissions, audit ownership, dan RLS
+per workspace; hal tersebut sengaja tidak dicampurkan ke v14.

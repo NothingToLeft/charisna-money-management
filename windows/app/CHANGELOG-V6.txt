@@ -1,0 +1,39 @@
+CHARISNA MONEY MANAGEMENT v6 COMPLETE — CHANGELOG
+
+CLOUD & BACKUP
+- Offline sync queue dan retry otomatis
+- Realtime conflict detection
+- Pilihan Cloud / Lokal / Gabungkan
+- Local version snapshots dan cloud version history
+- Full backup ZIP termasuk lampiran terenkripsi
+- Partial restore
+- Sinkronisasi lampiran melalui Supabase Storage
+
+SECURITY
+- Recovery key
+- Login attempt lockout
+- Device list dan revoke device
+- Logout all devices
+- Reset password dan change email cloud
+- Security and error logs
+
+FINANCE
+- Smart dashboard range, saving rate, burn rate, runway
+- Net worth dan account balance charts
+- Transaction templates, duplicate, refund, bulk actions
+- Location dan multi-attachment
+- Auto-post recurring transactions
+- Smart budget suggestions dan exhaustion forecast
+- Debt/receivable/installment tracker
+- Snowball, avalanche, payoff simulator
+- Investment and asset tracker
+- Dividends/passive income and allocation chart
+- Shared wallet roles, invitations, approval threshold
+
+UX
+- Mobile transaction cards
+- Floating add button
+- Drag-and-drop dashboard widgets
+- PWA install/update tools
+- Onboarding checklist
+- Privacy policy template

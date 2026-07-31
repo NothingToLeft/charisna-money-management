@@ -1,0 +1,82 @@
+{
+  "status": "PASS",
+  "initial": {
+    "transferVersion": "14.1.0",
+    "businessBalance": 8000000,
+    "personalBalance": 50222500,
+    "businessTotals": {
+      "income": 3000000,
+      "expense": 0
+    }
+  },
+  "created": {
+    "rowCount": 2,
+    "sameId": true,
+    "linked": true,
+    "sourceProfile": "profile-business",
+    "destinationProfile": "profile-personal",
+    "outgoingAmount": 1000000,
+    "incomingAmount": 1000000,
+    "fee": 6500,
+    "businessBalance": 6993500,
+    "personalBalance": 51222500,
+    "businessTotals": {
+      "income": 3000000,
+      "expense": 0
+    },
+    "visibleRows": [
+      "outgoing"
+    ],
+    "transferId": "cross-transfer-1785515078207-544a6835"
+  },
+  "businessUI": {
+    "text": "\n        \n          \n            Transaksi\n            \n              Pemasukan, pengeluaran, transfer, split transaction, dan lampiran.\n            \n          \n\n          \n            \n\n            \n              Semua jenis\n              Pemasukan\n              Pengeluaran\n              Transfer\n            \n          \n      ⧉ Duplikat Terakhir\n    \n        Cari cepat:>100000tanggal:2026-07#tag\n\n        \n      \n        0 dipilih\n        \n          Ubah kategori...\n          \n        \n          🍜 Makanan\n        \n      \n        \n          🚕 Transportasi\n        \n      \n        \n          🛍️ Belanja\n        \n      \n        \n          🎮 Hiburan\n        \n      \n        \n          🧾 Tagihan\n        \n      \n        \n          💊 Kesehatan\n        \n      \n        \n          📚 Pendidikan\n        \n      \n        \n          ✈️ Traveling\n        \n      \n        \n          🤝 Donasi\n        \n      \n        \n          🏠 Rumah\n        \n      \n        \n          🧮 Pajak\n        \n      \n        \n          ✨ Lainnya\n        \n      \n        \n        Terapkan\n        ☆ Simpan Template\n        ⚡ Template Cepat\n        Hapus Terpilih\n      \n      Pemasukan Kos Juli31 Jul 2026 · Sewa / Kos+Rp 3.000.000PenyewaEdit⧉↩Setoran hasil kos ke personal31 Jul 2026 · Transfer Antar Akun-Rp 1.000.000⇄ Keluar ke PersonalEdit transfer🗑️\n    \n          \n            \n              \n                \n                  Transaksi\n                  Akun\n                  Tanggal\n                  Kategori\n                  Status\n                  Nominal\n                  \n                \n              \n\n              \n    \n      \n        \n          \n            🏘️\n          \n\n          \n            Pemasukan Kos Juli\n\n            \n              Penyewa\n               · #kos\n            \n          \n        \n      \n\n      \n        Kas Usaha Kos\n        \n      \n\n      31 Jul 2026\n\n      \n        Sewa / Kos\n      \n\n      \n        \n          completed\n          \n        \n      \n\n      \n        \n          +\n          Rp 3.000.000\n        \n      \n\n      \n        \n          \n            ✏️\n          \n\n          \n            🗑️\n          \n        \n      \n    \n  \n      \n        \n          \n            ⇄\n            Setoran hasil kos ke personalTransfer keluar · Personal\n          \n        \n        \n          Kas Usaha Kos\n          → ke BCA Utama · Personal\n        \n        31 Jul 2026\n        Antar akun\n        completed · terhubung\n        - Rp 1.000.000Biaya Rp 6.500\n        \n          \n            ✏️\n            🗑️\n          \n        \n      \n            \n          \n        \n      ",
+    "customEdit": true,
+    "genericEdit": false,
+    "duplicate": false
+  },
+  "personalView": {
+    "visibleRoles": [
+      "incoming"
+    ],
+    "text": "\n        \n          \n            Transaksi\n            \n              Pemasukan, pengeluaran, transfer, split transaction, dan lampiran.\n            \n          \n\n          \n            \n\n            \n              Semua jenis\n              Pemasukan\n              Pengeluaran\n              Transfer\n            \n          \n      ⧉ Duplikat Terakhir\n    \n        Cari cepat:>100000tanggal:2026-07#tag\n\n        \n      \n        0 dipilih\n        \n          Ubah kategori...\n          \n        \n          🍜 Makanan\n        \n      \n        \n          🚕 Transportasi\n        \n      \n        \n          🛍️ Belanja\n        \n      \n        \n          🎮 Hiburan\n        \n      \n        \n          🧾 Tagihan\n        \n      \n        \n          💊 Kesehatan\n        \n      \n        \n          📚 Pendidikan\n        \n      \n        \n          ✈️ Traveling\n        \n      \n        \n          🤝 Donasi\n        \n      \n        \n          🏠 Rumah\n        \n      \n        \n          🧮 Pajak\n        \n      \n        \n          ✨ Lainnya\n        \n      \n        \n        Terapkan\n        ☆ Simpan Template\n        ⚡ Template Cepat\n        Hapus Terpilih\n      \n      Setoran hasil kos ke personal31 Jul 2026 · Transfer Antar Akun+Rp 1.000.000⇄ Masuk dari BisnisEdit transfer🗑️Pengeluaran bulanan15 Jul 2026 · Tagihan-Rp 5.200.000BeragamEdit⧉↩Top up GoPay8 Jul 2026 · LainnyaRp 400.000Tanpa merchantEdit⧉↩Belanja supermarket6 Jul 2026 · Makanan-Rp 875.000SupermarketEdit⧉↩Gaji bulanan2 Jul 2026 · Gaji+Rp 12.500.000PerusahaanEdit⧉↩Gaji bulanan2 Jul 2026 · Gaji+Rp 11.500.000PerusahaanEdit⧉↩Pengeluaran bulanan15 Mei 2026 · Belanja-Rp 5.450.000BeragamEdit⧉↩Pengeluaran bulanan15 Mei 2026 · Tagihan-Rp 5.700.000BeragamEdit⧉↩Gaji bulanan2 Mei 2026 · Gaji+Rp 11.650.000PerusahaanEdit⧉↩Gaji bulanan2 Mei 2026 · Gaji+Rp 11.800.000PerusahaanEdit⧉↩Pengeluaran bulanan15 Mar 2026 · Belanja-Rp 5.950.000BeragamEdit⧉↩Pengeluaran bulanan15 Mar 2026 · Tagihan-Rp 6.200.000BeragamEdit⧉↩Gaji bulanan2 Mar 2026 · Gaji+Rp 11.950.000PerusahaanEdit⧉↩Gaji bulanan2 Mar 2026 · Gaji+Rp 12.100.000PerusahaanEdit⧉↩\n    \n          \n            \n              \n                \n                  Transaksi\n                  Akun\n                  Tanggal\n                  Kategori\n                  Status\n                  Nominal\n                  \n                \n              \n\n              \n      \n        \n          \n            ⇄\n            Setoran hasil kos ke personalTransfer masuk · Bisnis\n          \n        \n        \n          BCA Utama\n          ← dari Kas Usaha Kos · Bisnis\n        \n        31 Jul 2026\n        Antar akun\n        completed · terhubung\n        + Rp 1.000.000\n        \n          \n            ✏️\n            🗑️\n          \n        \n      \n    \n      \n        \n          \n            🧾\n          \n\n          \n            Pengeluaran bulanan\n\n            \n              Beragam\n              \n            \n          \n        \n      \n\n      \n        BCA Utama\n        \n      \n\n      15 Jul 2026\n\n      \n        Tagihan\n      \n\n      \n        \n          completed\n           · ✓\n        \n      \n\n      \n        \n          -\n          Rp 5.200.000\n        \n      \n\n      \n        \n          \n            ✏️\n          \n\n          \n            🗑️\n          \n        \n      \n    \n  \n    \n      \n        \n          \n            ↔️\n          \n\n          \n            Top up GoPay\n\n            \n              \n               · #transfer\n            \n          \n        \n      \n\n      \n        BCA Utama\n        → GoPay\n      \n\n      8 Jul 2026\n\n      \n        Lainnya\n      \n\n      \n        \n          completed\n           · ✓\n        \n      \n\n      \n        \n          \n          Rp 400.000\n        \n      \n\n      \n        \n          \n            ✏️\n          \n\n          \n            🗑️\n          \n        \n      \n    \n  \n    \n      \n        \n          \n            🍜\n          \n\n          \n            Belanja supermarket\n\n            \n              Supermarket\n               · #rumah\n            \n          \n        \n      \n\n      \n        BCA Utama\n        \n      \n\n      6 Jul 2026\n\n      \n        2 kategori\n      \n\n      \n        \n          completed\n          \n        \n      \n\n      \n        \n          -\n          Rp 875.000\n        \n      \n\n      \n        \n          \n            ✏️\n          \n\n          \n            🗑️\n          \n        \n      \n    \n  \n    \n      \n        \n          \n            💼\n          \n\n          \n            Gaji bulanan\n\n            \n              Perusahaan\n               · #kantor\n            \n          \n        \n      \n\n      \n        BCA Utama\n        \n      \n\n      2 Jul 2026\n\n      \n        Gaji\n      \n\n      \n        \n          completed\n           · ✓\n        \n      \n\n      \n        \n          +\n          Rp 12.500.000\n        \n      \n\n      \n        \n          \n            ✏️\n          \n\n          \n            🗑️\n          \n        \n      \n    \n  \n    \n      \n        \n          \n            💼\n          \n\n          \n            Gaji bulanan\n\n            \n              Perusahaan\n               · #kantor\n            \n          \n        \n      \n\n      \n        BCA Utama\n        \n      \n\n      2 Jul 2026\n\n      \n        Gaji\n      \n\n      \n        \n          completed\n           · ✓\n        \n      \n\n      \n        \n          +\n          Rp 11.500.000\n        \n      \n\n      \n        \n          \n            ✏️\n          \n\n          \n            🗑️\n          \n        \n      \n    \n  \n    \n      \n        \n          \n            🛍️\n          \n\n          \n            Pengeluaran bulanan\n\n            \n              Beragam\n              \n            \n          \n        \n      \n\n      \n        BCA Utama\n        \n      \n\n      15 Mei 2026\n\n      \n        Belanja\n      \n\n      \n        \n          completed\n           · ✓\n        \n      \n\n      \n        \n          -\n          Rp 5.450.000\n        \n      \n\n      \n        \n          \n            ✏️\n          \n\n          \n            🗑️\n          \n        \n      \n    \n  \n    \n      \n        \n          \n            🧾\n          \n\n          \n            Pengeluaran bulanan\n\n            \n              Beragam\n              \n            \n          \n        \n      \n\n      \n        BCA Utama\n        \n      \n\n      15 Mei 2026\n\n      \n        Tagihan\n      \n\n      \n        \n          completed\n           · ✓\n        \n      \n\n      \n        \n          -\n          Rp 5.700.000\n        \n      \n\n      \n        \n          \n            ✏️\n          \n\n          \n            🗑️\n          \n        \n      \n    \n  \n    \n      \n        \n          \n            💼\n          \n\n          \n            Gaji bulanan\n\n            \n              Perusahaan\n               · #kantor\n            \n          \n        \n      \n\n      \n        BCA Utama\n        \n      \n\n      2 Mei 2026\n\n      \n        Gaji\n      \n\n      \n        \n          completed\n           · ✓\n        \n      \n\n      \n        \n          +\n          Rp 11.650.000\n        \n      \n\n      \n        \n          \n            ✏️\n          \n\n          \n            🗑️\n          \n        \n      \n    \n  \n    \n      \n        \n          \n            💼\n          \n\n          \n            Gaji bulanan\n\n            \n              Perusahaan\n               · #kantor\n            \n          \n        \n      \n\n      \n        BCA Utama\n        \n      \n\n      2 Mei 2026\n\n      \n        Gaji\n      \n\n      \n        \n          completed\n           · ✓\n        \n      \n\n      \n        \n          +\n          Rp 11.800.000\n        \n      \n\n      \n        \n          \n            ✏️\n          \n\n          \n            🗑️\n          \n        \n      \n    \n  \n    \n      \n        \n          \n            🛍️\n          \n\n          \n            Pengeluaran bulanan\n\n            \n              Beragam\n              \n            \n          \n        \n      \n\n      \n        BCA Utama\n        \n      \n\n      15 Mar 2026\n\n      \n        Belanja\n      \n\n      \n        \n          completed\n           · ✓\n        \n      \n\n      \n        \n          -\n          Rp 5.950.000\n        \n      \n\n      \n        \n          \n            ✏️\n          \n\n          \n            🗑️\n          \n        \n      \n    \n  \n    \n      \n        \n          \n            🧾\n          \n\n          \n            Pengeluaran bulanan\n\n            \n              Beragam\n              \n            \n          \n        \n      \n\n      \n        BCA Utama\n        \n      \n\n      15 Mar 2026\n\n      \n        Tagihan\n      \n\n      \n        \n          completed\n           · ✓\n        \n      \n\n      \n        \n          -\n          Rp 6.200.000\n        \n      \n\n      \n        \n          \n            ✏️\n          \n\n          \n            🗑️\n          \n        \n      \n    \n  \n    \n      \n        \n          \n            💼\n          \n\n          \n            Gaji bulanan\n\n            \n              Perusahaan\n               · #kantor\n            \n          \n        \n      \n\n      \n        BCA Utama\n        \n      \n\n      2 Mar 2026\n\n      \n        Gaji\n      \n\n      \n        \n          completed\n           · ✓\n        \n      \n\n      \n        \n          +\n          Rp 11.950.000\n        \n      \n\n      \n        \n          \n            ✏️\n          \n\n          \n            🗑️\n          \n        \n      \n    \n  \n    \n      \n        \n          \n            💼\n          \n\n          \n            Gaji bulanan\n\n            \n              Perusahaan\n               · #kantor\n            \n          \n        \n      \n\n      \n        BCA Utama\n        \n      \n\n      2 Mar 2026\n\n      \n        Gaji\n      \n\n      \n        \n          completed\n           · ✓\n        \n      \n\n      \n        \n          +\n          Rp 12.100.000\n        \n      \n\n      \n        \n          \n            ✏️\n          \n\n          \n            🗑️\n          \n        \n      \n    \n  \n            \n          \n        \n      ",
+    "totals": {
+      "income": 24000000,
+      "expense": 6075000
+    }
+  },
+  "edited": {
+    "count": 2,
+    "sourceAmount": 1200000,
+    "receivedAmount": 1200000,
+    "fee": 5000,
+    "businessBalance": 6795000,
+    "personalBalance": 51422500
+  },
+  "fx": {
+    "incomingAmount": 50,
+    "incomingCurrency": "USD",
+    "outgoingAmount": 800000,
+    "outgoingCurrency": "IDR",
+    "usdBalance": 550
+  },
+  "deleted": {
+    "remaining": 0,
+    "businessBalance": 7197500,
+    "personalBalance": 50222500
+  },
+  "cleared": {
+    "crossRows": 0,
+    "businessBalance": 8000000,
+    "businessIncomeStillThere": true,
+    "personalAccounts": 0
+  },
+  "responsive": {
+    "viewport": 393,
+    "scrollWidth": 394,
+    "formWidth": 301,
+    "flowColumns": "301px",
+    "buttonVisible": true
+  },
+  "errors": []
+}

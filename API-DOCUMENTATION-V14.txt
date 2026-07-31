@@ -1,0 +1,56 @@
+INTERNAL API DOCUMENTATION — CHARISNA v14
+==========================================
+
+Tidak ada REST API publik atau perubahan API Supabase pada v14.
+Modul multi-user mengekspos API browser internal berikut:
+
+window.CharisnaUsers.version
+  Number. Nilai saat ini: 14.
+
+window.CharisnaUsers.activeId()
+  Mengembalikan profileId akun keuangan aktif.
+
+window.CharisnaUsers.active()
+  Mengembalikan object profil aktif.
+
+window.CharisnaUsers.belongs(item)
+  Boolean. True apabila item memiliki profileId akun aktif.
+
+window.CharisnaUsers.items(collection)
+  Mengembalikan array terfilter untuk akun aktif.
+
+window.CharisnaUsers.profiles()
+  Mengembalikan profil yang tidak diarsipkan.
+
+window.CharisnaUsers.ensure()
+  Menjalankan normalisasi dan migrasi state v14. Mengembalikan boolean changed.
+
+window.CharisnaUsers.switchTo(profileId, options)
+  Promise. Mengganti akun aktif.
+  options.persist: simpan vault setelah berpindah, default true.
+  options.announce: tampilkan toast, default true.
+
+window.CharisnaUsers.openForm(existingProfile?)
+  Membuka modal tambah atau edit akun keuangan.
+
+window.CharisnaUsers.openManager()
+  Membuka modal pengelolaan seluruh akun.
+
+window.CharisnaUsers.counts(profileId)
+  Mengembalikan jumlah item per koleksi dan total konten finansial profil.
+
+GLOBAL COMPATIBILITY HELPERS
+window.activeFinancialUserId()
+window.financialItems(collection)
+
+KONTRAK DATA PROFIL UTAMA
+{
+  id, name, type, userType, icon, color, baseCurrency, notes,
+  members[], isPrimary, archived, preferences{}, createdAt, updatedAt
+}
+
+KONTRAK ENTITAS TERISOLASI
+Setiap item pada koleksi finansial wajib memiliki:
+{
+  profileId: "ID akun keuangan pemilik item"
+}

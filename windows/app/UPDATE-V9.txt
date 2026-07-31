@@ -1,0 +1,19 @@
+UPDATE CHARISNA MONEY MANAGEMENT KE v9
+
+NETLIFY
+1. Buka project charisna-money.
+2. Masuk ke Production deploys.
+3. Upload ZIP charisna-money-management-v9-subscription-manager.zip.
+4. Tunggu status Published.
+5. Buka https://charisna-money.netlify.app lalu refresh penuh.
+
+WINDOWS LOKAL
+1. Ekstrak ZIP ke folder baru.
+2. Klik BUKA-CHARISNA-MONEY.bat.
+3. Jendela hitam harus tetap terbuka selama aplikasi digunakan.
+
+CATATAN
+- Tidak memerlukan SQL Supabase baru.
+- Data v8 tetap kompatibel.
+- Sebaiknya buat Backup Terenkripsi sebelum update.
+- Menu baru: Langganan dan Pembaruan.

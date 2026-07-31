@@ -1,0 +1,17 @@
+CHARISNA MONEY MANAGEMENT v13.0.1 — MOBILE LAYOUT FIX
+22 Juli 2026
+
+PERBAIKAN UTAMA
+- Memperbaiki daftar pengaturan widget yang pecah vertikal di HP.
+- Mengganti checkbox mentah menjadi sakelar ringkas dan mudah disentuh.
+- Menyatukan tombol naik/turun dalam satu baris yang stabil.
+- Memaksa seluruh panel Pengaturan menjadi satu kolom pada layar HP.
+- Memadatkan header agar ruang layar Infinix Note 40 Pro+ lebih efisien.
+- Menyesuaikan safe area status bar, gesture navigation, FAB, dan bottom navigation Android.
+- Menambahkan layout khusus viewport 360–430 px serta perbaikan landscape.
+- Mempertahankan seluruh data, PIN, cloud sync, notifikasi, dan fitur v13.
+
+TARGET UJI UTAMA
+- Infinix Note 40 Pro+ portrait dan landscape.
+- Android viewport 360, 393, 412, dan 430 px.
+- Tablet 820 px dan desktop 1440 px tidak berubah menjadi layout HP.

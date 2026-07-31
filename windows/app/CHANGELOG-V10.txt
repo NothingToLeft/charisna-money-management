@@ -1,0 +1,47 @@
+CHARISNA MONEY MANAGEMENT v10.0 — PRODUCTION UPDATE
+Tanggal: 18 Juli 2026
+
+FITUR BARU
+1. Background Push Reminder
+- Web Push melalui service worker ketika aplikasi tertutup.
+- Sinkronisasi jadwal tagihan ke Supabase.
+- Mode privasi generik atau detail.
+- Notifikasi tes, aktivasi/nonaktif perangkat, dan pengaturan zona waktu.
+- Paket SQL, VAPID generator, dan Supabase Edge Function disertakan.
+
+2. Update Center
+- Deteksi pembaruan service worker.
+- Backup terenkripsi sebelum memasang update.
+- Pembersihan cache versi lama.
+- Status versi aplikasi/data dan riwayat migrasi.
+
+3. System Health
+- Pemeriksaan internet, secure context, service worker, vault, IndexedDB, storage, notifikasi, cloud session, RLS, sync queue, dan integritas data.
+- Export laporan diagnostik tanpa isi transaksi.
+
+4. Subscription Intelligence
+- Estimasi biaya bulanan/tahunan.
+- Potensi penghematan dari layanan jarang dipakai.
+- Trial akan berakhir, riwayat kenaikan harga, eksposur kurs, kartu hampir kedaluwarsa.
+- Tingkat penggunaan, kandidat dihentikan, tanggal terakhir dipakai, dan simulator penghematan.
+
+5. Smart Cleanup & Data Quality
+- Deteksi transaksi duplikat.
+- Transaksi tanpa akun.
+- Split transaction tidak seimbang.
+- Jadwal rutin terlambat.
+- Kurs kosong.
+- Langganan mirip.
+- Tag tidak konsisten.
+- Lampiran yatim.
+- Backup dan konfirmasi sebelum tindakan berisiko.
+
+6. Excel Profesional
+- Workbook bergaya profesional memakai ExcelJS.
+- Sheet Dashboard, Transaksi, Akun, Budget, Goals, Langganan, Utang, Investasi, Audit Log, dan Metadata.
+- Header, freeze pane, filter, lebar kolom, format tanggal/angka, warna transaksi, dan print setup.
+
+KOMPATIBILITAS
+- Data v9 dan Supabase lama tetap kompatibel.
+- Fitur selain background push langsung aktif setelah update Netlify.
+- Background push membutuhkan SUPABASE-SETUP-V10.sql, VAPID keys, Edge Function, dan Cron.

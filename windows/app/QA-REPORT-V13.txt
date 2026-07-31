@@ -1,0 +1,52 @@
+CHARISNA MONEY MANAGEMENT v13 — QA REPORT
+=========================================
+
+Tanggal: 22 Juli 2026
+Target: Web/Netlify, Android HP/Tablet, Windows x64
+
+UJI TAMPILAN BROWSER NYATA
+- Viewport HP 390x844: LULUS
+- Viewport tablet 820x1180: LULUS
+- Viewport desktop 1440x900: LULUS
+- Navigasi responsif per perangkat: LULUS
+- Dashboard, kategori, grafik, kartu, dan quick actions: LULUS
+- Transaction calculator dan category picker: LULUS
+- Form anggaran lanjutan dan penyimpanan metadata: LULUS
+- Form tujuan tabungan lanjutan dan penyimpanan metadata: LULUS
+- Pengaturan multi-buku dan penyimpanan metadata: LULUS
+- Mode kalender dan pencarian pintar: LULUS
+- Kesalahan JavaScript runtime selama pengujian: 0
+
+UJI PIN & CLOUD
+- PIN 4/6/8/12 digit: LULUS
+- Mengubah PIN 6 digit menjadi 4 digit: LULUS
+- Migrasi sandi lama menjadi PIN 8 digit: LULUS
+- PBKDF2 600.000 iterasi dan AES-GCM: LULUS
+- Cloud versi lebih tinggi diterapkan otomatis: LULUS
+- Snapshot recovery sebelum pergantian data: LULUS
+- Autosave/flush perubahan tetap aktif: LULUS
+
+UJI ANDROID
+- Package com.charisna.moneymanagement: LULUS
+- Version code 130000 / version name 13.0.0: LULUS
+- Minimum Android 7/API 24; target API 36: LULUS
+- APK alignment: LULUS
+- APK Signature Scheme v2 dan v3: LULUS
+- Sertifikat sama dengan rilis sebelumnya: LULUS
+- Aset v13 dan ikon baru tertanam: LULUS
+- Notifikasi dijadwalkan lalu dibatalkan saat dimatikan: LULUS
+- Acara kalender perangkat yang dibuat scheduler: 0
+
+UJI WINDOWS
+- Paket Electron lokal, bukan halaman web/webview eksternal: LULUS
+- App package version 13.0.0 dan aset v13 tertanam: LULUS
+- Windows x64 PE, ikon aplikasi, system tray, reminder, dan updater: LULUS
+- Installer per-user tanpa hak administrator: LULUS (audit paket/script)
+
+CATATAN BATAS UJI
+- APK belum dijalankan pada perangkat fisik di lingkungan build Linux ini.
+- EXE tidak dapat dieksekusi pada host Linux; struktur PE, archive, app.asar,
+  script installer, versi, dan integritas diperiksa secara statis.
+- Login Supabase produksi dan deploy Netlify tidak diubah tanpa akses pemilik.
+- EXE belum memakai sertifikat code-signing komersial; Windows SmartScreen dapat
+  menampilkan peringatan pada pemasangan pertama.

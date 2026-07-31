@@ -1,0 +1,30 @@
+{
+  "name": "CHARISNA Money Management v14.1",
+  "short_name": "CHARISNA Money",
+  "description": "Money management cloud dengan akun keuangan terpisah dan transfer terhubung antara pribadi, pasangan, keluarga, serta usaha.",
+  "start_url": "./index.html?v=14.1.1-auto-pin-unlock",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#fff8fb",
+  "theme_color": "#ee5d92",
+  "orientation": "any",
+  "lang": "id",
+  "categories": [
+    "finance",
+    "productivity"
+  ],
+  "icons": [
+    {
+      "src": "./icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

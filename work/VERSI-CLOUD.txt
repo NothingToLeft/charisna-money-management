@@ -1,9 +1,0 @@
-CHARISNA Money Management v12.0.0
-PIN & Always-Latest Cloud
-
-URL produksi:
-https://charisna-money.netlify.app
-
-Kompatibel dengan data v6-v11.1 dan tabel Supabase yang sudah ada.
-Jalankan SUPABASE-SETUP-V12.sql satu kali untuk revisi atomik, waktu server,
-dan Realtime Always-Latest yang paling andal.

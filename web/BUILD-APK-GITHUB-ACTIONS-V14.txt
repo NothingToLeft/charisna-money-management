@@ -1,0 +1,23 @@
+BUILD APK TANPA ANDROID STUDIO — v14.1
+=====================================
+
+Source lengkap menyertakan workflow:
+.github/workflows/build-android-v14.yml
+
+CARA MENJALANKAN
+1. Upload seluruh isi Full Source ke repository GitHub.
+2. Buka tab Actions.
+3. Pilih "Build Android APK v14.1".
+4. Tekan "Run workflow".
+5. Setelah selesai, unduh artifact:
+   CHARISNA-Money-Management-v14.1.1-APK
+
+HASIL
+CHARISNA-Money-Management-v14.1.1-Multi-User-Transfer-debug.apk
+
+CATATAN
+- Build memakai GitHub Actions dan tidak membutuhkan Android Studio.
+- Debug APK dapat langsung dipasang untuk pengujian internal.
+- Workflow memakai Node.js 20, Java 17, Android SDK 34, Capacitor 6, dan Gradle project yang disertakan.
+- Untuk update yang mempertahankan signature aplikasi lama, gunakan signing keystore yang sama melalui GitHub Actions Secrets.
+- Jangan menyimpan keystore atau password di repository publik.

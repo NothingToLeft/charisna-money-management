@@ -1,0 +1,24 @@
+CHARISNA Money Management v8 — Bill Reminder Center
+
+FITUR BARU
+- Popup otomatis saat aplikasi dibuka jika tagihan mencapai jadwal pengingat.
+- Jadwal default 7, 3, 1 hari sebelum jatuh tempo dan hari H.
+- Jadwal pengingat global dapat diubah.
+- Setiap tagihan rutin dapat memakai jadwal khusus atau mematikan pengingat.
+- Pemeriksaan saldo akun pembayaran.
+- Menghitung kekurangan saldo dan buffer isi saldo.
+- Tombol Siapkan Saldo dari dana luar atau transfer akun internal.
+- Tombol Tandai Dibayar untuk tagihan rutin dan memajukan jadwal berikutnya.
+- Snooze/tunda pengingat satu hari.
+- Reminder Center dengan badge lonceng di topbar.
+- Dukungan tagihan rutin, cicilan/utang, kartu kredit, dan PayLater.
+- Browser notification melalui service worker ketika aplikasi sedang aktif/terbuka.
+
+KOMPATIBILITAS
+- Data v7 tetap dapat digunakan.
+- Pengaturan pengingat ikut terenkripsi dan tersinkron ke cloud.
+- Tidak memerlukan perubahan tabel Supabase atau SQL baru.
+
+BATASAN BROWSER
+- Popup selalu dapat muncul ketika aplikasi dibuka.
+- Notifikasi terjadwal saat aplikasi benar-benar tertutup memerlukan push server/background service tambahan.

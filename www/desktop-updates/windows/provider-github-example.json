@@ -1,0 +1,5 @@
+{
+  "enabled": true,
+  "url": "https://github.com/OWNER/REPOSITORY/releases/latest/download",
+  "note": "Ganti OWNER dan REPOSITORY, lalu simpan sebagai provider.json pada deploy Netlify."
+}

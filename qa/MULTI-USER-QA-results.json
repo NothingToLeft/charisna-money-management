@@ -1,0 +1,204 @@
+{
+  "status": "PASS",
+  "seeded": {
+    "version": 14,
+    "profiles": 3
+  },
+  "desktop": {
+    "switching": {
+      "personal": {
+        "id": "profile-personal",
+        "name": "Personal",
+        "accounts": [
+          "BCA Utama",
+          "GoPay",
+          "Travel USD",
+          "Kartu Kredit"
+        ],
+        "transactions": [
+          "Gaji bulanan",
+          "Belanja supermarket",
+          "Top up GoPay",
+          "Gaji bulanan",
+          "Pengeluaran bulanan",
+          "Gaji bulanan",
+          "Pengeluaran bulanan",
+          "Gaji bulanan",
+          "Pengeluaran bulanan",
+          "Gaji bulanan",
+          "Pengeluaran bulanan",
+          "Gaji bulanan",
+          "Pengeluaran bulanan"
+        ],
+        "categories": [
+          "Harian",
+          "Komunikasi",
+          "Sosial",
+          "Pakaian",
+          "Kecantikan",
+          "Anak & Bayi",
+          "Hewan",
+          "Hadiah",
+          "Asuransi",
+          "Langganan",
+          "Usaha",
+          "Sewa / Kos",
+          "Cashback",
+          "Gaji",
+          "Bonus",
+          "Freelance",
+          "Investasi",
+          "Makanan",
+          "Transportasi",
+          "Belanja",
+          "Hiburan",
+          "Tagihan",
+          "Kesehatan",
+          "Pendidikan",
+          "Traveling",
+          "Donasi",
+          "Rumah",
+          "Pajak",
+          "Lainnya"
+        ],
+        "tags": [
+          "kantor",
+          "rumah",
+          "transfer"
+        ],
+        "pageText": "Transaksi\n\nPemasukan, pengeluaran, transfer, split transaction, dan lampiran.\n\nSemua jenis\nPemasukan\nPengeluaran\nTransfer\n⧉ Duplikat Terakhir\nCari cepat:\n>100000\ntanggal:2026-07\n#tag\n0 dipilih\nUbah kategori...\n🍜 Makanan\n🚕 Transportasi\n🛍️ Belanja\n🎮 Hiburan\n🧾 Tagihan\n💊 Kesehatan\n📚 Pendidikan\n✈️ Traveling\n🤝 Donasi\n🏠 Rumah\n🧮 Pajak\n✨ Lainnya\nTerapkan\n☆ Simpan Template\n⚡ Template Cepat\nHapus Terpilih\n\tTRANSAKSI\tAKUN\tTANGGAL\tKATEGORI\tSTATUS\tNOMINAL\t\n\n🧾\nPengeluaran bulanan\nBeragam\n\tBCA Utama\t15 Jul 2026\tTagihan\tcompleted · ✓\t- Rp 5.200.000\t\n✏️\n🗑️\n\n\n↔️\nTop up GoPay\n· #transfer\n\tBCA Utama\n→ GoPay\t8 Jul 2026\tLainnya\tcompleted · ✓\tRp 400.000\t\n✏️\n🗑️\n\n\n🍜\nBelanja supermarket\nSupermarket · #rumah\n\tBCA Utama\t6 Jul 2026\t2 kategori\tcompleted\t- Rp 875.000\t\n✏️\n🗑️\n\n\n💼\nGaji bulanan\nPerusahaan · #kantor\n\tBCA Utama\t2 Jul 2026\tGaji\tcompleted · ✓\t+ Rp 12.500.000\t\n✏️\n🗑️\n\n\n💼\nGaji bulanan\nPerusahaan · #kantor\n\tBCA Utama\t2 Jul 2026\tGaji\tcompleted · ✓\t+ Rp 11.500.000\t\n✏️\n🗑️\n\n\n🛍️\nPengeluaran bulanan\nBeragam\n\tBCA Utama\t15 Mei 2026\tBelanja\tcompleted · ✓\t- Rp 5.450.000\t\n✏️\n🗑️\n\n\n🧾\nPengeluaran bulanan\nBeragam\n\tBCA Utama\t15 Mei 2026\tTagihan\tcompleted · ✓\t- Rp 5.700.000\t\n✏️\n🗑️\n\n\n💼\nGaji bulanan\nPerusahaan · #kantor\n\tBCA Utama\t2 Mei 2026\tGaji\tcompleted · ✓\t+ Rp 11.650.000\t\n✏️\n🗑️\n\n\n💼\nGaji bulanan\nPerusahaan · #kantor\n\tBCA Utama\t2 Mei 2026\tGaji\tcompleted · ✓\t+ Rp 11.800.000\t\n✏️\n🗑️\n\n\n🛍️\nPengeluaran bulanan\nBeragam\n\tBCA Utama\t15 Mar 2026\tBelanja\tcompleted · ✓\t- Rp 5.950.000\t\n✏️\n🗑️\n\n\n🧾\nPengeluaran bulanan\nBeragam\n\tBCA Utama\t15 Mar 2026\tTagihan\tcompleted · ✓\t- Rp 6.200.000\t\n✏️\n🗑️\n\n\n💼\nGaji bulanan\nPerusahaan · #kantor\n\tBCA Utama\t2 Mar 2026\tGaji\tcompleted · ✓\t+ Rp 11.950.000\t\n✏️\n🗑️\n\n\n💼\nGaji bulanan\nPerusahaan · #kantor\n\tBCA Utama\t2 Mar 2026\tGaji\tcompleted · ✓\t+ Rp 12.100.000\t\n✏️\n🗑️",
+        "switcher": "Personal",
+        "bodyUser": "profile-personal"
+      },
+      "business": {
+        "id": "profile-business",
+        "name": "Bisnis",
+        "accounts": [
+          "Kas Toko"
+        ],
+        "transactions": [
+          "Penjualan Toko"
+        ],
+        "categories": [
+          "Harian",
+          "Komunikasi",
+          "Sosial",
+          "Pakaian",
+          "Kecantikan",
+          "Anak & Bayi",
+          "Hewan",
+          "Hadiah",
+          "Asuransi",
+          "Langganan",
+          "Usaha",
+          "Sewa / Kos",
+          "Cashback",
+          "Gaji",
+          "Bonus",
+          "Freelance",
+          "Investasi",
+          "Makanan",
+          "Transportasi",
+          "Belanja",
+          "Hiburan",
+          "Tagihan",
+          "Kesehatan",
+          "Pendidikan",
+          "Traveling",
+          "Donasi",
+          "Rumah",
+          "Pajak",
+          "Lainnya",
+          "Penjualan"
+        ],
+        "tags": [
+          "toko"
+        ],
+        "pageText": "Transaksi\n\nPemasukan, pengeluaran, transfer, split transaction, dan lampiran.\n\nSemua jenis\nPemasukan\nPengeluaran\nTransfer\n⧉ Duplikat Terakhir\nCari cepat:\n>100000\ntanggal:2026-07\n#tag\n0 dipilih\nUbah kategori...\n🍜 Makanan\n🚕 Transportasi\n🛍️ Belanja\n🎮 Hiburan\n🧾 Tagihan\n💊 Kesehatan\n📚 Pendidikan\n✈️ Traveling\n🤝 Donasi\n🏠 Rumah\n🧮 Pajak\n✨ Lainnya\nTerapkan\n☆ Simpan Template\n⚡ Template Cepat\nHapus Terpilih\n\tTRANSAKSI\tAKUN\tTANGGAL\tKATEGORI\tSTATUS\tNOMINAL\t\n\n✨\nPenjualan Toko\nPelanggan · #toko\n\tKas Toko\t31 Jul 2026\tPenjualan\tcompleted\t+ Rp 1.750.000\t\n✏️\n🗑️",
+        "switcher": "Bisnis",
+        "bodyUser": "profile-business"
+      },
+      "partner": {
+        "id": "profile-partner",
+        "name": "Pasangan",
+        "accounts": [
+          "Dompet Pasangan"
+        ],
+        "transactions": [
+          "Belanja Pasangan"
+        ],
+        "categories": [
+          "Harian",
+          "Komunikasi",
+          "Sosial",
+          "Pakaian",
+          "Kecantikan",
+          "Anak & Bayi",
+          "Hewan",
+          "Hadiah",
+          "Asuransi",
+          "Langganan",
+          "Usaha",
+          "Sewa / Kos",
+          "Cashback",
+          "Gaji",
+          "Bonus",
+          "Freelance",
+          "Investasi",
+          "Makanan",
+          "Transportasi",
+          "Belanja",
+          "Hiburan",
+          "Tagihan",
+          "Kesehatan",
+          "Pendidikan",
+          "Traveling",
+          "Donasi",
+          "Rumah",
+          "Pajak",
+          "Lainnya"
+        ],
+        "tags": [
+          "pasangan"
+        ],
+        "pageText": "Transaksi\n\nPemasukan, pengeluaran, transfer, split transaction, dan lampiran.\n\nSemua jenis\nPemasukan\nPengeluaran\nTransfer\n⧉ Duplikat Terakhir\nCari cepat:\n>100000\ntanggal:2026-07\n#tag\n0 dipilih\nUbah kategori...\n🍜 Makanan\n🚕 Transportasi\n🛍️ Belanja\n🎮 Hiburan\n🧾 Tagihan\n💊 Kesehatan\n📚 Pendidikan\n✈️ Traveling\n🤝 Donasi\n🏠 Rumah\n🧮 Pajak\n✨ Lainnya\nTerapkan\n☆ Simpan Template\n⚡ Template Cepat\nHapus Terpilih\n\tTRANSAKSI\tAKUN\tTANGGAL\tKATEGORI\tSTATUS\tNOMINAL\t\n\n🛍️\nBelanja Pasangan\nToko · #pasangan\n\tDompet Pasangan\t31 Jul 2026\tBelanja\tcompleted\t- Rp 125.000\t\n✏️\n🗑️",
+        "switcher": "Pasangan",
+        "bodyUser": "profile-partner"
+      }
+    },
+    "created": {
+      "name": "Usaha Kedua",
+      "profileId": "financial-user-1785515071747-acce65bd",
+      "starterAccount": "Tunai",
+      "starterBalance": 250000,
+      "categoryCount": 29
+    },
+    "safeClear": {
+      "activeAccounts": 0,
+      "activeTransactions": 0,
+      "businessTransactions": 1,
+      "partnerTransactions": 1,
+      "profileStillExists": true,
+      "categoriesStillExist": 29
+    }
+  },
+  "responsive": {
+    "mobile": {
+      "viewport": 393,
+      "scrollWidth": 394,
+      "switcherVisible": true,
+      "switcherWidth": 365,
+      "bodyUser": "profile-personal",
+      "topbarWidth": 393
+    },
+    "tablet": {
+      "viewport": 800,
+      "scrollWidth": 800,
+      "switcherVisible": true,
+      "switcherWidth": 172,
+      "bodyUser": "profile-personal",
+      "topbarWidth": 696
+    }
+  },
+  "errors": []
+}

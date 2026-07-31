@@ -1,0 +1,22 @@
+CHARISNA MONEY MANAGEMENT v13.0.1 — QA MOBILE FIX
+
+PEMERIKSAAN SOURCE
+- JavaScript app.js: LULUS syntax check.
+- JavaScript service-worker.js: LULUS syntax check.
+- CSS mobile override: LULUS keseimbangan blok/braces.
+- Cache service worker baru v13.0.1: LULUS.
+
+PEMERIKSAAN RESPONSIF
+- Pengaturan widget memakai grid 42px / fleksibel / tombol: LULUS.
+- Checkbox Android tidak lagi terkena min-height input 44px: LULUS.
+- Panel Setting satu kolom di <=760px: LULUS.
+- Target Infinix Note 40 Pro+ 360–430px portrait: LULUS.
+- Landscape HP <=900px: LULUS.
+- Safe area status bar dan gesture navigation: LULUS.
+- Tablet >760px dan desktop tetap memakai layout masing-masing: LULUS.
+
+KOMPATIBILITAS DATA
+- Tidak ada perubahan skema Supabase: LULUS.
+- Tidak ada perubahan format data lokal/cloud: LULUS.
+- Package Android tetap com.charisna.moneymanagement: LULUS.
+- Version code dinaikkan menjadi 130001 agar dapat dipasang sebagai update: LULUS.

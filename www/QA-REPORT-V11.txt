@@ -1,0 +1,94 @@
+CHARISNA MONEY MANAGEMENT v11.1 — QA REPORT
+Tanggal pemeriksaan: 18 Juli 2026
+
+RINGKASAN TEMUAN
+Bug utama berasal dari parser v11.0 yang menganggap satu titik dengan tiga digit sebagai pemisah ribuan, tetapi menganggap “1.0000” sebagai angka desimal 1. Akibatnya, setelah tampilan mencapai 1.000, digit berikutnya membuat nilai kembali menjadi 1. Formatter tersebut sudah diganti dengan sistem berbasis digit mentah dan nilai numerik kanonis.
+
+PERBAIKAN TAMBAHAN YANG DITEMUKAN SAAT AUDIT
+- Kolom kosong sebelumnya dapat berubah menjadi 0 karena Number("") menghasilkan 0.
+- Refresh kurs manual dapat membaca tampilan 1.000 sebagai 1.
+- Input desimal koma sulit dimasukkan karena separator hilang pada setiap ketikan.
+- Tombol backspace di dekat titik ribuan dapat terlihat tidak bekerja.
+- Template transaksi mengubah value tanpa memperbarui nilai numerik formatter.
+- Kategori legacy dapat hilang dari dropdown saat transaksi lama diedit.
+- Rename kategori belum memperbarui kategori induk anak.
+- Kurs yang tidak tersedia dapat ditampilkan sebagai 0.
+- Launcher Windows masih memakai nama dan query cache v10.
+- Pemeriksaan batas folder pada server lokal Windows terlalu longgar.
+
+PEMERIKSAAN OTOMATIS
+PASSED 57
+PASS JavaScript syntax: app-patch-v10.js
+PASS JavaScript syntax: app-patch-v11.js
+PASS JavaScript syntax: app-patch-v9.js
+PASS JavaScript syntax: app-pro.js
+PASS JavaScript syntax: app.js
+PASS JavaScript syntax: service-worker.js
+PASS Manifest JSON valid
+PASS Index reference exists: ./app.js
+PASS Index reference exists: ./app-pro.js
+PASS Index reference exists: ./app-patch-v9.js
+PASS Index reference exists: ./app-patch-v10.js
+PASS Index reference exists: ./app-patch-v11.js
+PASS Index reference exists: ./manifest.webmanifest
+PASS Index reference exists: ./styles.css
+PASS Index reference exists: ./styles-pro.css
+PASS Index reference exists: ./styles-patch-v9.css
+PASS Index reference exists: ./styles-patch-v10.css
+PASS Index reference exists: ./styles-patch-v11.css
+PASS Service worker cache reference exists: ./index.html
+PASS Service worker cache reference exists: ./styles.css
+PASS Service worker cache reference exists: ./styles-pro.css
+PASS Service worker cache reference exists: ./styles-patch-v9.css
+PASS Service worker cache reference exists: ./styles-patch-v10.css
+PASS Service worker cache reference exists: ./styles-patch-v11.css
+PASS Service worker cache reference exists: ./app.js
+PASS Service worker cache reference exists: ./app-pro.js
+PASS Service worker cache reference exists: ./app-patch-v9.js
+PASS Service worker cache reference exists: ./app-patch-v10.js
+PASS Service worker cache reference exists: ./app-patch-v11.js
+PASS Service worker cache reference exists: ./manifest.webmanifest
+PASS Service worker cache reference exists: ./PRIVACY-POLICY.html
+PASS Service worker cache reference exists: ./CHANGELOG.html
+PASS Service worker cache reference exists: ./icons/icon-192.png
+PASS Service worker cache reference exists: ./icons/icon-512.png
+PASS Service worker cache reference exists: ./index.html
+PASS Service worker cache reference exists: ./index.html
+PASS Service worker cache reference exists: ./icons/icon-192.png
+PASS Service worker cache reference exists: ./icons/icon-192.png
+PASS Service worker cache reference exists: ./index.html
+PASS Service worker cache reference exists: ./index.html
+PASS Service worker cache version updated
+PASS Manifest start URL version updated
+PASS All literal getElementById references have a definition
+PASS No duplicate static IDs in index.html
+PASS All identified monetary inputs are covered by formatter
+PASS Unformatted numeric inputs are only day/percentage controls
+PASS Windows launcher opens current v11.1 URL
+PASS Windows launcher title is current
+PASS Local server path traversal guard uses separator boundary
+PASS Old fragile 3-digit parser removed
+PASS Empty numeric dataset handled without Number("")
+PASS Category builtin aliases preserved
+PASS Legacy selected category preservation exists
+PASS Category parent references migrate
+PASS Autocomplete keyboard navigation exists
+PASS Missing currency rates render dash
+PASS Money formatter/parser regression test
+ISSUES 0
+
+
+UNIT TEST FORMATTER
+- Kosong tetap kosong: LULUS
+- 1.000: LULUS
+- 10.000: LULUS
+- 1.000.000: LULUS
+- 1.000.000.000.000: LULUS
+- Desimal 1.000,50: LULUS
+- Paste format Indonesia: LULUS
+- Paste format Inggris: LULUS
+- Angka negatif: LULUS
+- Nilai di bawah 1 dengan titik desimal: LULUS
+
+BATAS PEMERIKSAAN
+Audit ini mencakup sintaks, referensi file/DOM, cakupan input numerik, unit test formatter/parser, kategori legacy, launcher, manifest, dan service worker. Perilaku izin push, email Supabase, serta variasi keyboard vendor tetap perlu diuji di perangkat nyata setelah deploy. Backup terenkripsi tetap disarankan sebelum update.

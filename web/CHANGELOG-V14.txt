@@ -1,0 +1,53 @@
+CHARISNA MONEY MANAGEMENT v14.0.0
+MULTI-USER FINANCIAL SPACES
+Tanggal rilis: 31 Juli 2026
+
+RINGKASAN
+Versi 14 mengubah konsep multi-buku lama menjadi akun keuangan internal yang
+benar-benar terisolasi. Satu login cloud dapat mengelola uang pribadi, pasangan,
+keluarga, proyek, dan beberapa usaha tanpa mencampur halaman maupun laporan.
+
+FITUR BARU
+1. Pemilih akun keuangan pada header aplikasi.
+2. Tambah, edit, arsipkan, pulihkan, jadikan utama, dan hapus akun kosong.
+3. Jenis akun internal: Saya, Pasangan, Usaha, Keluarga, Proyek, dan Lainnya.
+4. Dompet Tunai awal opsional saat membuat akun baru.
+5. Preferensi mata uang dan tampilan disimpan per akun keuangan.
+6. Identitas warna dan ikon berbeda untuk setiap akun.
+
+ISOLASI DATA
+Data berikut hanya dibaca dan ditampilkan untuk akun yang sedang aktif:
+- dompet/rekening dan saldo;
+- transaksi dan transfer;
+- budget dan target;
+- pembayaran rutin/langganan;
+- utang, piutang, dan investasi;
+- shared wallet, rekonsiliasi, rules, dan template transaksi;
+- kategori dan tag kustom;
+- dashboard, kalender, pencarian, analisis, laporan, PDF, dan Excel.
+
+MIGRASI
+- Data v6 sampai v13.0.1 tetap kompatibel.
+- Data lama yang belum memiliki profileId dipetakan melalui akun/rekeningnya.
+- Data yang tidak dapat dipetakan masuk ke akun utama agar tidak hilang.
+- Kategori bawaan disalin sebagai katalog awal untuk setiap akun keuangan.
+- Migrasi tersimpan di brankas cloud terenkripsi.
+
+KEAMANAN
+- Ini adalah pemisahan ruang keuangan di dalam satu login, bukan akun login
+  Supabase terpisah.
+- Siapa pun yang memiliki akses ke login cloud dan PIN utama dapat membuka semua
+  akun keuangan internal.
+- Akun berisi data tidak dapat dihapus langsung; gunakan Arsipkan.
+- Hapus Data Akun Aktif memerlukan konfirmasi nama akun dan tidak menyentuh akun
+  keuangan lain.
+
+PERBAIKAN
+- Memperbaiki grafik dashboard yang dapat bentrok saat akun diganti cepat.
+- Memastikan pencarian, ekspor, rincian kategori, akun default formulir, kategori,
+  dan tag mengikuti akun aktif.
+- Mengganti istilah multi-buku pada antarmuka utama menjadi akun keuangan.
+
+BACKEND
+Tidak ada SQL, tabel, Edge Function, atau layanan berbayar baru. Tabel Supabase
+versi 12 tetap digunakan sebagai brankas cloud terenkripsi.

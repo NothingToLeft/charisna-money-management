@@ -1,0 +1,17 @@
+BUILD STATUS — CHARISNA v14.1.0
+Tanggal: 31 Juli 2026
+
+SOURCE STATUS
+- Web/Netlify: siap deploy.
+- Android/Capacitor source: siap build.
+- Windows/Electron source: siap build.
+- Android assets: sudah disinkronkan langsung dengan www v14.1.
+- JavaScript static validation: lulus.
+- Browser functional QA: lulus.
+
+LOCAL APK BUILD ATTEMPT
+Build APK tidak dapat diselesaikan di lingkungan pengerjaan ini karena jaringan keluar tidak tersedia untuk mengunduh:
+1. paket npm/Capacitor dari registry;
+2. distribusi Gradle 8.2.1 dari services.gradle.org.
+
+Ini merupakan keterbatasan toolchain lingkungan build, bukan kegagalan source aplikasi. Workflow GitHub Actions yang disertakan akan mengunduh dependency pada runner GitHub dan menghasilkan APK debug tanpa Android Studio.

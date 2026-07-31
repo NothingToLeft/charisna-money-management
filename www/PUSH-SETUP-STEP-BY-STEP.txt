@@ -1,0 +1,65 @@
+SETUP BACKGROUND PUSH — CHARISNA MONEY MANAGEMENT v10
+
+PENTING
+- Fitur popup saat aplikasi dibuka tetap berjalan tanpa setup ini.
+- Setup ini diperlukan agar notifikasi muncul saat aplikasi tertutup.
+- Jangan pernah membagikan VAPID private key, CRON_SECRET, Supabase secret key, atau service-role key.
+
+TAHAP 1 — DATABASE
+1. Supabase → SQL Editor → New query.
+2. Buka SUPABASE-SETUP-V10.sql dengan Notepad.
+3. Salin semuanya, tempel, lalu Run.
+4. Hasil benar: Success. No rows returned.
+
+TAHAP 2 — BUAT VAPID KEY
+1. Buka VAPID-KEY-GENERATOR.html di browser komputer.
+2. Klik Buat Kunci Baru.
+3. Simpan Public Key dan Private Key.
+4. Public Key nanti dimasukkan ke aplikasi.
+5. Private Key hanya dimasukkan sebagai Supabase Secret.
+
+TAHAP 3 — EDGE FUNCTION
+Cara termudah melalui Supabase Dashboard:
+1. Supabase → Edge Functions.
+2. Create / Deploy a new function.
+3. Nama function: send-bill-reminders
+4. Salin isi file supabase/functions/send-bill-reminders/index.ts.
+5. Pastikan Verify JWT dinonaktifkan, karena function memakai CRON_SECRET sendiri dan tetap memverifikasi pengguna untuk test push.
+6. Deploy.
+
+TAHAP 4 — SECRETS
+Di Supabase → Edge Functions → Secrets, tambahkan:
+- VAPID_PUBLIC_KEY = public key dari generator
+- VAPID_PRIVATE_KEY = private key dari generator
+- VAPID_SUBJECT = mailto:email-anda@example.com
+- CRON_SECRET = buat teks acak panjang minimal 32 karakter
+
+TAHAP 5 — CRON
+Pilihan termudah:
+1. Supabase → Integrations → Cron / Jobs.
+2. Create job.
+3. Name: charisna-bill-reminders
+4. Schedule: */15 * * * *
+5. Target: HTTP request / Edge Function send-bill-reminders.
+6. Method POST.
+7. Header: x-cron-secret = CRON_SECRET yang sama.
+8. Body: {}
+9. Save.
+
+Alternatif SQL:
+- Buka SCHEDULE-PUSH-CRON.sql.
+- Ganti YOUR_CRON_SECRET.
+- Tempel di SQL Editor dan Run.
+
+TAHAP 6 — AKTIFKAN DI APLIKASI
+1. Update aplikasi v10 di Netlify.
+2. Buka CHARISNA → System → Push Reminder.
+3. Masukkan VAPID Public Key.
+4. Pilih jam, zona waktu, dan mode privasi.
+5. Klik Aktifkan Push dan Izinkan notifikasi.
+6. Klik Sinkronkan Jadwal.
+7. Klik Kirim Notifikasi Tes.
+
+MODE PRIVASI
+- Generik: server mengetahui jadwal, tetapi notifikasi tidak menyimpan nama dan nominal tagihan.
+- Detail: server menyimpan nama dan nominal di tabel jadwal supaya notifikasi dapat menampilkan detail.

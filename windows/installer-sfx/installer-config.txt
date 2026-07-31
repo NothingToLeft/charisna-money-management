@@ -1,0 +1,5 @@
+;!@Install@!UTF-8!
+Title="CHARISNA Money Management v13"
+Progress="yes"
+RunProgram="powershell.exe -NoProfile -ExecutionPolicy Bypass -File install.ps1"
+;!@InstallEnd@!

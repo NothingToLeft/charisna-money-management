@@ -1,0 +1,50 @@
+IMPLEMENTATION NOTES — CHARISNA v14.0.0
+========================================
+
+KEPUTUSAN ARSITEKTUR
+Satu encrypted vault dipertahankan agar kompatibel dengan Supabase dan mekanisme
+PIN yang sudah berjalan. Pemisahan dilakukan dengan profileId pada setiap entitas
+keuangan. Pendekatan ini menghindari tabel cloud baru, login ulang, duplikasi
+sinkronisasi, dan biaya backend tambahan.
+
+SUMBER DATA
+- Supabase encrypted vault: sumber data cloud utama.
+- state.profiles: metadata akun keuangan internal.
+- state.settings.activeFinancialUserId: konteks akun aktif.
+- state.settings.activeBookId: alias kompatibilitas untuk data v13.
+
+KOLEKSI TERISOLASI
+accounts, transactions, budgets, goals, recurring, debts, investments,
+sharedWallets, reconciliations, rules, transactionTemplates, categoryCatalog,
+dan tagCatalog.
+
+HELPER UTAMA
+- activeFinancialUserId(): ID akun keuangan aktif.
+- financialItems(collection): hanya mengembalikan data milik akun aktif.
+- ensureV14State(): normalisasi profil, migrasi profileId, seed kategori, dan
+  pencatatan migrationHistory.
+- switchFinancialUser(profileId): menyimpan preferensi akun lama, memuat
+  preferensi akun baru, kemudian merender ulang seluruh UI.
+
+KOMPATIBILITAS
+- activeBookId v13 tetap ditulis agar modul lama tidak rusak.
+- Data tanpa profileId diinferensikan dari accountId/destinationAccountId.
+- Fallback terakhir adalah akun utama.
+- Tidak ada perubahan skema Supabase.
+
+PENGAMAN
+- Profil utama tidak dapat diarsipkan atau dihapus.
+- Profil berisi data tidak dapat dihapus; hanya dapat diarsipkan.
+- Hapus Data Akun Aktif hanya membersihkan koleksi konten milik profileId aktif.
+- Kategori/tag metadata dipertahankan ketika data finansial akun dikosongkan.
+
+PERFORMA
+Filtering dilakukan in-memory pada vault yang sudah terdekripsi. Tidak ada query
+network tambahan saat berpindah akun. Render ulang mempertahankan pola aplikasi
+lama. Lifecycle Chart.js diperbaiki dengan destroy instance lama sebelum memakai
+canvas dashboard kembali.
+
+BATASAN DISENGAJA
+Pemisahan ini bukan boundary autentikasi. Satu login/PIN utama tetap dapat membaca
+semua profil. Hal ini sesuai kebutuhan pemilik yang ingin memisahkan pembukuan,
+bukan memberikan kredensial independen kepada orang lain.

@@ -1,0 +1,5 @@
+{
+  "enabled": false,
+  "url": "",
+  "note": "Aktifkan setelah GitHub Releases dibuat. Isi url dengan https://github.com/OWNER/REPO/releases/latest/download"
+}

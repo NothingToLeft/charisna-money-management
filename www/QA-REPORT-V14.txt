@@ -1,0 +1,35 @@
+QA REPORT — CHARISNA MONEY MANAGEMENT v14.0.0
+==============================================
+Tanggal: 31 Juli 2026
+Status: PASS
+
+LINGKUP UJI
+- Migrasi dan normalisasi tiga akun keuangan.
+- Pergantian Personal, Bisnis, dan Pasangan.
+- Isolasi dompet, transaksi, kategori, dan tag.
+- Pembuatan akun Usaha baru dan dompet Tunai awal.
+- Seed kategori per akun.
+- Penghapusan aman data akun aktif.
+- Perlindungan data akun bisnis/pasangan lain.
+- Lifecycle grafik ketika berpindah akun cepat.
+- Responsive layout 393x873 dan 800x1280.
+- Pemeriksaan error console dan JavaScript runtime.
+
+HASIL UTAMA
+- Personal tidak membaca transaksi Bisnis/Pasangan.
+- Bisnis hanya membaca Kas Toko dan Penjualan Toko.
+- Pasangan hanya membaca Dompet Pasangan dan Belanja Pasangan.
+- Akun Usaha baru otomatis aktif, memiliki dompet Tunai dan 29 kategori awal.
+- Hapus Data Akun Aktif mengosongkan akun tujuan saja.
+- Transaksi Bisnis dan Pasangan tetap utuh setelah penghapusan akun lain.
+- Tidak ada page error atau console error setelah perbaikan Chart.js.
+- Tidak ada overflow horizontal signifikan pada HP dan tablet uji.
+
+PERANGKAT TARGET
+- Infinix Note 40 Pro+: layout kelas Android phone tercakup oleh viewport HP.
+- Huawei MatePad SE 11: layout kelas tablet tercakup oleh viewport tablet.
+- Desktop/Web: viewport desktop 1440x1000 diuji.
+
+CATATAN
+Uji runtime dijalankan melalui Chromium/Playwright dengan state simulasi lokal.
+Build Android diuji terpisah melalui Gradle pada tahap packaging.

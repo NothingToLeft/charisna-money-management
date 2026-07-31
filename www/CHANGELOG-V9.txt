@@ -1,0 +1,29 @@
+CHARISNA Money Management v9.0 — Subscription Manager & Changelog
+Tanggal rilis: 18 Juli 2026
+
+FITUR BARU
+- Halaman khusus Langganan & Tagihan Rutin.
+- Edit, hapus, jeda/aktifkan, duplikasi, dan tandai dibayar.
+- Riwayat pembayaran setiap langganan.
+- Pencarian berdasarkan layanan, provider, paket, kategori, mata uang, dan tag.
+- Filter status aktif/dijeda/jatuh tempo/terlambat.
+- Filter frekuensi mingguan, bulanan, dan tahunan.
+- Urutan berdasarkan jatuh tempo, biaya tahunan, nama, atau perubahan terbaru.
+- Ringkasan jumlah aktif, estimasi biaya bulanan/tahunan, dan tagihan 30 hari.
+- Detail tambahan: jenis layanan, provider, paket, cara pembayaran, website, halaman pembatalan, akhir trial, tag, dan catatan.
+- Ekspor daftar langganan ke CSV.
+- Halaman Pembaruan & Changelog di dalam aplikasi.
+- Halaman publik CHANGELOG.html.
+- Popup “Apa yang Baru” yang tampil satu kali setelah update.
+
+PERBAIKAN PENGELOLAAN TAGIHAN
+- Tombol hapus kini tersedia dan tidak menghapus riwayat transaksi lama.
+- Jadwal dapat dijeda tanpa dihapus.
+- Duplikasi membuat salinan dalam kondisi dijeda untuk mencegah penagihan ganda.
+- Tombol Bayar mencatat transaksi dan memajukan tanggal jatuh tempo berikutnya.
+
+KOMPATIBILITAS
+- Data v8 dan versi sebelumnya tetap kompatibel.
+- Tidak memerlukan SQL Supabase baru.
+- Pengaturan dan detail langganan ikut terenkripsi serta tersinkron ke cloud.
+- Cache PWA dinaikkan ke v9 agar file lama diganti setelah deploy.

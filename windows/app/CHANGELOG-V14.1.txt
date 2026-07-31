@@ -1,0 +1,33 @@
+CHARISNA MONEY MANAGEMENT v14.1.0
+MULTI-USER + TRANSFER ANTAR AKUN KEUANGAN
+Tanggal rilis: 31 Juli 2026
+
+FITUR BARU
+1. Transfer uang langsung antara akun keuangan berbeda dalam satu login cloud.
+   Contoh: Usaha Kos -> Personal, Toko -> Pasangan, atau Proyek A -> Usaha Utama.
+2. Transfer dicatat sebagai pasangan transaksi yang saling terhubung:
+   - sisi keluar pada akun keuangan sumber;
+   - sisi masuk pada akun keuangan tujuan.
+3. Pemilihan rekening/dompet sumber dan tujuan.
+4. Biaya transfer dibebankan hanya pada saldo rekening sumber.
+5. Mendukung transfer beda mata uang dengan nominal diterima terpisah.
+6. Detail transfer menampilkan akun keuangan, rekening, nominal, biaya, tanggal, dan catatan.
+7. Edit dari sisi mana pun memperbarui kedua catatan secara konsisten.
+8. Hapus dari sisi mana pun menghapus kedua catatan dan memulihkan saldo.
+
+AKURASI LAPORAN
+- Transfer antar akun tidak dihitung sebagai pemasukan operasional atau omzet.
+- Transfer antar akun tidak dihitung sebagai pengeluaran operasional.
+- Saldo rekening tetap berubah sesuai arus uang aktual.
+- Laporan tiap akun keuangan hanya menampilkan sisi transfer miliknya.
+
+KEAMANAN DATA
+- Setiap pasangan menggunakan ID transfer unik dan ID transaksi timbal balik.
+- Penghapusan massal dan pembersihan akun memperluas operasi ke pasangan transfer.
+- Duplikasi transaksi lintas akun ditolak agar tidak membuat catatan tanpa pasangan.
+- Data lama v6-v14.0 tetap kompatibel dan tidak memerlukan migrasi SQL.
+
+PLATFORM
+- Android/Capacitor
+- Web/Netlify
+- Windows/Electron

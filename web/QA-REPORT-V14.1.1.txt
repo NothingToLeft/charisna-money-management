@@ -1,0 +1,18 @@
+QA REPORT — CHARISNA MONEY MANAGEMENT v14.1.1
+FEATURE: AUTO PIN UNLOCK
+STATUS: PASS
+
+TEST CASES
+1. PIN belum lengkap tidak memicu login: PASS.
+2. PIN benar melalui keyboard/autofill membuka dashboard otomatis: PASS.
+3. PIN benar melalui keypad angka layar membuka dashboard otomatis: PASS.
+4. PIN salah tidak membuka dashboard: PASS.
+5. PIN salah mengosongkan input dan mengembalikan state busy: PASS.
+6. Auto-submit dan submit manual bersamaan hanya menjalankan satu proses dekripsi: PASS.
+7. Session key tersimpan setelah PIN benar: PASS.
+8. Tidak ada JavaScript page error pada harness pengujian: PASS.
+9. Sintaks seluruh file JavaScript aplikasi: PASS.
+10. File inti Web, WWW, Android assets, dan Windows app sinkron: PASS.
+
+CATATAN
+Tombol Buka Dashboard dipertahankan sebagai fallback, tetapi tidak wajib digunakan untuk PIN angka.

@@ -1,0 +1,39 @@
+IMPLEMENTATION NOTES — CHARISNA v14.1.0
+
+1. ARSITEKTUR
+Fitur menggunakan pola paired ledger di dalam cloud vault yang sudah ada. Satu aksi transfer menghasilkan dua transaksi bertipe "transfer" dengan crossProfileTransferId yang sama. Kedua transaksi memiliki linkedTransactionId timbal balik.
+
+2. MODEL DATA TAMBAHAN
+- crossProfileTransferId: ID unik pasangan transfer.
+- linkedTransactionId: ID transaksi pasangannya.
+- transferKind: "cross-profile".
+- crossProfileRole: "outgoing" atau "incoming".
+- sourceProfileId / destinationProfileId.
+- sourceAccountId / targetAccountId.
+- sourceAmount / receivedAmount.
+- sourceCurrency / targetCurrency.
+- transferFee.
+- crossProfileSchemaVersion: 1.
+
+3. ATOMICITY
+Pembuatan, perubahan, dan penghapusan kedua sisi dilakukan dalam satu perubahan state sebelum commit ke cloud vault. Dengan demikian autosave Supabase menerima satu snapshot yang sudah konsisten, bukan dua penyimpanan terpisah.
+
+4. PERHITUNGAN SALDO
+- Sumber: saldo berkurang sourceAmount + transferFee.
+- Tujuan: saldo bertambah receivedAmount.
+- Biaya tidak dibuat sebagai omzet/pengeluaran operasional terpisah; biaya tetap tercermin pada saldo sumber dan detail transfer.
+
+5. LAPORAN
+Transaksi tetap bertipe "transfer" sehingga agregator pemasukan/pengeluaran lama tidak memasukkannya ke omzet, biaya operasional, budget, atau laba-rugi.
+
+6. KOMPATIBILITAS
+- Transfer biasa antarrekening dalam akun keuangan yang sama tetap berfungsi.
+- Tidak ada perubahan skema Supabase, Edge Function, atau layanan berbayar.
+- Data sebelum v14.1 tetap dibaca normal.
+- Source of truth tetap cloud/Supabase; cache lokal bukan mode offline.
+
+7. PROTEKSI REGRESI
+- Cross-profile transfer tidak dapat diduplikasi sebagai transaksi tunggal.
+- Bulk delete otomatis menyertakan transaksi pasangan.
+- Clear akun keuangan menghapus pasangan lintas akun untuk mencegah saldo yatim.
+- Render desktop dan mobile hanya menampilkan sisi milik akun aktif.

@@ -1,0 +1,32 @@
+CARA UPDATE WEB/NETLIFY KE CHARISNA MONEY MANAGEMENT v12
+=======================================================
+
+1. Dari aplikasi lama, buka Tools/Setting lalu buat Backup Terenkripsi.
+2. Buka Supabase Dashboard > SQL Editor.
+3. Jalankan isi file SUPABASE-SETUP-V12.sql satu kali. SQL ini memastikan nomor
+   versi cloud bertambah secara atomik, memakai waktu server, dan mengaktifkan
+   Realtime pada tabel moniflow_vaults.
+4. Buka Netlify > project charisna-money > Production deploys.
+5. Unggah ZIP Netlify v12 yang disertakan dalam paket rilis.
+6. Tunggu status Published, lalu buka:
+   https://charisna-money.netlify.app
+7. Komputer: tekan Ctrl+F5 satu kali.
+8. HP/Tablet: tutup semua tab/PWA CHARISNA lalu buka kembali.
+9. Login dengan email + password cloud seperti biasa.
+10. Jika brankas masih memakai sandi lama, buka sekali memakai sandi lama lalu
+    buat PIN angka. Untuk brankas baru, pilih langsung 4, 6, 8, atau 12 angka.
+
+TES CEPAT
+- Pilih PIN 6 angka dan pastikan panel angka muncul saat lock.
+- Tambah transaksi kecil; status cloud harus berubah menjadi tersinkron otomatis.
+- Buka perangkat kedua; cloud terbaru harus dipakai tanpa dialog konflik.
+- Aktifkan Pengingat Tagihan dan izinkan notifikasi pada tiap perangkat.
+- Windows: tutup jendela; aplikasi masuk tray dan terkunci, bukan kehilangan data.
+
+CATATAN
+- Jangan menghapus tabel Supabase lama.
+- Netlify tetap menjadi host web, Supabase tetap menjadi login/database cloud.
+- GitHub bersifat tambahan untuk penyimpanan source, build otomatis, dan rilis
+  installer; bukan pengganti Netlify maupun Supabase. Installer Windows lebih
+  dari 10 MB, jadi jangan masukkan EXE ke deploy web Netlify. Ikuti
+  GITHUB-SETUP-V12.txt untuk mengaktifkan kanal update desktop.

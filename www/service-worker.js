@@ -1,0 +1,125 @@
+"use strict";
+
+const CACHE_NAME = "charisna-money-management-v14.1.1-auto-pin-unlock";
+const APP_FILES = [
+  "./",
+  "./index.html?v=14.1.1-auto-pin-unlock",
+  "./styles.css?v=14.1.1-auto-pin-unlock",
+  "./styles-pro.css?v=14.1.1-auto-pin-unlock",
+  "./styles-patch-v9.css?v=14.1.1-auto-pin-unlock",
+  "./styles-patch-v10.css?v=14.1.1-auto-pin-unlock",
+  "./styles-patch-v11.css?v=14.1.1-auto-pin-unlock",
+  "./styles-patch-v12.css?v=14.1.1-auto-pin-unlock",
+  "./styles-native.css?v=14.1.1-auto-pin-unlock",
+  "./styles-cute-v13.css?v=14.1.1-auto-pin-unlock",
+  "./styles-mobile-v13-1.css?v=14.1.1-auto-pin-unlock",
+  "./styles-patch-v14.css?v=14.1.1-auto-pin-unlock",
+  "./native-bootstrap.js?v=14.1.1-auto-pin-unlock",
+  "./app.js?v=14.1.1-auto-pin-unlock",
+  "./app-pro.js?v=14.1.1-auto-pin-unlock",
+  "./app-patch-v9.js?v=14.1.1-auto-pin-unlock",
+  "./app-patch-v10.js?v=14.1.1-auto-pin-unlock",
+  "./app-patch-v11.js?v=14.1.1-auto-pin-unlock",
+  "./app-patch-v12.js?v=14.1.1-auto-pin-unlock",
+  "./app-patch-v13.js?v=14.1.1-auto-pin-unlock",
+  "./app-patch-v14.js?v=14.1.1-auto-pin-unlock",
+  "./manifest.webmanifest?v=14.1.1-auto-pin-unlock",
+  "./PRIVACY-POLICY.html",
+  "./CHANGELOG.html",
+  "./icons/icon-192.png",
+  "./icons/icon-512.png"
+];
+
+self.addEventListener("install", (event) => {
+  event.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.addAll(APP_FILES)));
+});
+
+self.addEventListener("activate", (event) => {
+  event.waitUntil(
+    caches.keys()
+      .then((names) => Promise.all(names.filter((name) => name !== CACHE_NAME).map((name) => caches.delete(name))))
+      .then(() => self.clients.claim())
+  );
+});
+
+self.addEventListener("message", (event) => {
+  if (event.data?.type === "SKIP_WAITING") self.skipWaiting();
+});
+
+self.addEventListener("fetch", (event) => {
+  if (event.request.method !== "GET") return;
+  const url = new URL(event.request.url);
+  if (url.origin !== self.location.origin) return;
+
+  if (event.request.mode === "navigate") {
+    event.respondWith(
+      fetch(event.request)
+        .then((response) => {
+          const copy = response.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put("./index.html?v=14.1.1-auto-pin-unlock", copy));
+          return response;
+        })
+        .catch(() => caches.match("./index.html?v=14.1.1-auto-pin-unlock"))
+    );
+    return;
+  }
+
+  event.respondWith(
+    caches.match(event.request).then((cached) => {
+      const network = fetch(event.request)
+        .then((response) => {
+          if (response?.status === 200) caches.open(CACHE_NAME).then((cache) => cache.put(event.request, response.clone()));
+          return response;
+        })
+        .catch(() => cached);
+      return cached || network;
+    })
+  );
+});
+
+self.addEventListener("push", (event) => {
+  let payload = {};
+  try {
+    payload = event.data?.json() || {};
+  } catch {
+    payload = { title: "CHARISNA Money Management", body: event.data?.text() || "Ada pengingat keuangan baru." };
+  }
+
+  const title = payload.title || "CHARISNA Money Management";
+  const options = {
+    body: payload.body || "Buka aplikasi untuk melihat pengingat tagihan.",
+    icon: "./icons/icon-192.png",
+    badge: "./icons/icon-192.png",
+    tag: payload.tag || "charisna-bill-reminder",
+    renotify: Boolean(payload.renotify),
+    requireInteraction: Boolean(payload.requireInteraction),
+    timestamp: payload.timestamp || Date.now(),
+    data: {
+      url: payload.url || "./index.html?v=14.1.1-auto-pin-unlock",
+      scheduleId: payload.scheduleId || null,
+      dueDate: payload.dueDate || null
+    },
+    actions: [
+      { action: "open", title: "Buka CHARISNA" },
+      { action: "dismiss", title: "Nanti" }
+    ]
+  };
+
+  event.waitUntil(self.registration.showNotification(title, options));
+});
+
+self.addEventListener("notificationclick", (event) => {
+  event.notification.close();
+  if (event.action === "dismiss") return;
+  const targetUrl = new URL(event.notification.data?.url || "./index.html?v=14.1.1-auto-pin-unlock", self.location.origin).href;
+  event.waitUntil(
+    clients.matchAll({ type: "window", includeUncontrolled: true }).then((list) => {
+      const existing = list.find((client) => client.url.startsWith(self.location.origin) && "focus" in client);
+      if (existing) {
+        existing.postMessage({ type: "OPEN_REMINDER_CENTER", data: event.notification.data || {} });
+        return existing.focus();
+      }
+      return clients.openWindow(targetUrl);
+    })
+  );
+});

@@ -1,0 +1,49 @@
+API DOCUMENTATION — CHARISNA v14.1.0 TRANSFER ANTAR AKUN
+
+GLOBAL API
+window.CharisnaTransfers
+
+PROPERTIES
+- version: "14.1.0"
+
+METHODS
+1. openForm(transferId?)
+   Membuka formulir transfer antar akun keuangan.
+   - tanpa transferId: mode tambah;
+   - dengan transferId: mode edit pasangan transfer.
+
+2. remove(transferOrTransaction, options?)
+   Menghapus kedua sisi transfer secara konsisten.
+   transferOrTransaction dapat berupa ID transfer atau objek transaksi.
+
+3. details(transferOrTransaction)
+   Mengembalikan detail transfer ternormalisasi, termasuk sisi keluar/masuk, profil, rekening, nominal, mata uang, biaya, dan pasangan ID.
+
+4. rows()
+   Mengembalikan daftar pasangan transfer lintas akun yang tersedia pada state aktif.
+
+TRANSACTION CONTRACT
+{
+  "type": "transfer",
+  "transferKind": "cross-profile",
+  "crossProfileTransferId": "xfer-...",
+  "linkedTransactionId": "tx-...",
+  "crossProfileRole": "outgoing | incoming",
+  "sourceProfileId": "profile-...",
+  "destinationProfileId": "profile-...",
+  "sourceAccountId": "account-...",
+  "targetAccountId": "account-...",
+  "sourceAmount": 1000000,
+  "receivedAmount": 1000000,
+  "sourceCurrency": "IDR",
+  "targetCurrency": "IDR",
+  "transferFee": 6500,
+  "crossProfileSchemaVersion": 1
+}
+
+VALIDATION RULES
+- Profil sumber dan tujuan wajib berbeda.
+- Rekening sumber dan tujuan wajib valid pada profil masing-masing.
+- Nominal sumber dan diterima harus lebih dari nol.
+- Mata uang sama menggunakan nominal diterima yang sama secara default.
+- Satu sisi tidak boleh disimpan tanpa sisi pasangan.

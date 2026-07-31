@@ -1,0 +1,26 @@
+CHARISNA MONEY MANAGEMENT v13.0.0
+=================================
+
+Tanggal rilis: 22 Juli 2026
+Nama rilis: Cute Complete
+
+- Desain responsif pastel pink dan ikon orisinal CHARISNA.
+- Layout khusus HP, tablet portrait/landscape, dan desktop.
+- Dashboard baru: buku, saldo, tren, analisis kategori, anggaran, tujuan, dan
+  transaksi terbaru dalam satu halaman ringkas.
+- Input transaksi Pengeluaran/Pemasukan/Transfer dengan kalkulator dan field
+  lanjutan.
+- Multi-buku dan pengaturan periode per buku.
+- Akun virtual, deposito, investasi, kripto, piutang, dan utang.
+- Anggaran multi-periode, multi-kategori, custom date, rollover, alarm, dan
+  perhitungan sisa per hari.
+- Tujuan fleksibel, rutin, serta tantangan 52 minggu.
+- Kalender dengan mode pengeluaran, pemasukan, dan total.
+- Pencarian pintar berdasarkan nominal, tanggal, tag, kategori, dan akun.
+- Pusat fitur untuk langganan, pengingat, kategori, anggota, kurs, shared wallet,
+  utang, investasi, rekonsiliasi, OCR, QR, backup, dan ekspor.
+- Perbaikan validasi perubahan panjang PIN 6 ke 4 digit.
+- Seluruh kemampuan cloud, notifikasi, tray Windows, dan auto-update v12 tetap
+  dipertahankan.
+
+Tidak ada SQL Supabase baru untuk v13.

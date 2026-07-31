@@ -1,0 +1,31 @@
+{
+  "appId": "com.charisna.moneymanagement",
+  "appName": "CHARISNA Money Management",
+  "webDir": "www",
+  "backgroundColor": "#fff8fb",
+  "android": {
+    "allowMixedContent": false,
+    "backgroundColor": "#fff8fb",
+    "captureInput": true
+  },
+  "server": {
+    "androidScheme": "https"
+  },
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 1400,
+      "launchAutoHide": true,
+      "backgroundColor": "#ee5d92ff",
+      "showSpinner": false
+    },
+    "StatusBar": {
+      "overlaysWebView": false,
+      "style": "LIGHT",
+      "backgroundColor": "#ee5d92"
+    },
+    "LocalNotifications": {
+      "smallIcon": "ic_stat_charisna",
+      "iconColor": "#ee5d92"
+    }
+  }
+}

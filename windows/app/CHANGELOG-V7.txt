@@ -1,0 +1,20 @@
+CHARISNA Money Management v7 — Account Workspace
+
+Penyempurnaan halaman Akun:
+- Akun dipisahkan otomatis berdasarkan kategori: Bank, Tunai, E-wallet, Investasi, Aset, Kartu Kredit, PayLater, Pinjaman, Utang, dan Piutang.
+- Setiap kategori menampilkan jumlah akun dan total nilai dalam mata uang utama.
+- Urutan kategori dapat diubah dengan drag-and-drop atau tombol panah.
+- Urutan akun di dalam kategori dapat diubah dengan drag-and-drop atau tombol panah.
+- Tata letak tersimpan terenkripsi dan ikut tersinkron ke cloud.
+- Pilihan tampilan: kartu nyaman, kartu ringkas, dan daftar.
+- Pencarian akun dan filter berdasarkan kategori.
+- Pilihan urutan manual, nama, saldo, atau aktivitas terbaru.
+- Akun favorit/pinned.
+- Arsip akun tanpa menghapus transaksi.
+- Tampilkan/sembunyikan akun bersaldo nol dan akun arsip.
+- Detail akun dengan arus masuk/keluar 30 hari dan transaksi terbaru.
+- Duplikasi konfigurasi akun dengan saldo awal 0.
+- Ekspor riwayat satu akun ke CSV.
+- Reset tata letak kapan saja.
+
+Tidak membutuhkan SQL Supabase tambahan. Semua pengaturan baru disimpan di dalam brankas terenkripsi yang sama.

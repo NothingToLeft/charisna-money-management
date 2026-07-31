@@ -1,0 +1,33 @@
+UPDATE CHARISNA MONEY MANAGEMENT KE v10
+
+A. BACKUP DULU
+1. Buka versi lama.
+2. Tools → Backup Terenkripsi.
+3. Simpan file backup.
+
+B. UPDATE NETLIFY
+1. Buka project charisna-money di Netlify.
+2. Masuk ke Production deploys.
+3. Upload ZIP v10 ini.
+4. Tunggu Published.
+5. Buka https://charisna-money.netlify.app
+6. Refresh penuh atau tutup tab lalu buka kembali.
+
+C. FITUR YANG LANGSUNG AKTIF
+- Update Center
+- System Health
+- Subscription Intelligence
+- Smart Cleanup
+- Excel Profesional
+
+D. BACKGROUND PUSH (SETUP TERPISAH)
+1. Jalankan SUPABASE-SETUP-V10.sql di Supabase SQL Editor.
+2. Buka VAPID-KEY-GENERATOR.html dan buat kunci.
+3. Simpan VAPID public key dan private key.
+4. Deploy Edge Function pada folder supabase/functions/send-bill-reminders.
+5. Atur Supabase Secrets: VAPID_PUBLIC_KEY, VAPID_PRIVATE_KEY, VAPID_SUBJECT, CRON_SECRET.
+6. Buat Cron setiap 15 menit yang memanggil Edge Function dengan header x-cron-secret.
+7. Di aplikasi: System → Push Reminder → masukkan public key → Aktifkan Push.
+
+CATATAN PRIVASI
+Mode generik menyimpan jadwal dan tanggal jatuh tempo tanpa nama/nominal rinci. Mode detail mengirim nama dan nominal ke tabel jadwal agar notifikasi dapat menampilkannya.

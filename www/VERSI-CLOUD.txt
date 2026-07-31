@@ -1,0 +1,10 @@
+CHARISNA Money Management v14.1.1
+Multi-User + Transfer Antar Akun — PIN & Always-Latest Cloud
+Release date: 31 Juli 2026
+
+Fitur utama:
+- Akun keuangan terpisah untuk personal, pasangan, keluarga, proyek, dan usaha.
+- Transfer antar akun keuangan dengan dua pencatatan yang terhubung.
+- Transfer tidak dihitung sebagai omzet atau pengeluaran operasional.
+- Edit dan hapus menjaga kedua sisi transfer tetap konsisten.
+- Mendukung biaya transfer serta mata uang berbeda.
