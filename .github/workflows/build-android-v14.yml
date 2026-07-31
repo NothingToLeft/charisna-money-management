@@ -1,9 +1,9 @@
-name: Build Android APK v14.1
+name: Build Android APK v14.1.1
 
 on:
   workflow_dispatch:
   push:
-    branches: [ main, master ]
+    branches: [main, master]
     paths:
       - "web/**"
       - "www/**"
@@ -13,8 +13,14 @@ on:
       - "capacitor.config.json"
       - ".github/workflows/build-android-v14.yml"
 
+# APK dipublikasikan sebagai GitHub Release asset agar tidak memakai
+# kuota GitHub Actions artifact (500 MB pada GitHub Free).
 permissions:
-  contents: read
+  contents: write
+
+concurrency:
+  group: android-v14.1.1-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   build-debug-apk:
@@ -23,16 +29,17 @@ jobs:
 
     steps:
       - name: Checkout source
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - name: Setup Node.js 22 LTS
+        uses: actions/setup-node@v5
         with:
-          node-version: "20"
+          node-version: "22"
           cache: npm
+          package-manager-cache: true
 
       - name: Setup Java 17
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: "17"
@@ -42,7 +49,10 @@ jobs:
         uses: android-actions/setup-android@v3
 
       - name: Install Android SDK 34
-        run: sdkmanager "platforms;android-34" "build-tools;34.0.0"
+        shell: bash
+        run: |
+          yes | sdkmanager --licenses >/dev/null || true
+          sdkmanager "platforms;android-34" "build-tools;34.0.0"
 
       - name: Install dependencies
         run: npm ci --no-audit --no-fund
@@ -56,16 +66,55 @@ jobs:
           chmod +x gradlew
           ./gradlew assembleDebug --no-daemon
 
-      - name: Rename APK
+      - name: Prepare APK and checksum
+        id: package
+        shell: bash
         run: |
-          mkdir -p artifacts
-          cp android/app/build/outputs/apk/debug/app-debug.apk \
-            artifacts/CHARISNA-Money-Management-v14.1.1-Multi-User-Transfer-debug.apk
+          set -euo pipefail
+          SOURCE_APK="android/app/build/outputs/apk/debug/app-debug.apk"
+          RELEASE_DIR="release"
+          APK_NAME="CHARISNA-Money-Management-v14.1.1-Multi-User-Transfer-debug.apk"
+          APK_PATH="$RELEASE_DIR/$APK_NAME"
+          SHA_PATH="$APK_PATH.sha256"
 
-      - name: Upload APK artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: CHARISNA-Money-Management-v14.1.1-APK
-          path: artifacts/CHARISNA-Money-Management-v14.1.1-Multi-User-Transfer-debug.apk
-          if-no-files-found: error
-          retention-days: 30
+          test -s "$SOURCE_APK"
+          mkdir -p "$RELEASE_DIR"
+          cp "$SOURCE_APK" "$APK_PATH"
+          sha256sum "$APK_PATH" > "$SHA_PATH"
+
+          echo "apk_path=$APK_PATH" >> "$GITHUB_OUTPUT"
+          echo "sha_path=$SHA_PATH" >> "$GITHUB_OUTPUT"
+          echo "apk_name=$APK_NAME" >> "$GITHUB_OUTPUT"
+
+      - name: Publish APK to GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG_NAME: v14.1.1
+          APK_PATH: ${{ steps.package.outputs.apk_path }}
+          SHA_PATH: ${{ steps.package.outputs.sha_path }}
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          if gh release view "$TAG_NAME" >/dev/null 2>&1; then
+            gh release upload "$TAG_NAME" "$APK_PATH" "$SHA_PATH" --clobber
+          else
+            gh release create "$TAG_NAME" "$APK_PATH" "$SHA_PATH" \
+              --target "$GITHUB_SHA" \
+              --title "CHARISNA Money Management v14.1.1" \
+              --notes "Android debug APK v14.1.1. Fitur: multi-akun keuangan, transfer antar akun, dan buka dashboard otomatis setelah PIN benar."
+          fi
+
+      - name: Write build summary
+        env:
+          TAG_NAME: v14.1.1
+          APK_NAME: ${{ steps.package.outputs.apk_name }}
+        shell: bash
+        run: |
+          {
+            echo "## Build Android selesai"
+            echo
+            echo "APK: \`$APK_NAME\`"
+            echo
+            echo "Unduh dari menu **Releases** pada tag **$TAG_NAME**."
+          } >> "$GITHUB_STEP_SUMMARY"
