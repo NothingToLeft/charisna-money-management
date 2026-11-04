@@ -1,0 +1,159 @@
+name: Build Release (tag v*)
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Versi rilis, contoh v14.1.1'
+        required: true
+        type: string
+  push:
+    tags:
+      - 'v*'
+
+env:
+  RELEASE_TAG: ${{ inputs.tag || github.ref_name }}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  create-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate release tag
+        run: |
+          [[ "$RELEASE_TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+(-[A-Za-z0-9.-]+)?$ ]] || exit 1
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if gh release view "${RELEASE_TAG}" --repo "${GITHUB_REPOSITORY}" > /dev/null 2>&1; then
+            echo "Release ${RELEASE_TAG} sudah ada, lanjut upload asset."
+          else
+            gh release create "${RELEASE_TAG}" --repo "${GITHUB_REPOSITORY}" \
+              --title "CHARISNA Money Management ${RELEASE_TAG}" \
+              --notes "CHARISNA Money Management ${RELEASE_TAG}. Asset: APK Android debug + installer Windows x64." \
+              --target "$GITHUB_SHA" --generate-notes
+          fi
+
+  android:
+    needs: create-release
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ env.RELEASE_TAG }}
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '22'
+          cache: npm
+          package-manager-cache: true
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: android-actions/setup-android@v3
+      - name: Install Android SDK 34
+        shell: bash
+        run: |
+          yes | sdkmanager --licenses >/dev/null || true
+          sdkmanager "platforms;android-34" "build-tools;34.0.0"
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+      - name: Sync Capacitor Android
+        run: npx cap sync android
+      - name: Build installable debug APK
+        working-directory: android
+        run: |
+          chmod +x gradlew
+          ./gradlew assembleDebug --no-daemon
+      - name: Prepare APK and checksum
+        id: package
+        shell: bash
+        run: |
+          set -euo pipefail
+          SOURCE_APK="android/app/build/outputs/apk/debug/app-debug.apk"
+          test -s "$SOURCE_APK"
+          APK_NAME="CHARISNA-Money-Management-${RELEASE_TAG}-debug.apk"
+          cp "$SOURCE_APK" "$APK_NAME"
+          sha256sum "$APK_NAME" > "$APK_NAME.sha256"
+          echo "apk_name=$APK_NAME" >> "$GITHUB_OUTPUT"
+      - name: Upload APK to GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release upload "$RELEASE_TAG" "${{ steps.package.outputs.apk_name }}" "${{ steps.package.outputs.apk_name }}.sha256" --repo "$GITHUB_REPOSITORY" --clobber
+
+  windows:
+    needs: create-release
+    runs-on: windows-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ env.RELEASE_TAG }}
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: windows/package-lock.json
+      - name: Validate desktop version
+        shell: pwsh
+        run: |
+          $package = Get-Content "windows/package.json" -Raw | ConvertFrom-Json
+          $expected = $env:RELEASE_TAG.TrimStart('v')
+          if ($package.version -ne $expected) {
+            throw "Versi windows/package.json ($($package.version)) harus $expected sesuai tag $env:RELEASE_TAG."
+          }
+      - name: Install Windows desktop dependencies
+        working-directory: windows
+        run: npm ci --no-audit --no-fund
+      - name: Build Windows x64 installer
+        working-directory: windows
+        run: npm run dist:win
+      - name: Prepare installer and checksum
+        id: package
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = "Stop"
+          $dist = Join-Path $env:GITHUB_WORKSPACE "windows/dist"
+          $release = Join-Path $env:GITHUB_WORKSPACE "release-windows"
+          New-Item -ItemType Directory -Force -Path $release | Out-Null
+          $setup = Get-ChildItem $dist -File -Filter "*Setup*.exe" | Where-Object { $_.Name -notlike '*.__uninstaller.exe' } | Select-Object -First 1
+          if (-not $setup) { throw "Installer EXE tidak ditemukan di windows/dist." }
+          Copy-Item $setup.FullName (Join-Path $release $setup.Name) -Force
+          $checksumName = "$($setup.Name).sha256"
+          $hash = (Get-FileHash (Join-Path $release $setup.Name) -Algorithm SHA256).Hash.ToLowerInvariant()
+          "$hash  $($setup.Name)" | Set-Content -Path (Join-Path $release $checksumName) -Encoding ascii
+          "setup_name=$($setup.Name)" | Out-File -FilePath $env:GITHUB_OUTPUT -Append -Encoding utf8
+          "checksum_name=$checksumName" | Out-File -FilePath $env:GITHUB_OUTPUT -Append -Encoding utf8
+      - name: Upload installer to GitHub Release
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          Get-ChildItem "$env:GITHUB_WORKSPACE/release-windows" -File | ForEach-Object {
+            gh release upload $env:RELEASE_TAG $_.FullName --repo $env:GITHUB_REPOSITORY --clobber
+            if ($LASTEXITCODE -ne 0) { throw "Gagal mengunggah $($_.Name)." }
+          }
+      - name: Write build summary
+        shell: pwsh
+        env:
+          SETUP_NAME: ${{ steps.package.outputs.setup_name }}
+          CHECKSUM_NAME: ${{ steps.package.outputs.checksum_name }}
+        run: |
+          @"
+          ## Build Windows selesai
+
+          Installer: ``$env:SETUP_NAME``
+
+          Checksum: ``$env:CHECKSUM_NAME``
+
+          Unduh dari menu **Releases** pada tag **$env:RELEASE_TAG**.
+          "@ | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append -Encoding utf8
