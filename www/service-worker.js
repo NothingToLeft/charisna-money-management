@@ -1,6 +1,6 @@
 "use strict";
 
-const CACHE_NAME = "charisna-money-management-v14.1.1-auto-pin-unlock";
+const CACHE_NAME = "charisna-money-management-v14.1.2-superapp";
 const APP_FILES = [
   "./",
   "./index.html?v=14.1.1-auto-pin-unlock",
@@ -23,6 +23,7 @@ const APP_FILES = [
   "./app-patch-v12.js?v=14.1.1-auto-pin-unlock",
   "./app-patch-v13.js?v=14.1.1-auto-pin-unlock",
   "./app-patch-v14.js?v=14.1.1-auto-pin-unlock",
+  "./superapp-sync.js?v=14.1.2-superapp",
   "./manifest.webmanifest?v=14.1.1-auto-pin-unlock",
   "./PRIVACY-POLICY.html",
   "./CHANGELOG.html",
