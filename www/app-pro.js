@@ -330,6 +330,10 @@
     `);
 
     bindProEvents();
+    document.getElementById('proCloudPasswordForm')?.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      await changeCloudPassword();
+    });
     installGlobalErrorCapture();
     updateOnlineStatus();
   }
@@ -456,13 +460,19 @@
       </article>
 
       <article class="panel">
-        <header class="panel-header"><div><h4>Akun Cloud</h4><p>Reset sandi, ubah email, dan keamanan akun Supabase.</p></div></header>
+        <header class="panel-header"><div><h4>Akun Cloud</h4><p>Ubah password login, kirim reset email, atau ubah email akun Supabase.</p></div></header>
         <form class="form-stack" id="proCloudAccountForm">
           <label class="field"><span>Email baru</span><input class="input" id="proCloudNewEmail" type="email" placeholder="email-baru@example.com" /></label>
           <div class="button-grid">
             <button class="button secondary" id="proChangeCloudEmail" type="button">Ubah Email</button>
             <button class="button secondary" id="proSendPasswordReset" type="button">Kirim Reset Sandi</button>
           </div>
+        </form>
+        <form class="form-stack" id="proCloudPasswordForm" style="margin-top:18px">
+          <label class="field"><span>Password cloud baru</span><input class="input" id="proCloudNewPassword" type="password" minlength="8" maxlength="128" autocomplete="new-password" required /></label>
+          <label class="field"><span>Ulangi password baru</span><input class="input" id="proCloudConfirmPassword" type="password" minlength="8" maxlength="128" autocomplete="new-password" required /></label>
+          <button class="button primary" id="proChangeCloudPassword" type="submit">Ubah Password Cloud</button>
+          <p class="muted" id="proCloudPasswordStatus" role="status" aria-live="polite"></p>
         </form>
       </article>
 
@@ -2028,6 +2038,35 @@
     showToast("Email reset sandi telah dikirim.", "✉️");
   }
 
+  async function changeCloudPassword() {
+    const form = document.getElementById("proCloudPasswordForm");
+    const status = document.getElementById("proCloudPasswordStatus");
+    const button = document.getElementById("proChangeCloudPassword");
+    const password = document.getElementById("proCloudNewPassword").value;
+    const confirmation = document.getElementById("proCloudConfirmPassword").value;
+    status.textContent = "";
+    if (!cloudSession?.user) { status.textContent = "Masuk ke akun cloud terlebih dahulu."; return; }
+    if (password.length < 8) { status.textContent = "Password baru minimal 8 karakter."; return; }
+    if (password !== confirmation) { status.textContent = "Dua password baru belum sama."; return; }
+    button.disabled = true;
+    try {
+      const { error } = await supabaseClient.auth.updateUser({ password });
+      if (error) {
+        status.textContent = error.code === "reauthentication_needed"
+          ? "Supabase meminta verifikasi email. Gunakan Kirim Reset Sandi."
+          : error.code === "weak_password"
+            ? "Password ditolak. Pilih password yang lebih kuat."
+            : "Password cloud belum berubah. Coba lagi.";
+        return;
+      }
+      status.textContent = "Password cloud berhasil diubah. Gunakan password baru saat login berikutnya.";
+    } catch {
+      status.textContent = "Akun cloud tidak dapat dihubungi. Coba lagi.";
+    } finally {
+      form.reset();
+      button.disabled = false;
+    }
+  }
   async function changeCloudEmail() {
     const email = document.getElementById("proCloudNewEmail")?.value.trim();
     if (!email) throw new Error("Isi email baru.");
