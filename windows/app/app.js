@@ -1477,6 +1477,62 @@ function closeModal() {
   document.body.style.overflow = "";
 }
 
+function showPromptModal({
+  title,
+  subtitle,
+  promptLabel,
+  placeholder = "",
+  confirmWord = "",
+  onConfirm
+}) {
+  const suffix = Math.random().toString(36).slice(2, 8);
+  const formId = `promptConfirmForm_${suffix}`;
+  const inputId = `promptConfirmInput_${suffix}`;
+  const errorId = `promptConfirmError_${suffix}`;
+
+  showModal(
+    title,
+    subtitle,
+    `
+      <form id="${formId}" class="form-stack">
+        <label class="field">
+          <span>${escapeHTML(promptLabel)}</span>
+          <input class="input" id="${inputId}" type="text" placeholder="${escapeHTML(placeholder)}" autocomplete="off" required />
+        </label>
+        <p class="form-error" id="${errorId}"></p>
+        <div class="form-actions">
+          <button class="button secondary" type="button" id="${formId}_cancel">Batal</button>
+          <button class="button danger" type="submit">Lanjutkan</button>
+        </div>
+      </form>
+    `
+  );
+
+  const form = document.getElementById(formId);
+  const input = document.getElementById(inputId);
+  const errorEl = document.getElementById(errorId);
+  const cancelBtn = document.getElementById(`${formId}_cancel`);
+
+  cancelBtn?.addEventListener("click", closeModal);
+  input?.focus();
+
+  form?.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const val = input.value.trim();
+    if (confirmWord && val !== confirmWord) {
+      errorEl.textContent = `Ketik tepat "${confirmWord}" untuk mengonfirmasi.`;
+      return;
+    }
+    closeModal();
+    try {
+      await onConfirm();
+    } catch (error) {
+      console.error(error);
+      showToast(error.message || "Operasi gagal.", "❗");
+    }
+  });
+}
+
 function applyTheme() {
   document.documentElement.dataset.theme = state.settings.darkMode
     ? "dark"
@@ -6058,8 +6114,11 @@ async function sendWebhook(eventName) {
   }
 
   try {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 4000);
     await fetch(state.settings.webhookUrl, {
       method: "POST",
+      signal: controller.signal,
       headers: {
         "Content-Type": "application/json"
       },
@@ -6069,6 +6128,7 @@ async function sendWebhook(eventName) {
         encryptedVault: vault
       })
     });
+    clearTimeout(timeout);
   } catch (error) {
     console.warn("Webhook gagal:", error);
   }
@@ -6222,6 +6282,10 @@ function lockApplication(message = "") {
   undoStack = [];
   redoStack = [];
 
+  if (!vault?.passkeyCredentialId) {
+    sessionStorage.removeItem(SESSION_KEY);
+  }
+
   document.getElementById("appShell").hidden = true;
   document.getElementById("authScreen").hidden = false;
   document.body.classList.add("locked");
@@ -6350,7 +6414,7 @@ async function registerServiceWorker() {
 
   if ("serviceWorker" in navigator) {
     try {
-      await navigator.serviceWorker.register("./service-worker.js?v=13-cute-complete");
+      await navigator.serviceWorker.register("./service-worker.js?v=14.1.2-ui-sync");
     } catch (error) {
       console.warn("Service worker gagal:", error);
     }
@@ -6574,29 +6638,30 @@ document
 
 document
   .getElementById("forgotPasswordButton")
-  .addEventListener("click", async () => {
-    const answer = prompt(
-      'Sandi brankas tidak dapat dipulihkan. Reset akan menghapus brankas lokal dan salinan cloud. Ketik "RESET" untuk melanjutkan.'
-    );
+  .addEventListener("click", () => {
+    showPromptModal({
+      title: "Reset Brankas",
+      subtitle: "Sandi/PIN brankas tidak dapat dipulihkan. Reset akan menghapus brankas lokal dan salinan cloud.",
+      promptLabel: 'Ketik "RESET" untuk mengonfirmasi penghapusan:',
+      placeholder: "RESET",
+      confirmWord: "RESET",
+      onConfirm: async () => {
+        try {
+          await deleteCloudVaultIfAvailable();
+        } catch (error) {
+          console.error(error);
+          showToast("Brankas cloud gagal dihapus. Reset dibatalkan.", "❗");
+          return;
+        }
 
-    if (answer !== "RESET") {
-      return;
-    }
+        localStorage.removeItem(STORAGE_KEY);
+        sessionStorage.removeItem(SESSION_KEY);
 
-    try {
-      await deleteCloudVaultIfAvailable();
-    } catch (error) {
-      console.error(error);
-      showToast("Brankas cloud gagal dihapus. Reset dibatalkan.", "❗");
-      return;
-    }
-
-    localStorage.removeItem(STORAGE_KEY);
-    sessionStorage.removeItem(SESSION_KEY);
-
-    const request = indexedDB.deleteDatabase(ATTACHMENT_DB);
-    request.onsuccess = () => location.reload();
-    request.onerror = () => location.reload();
+        const request = indexedDB.deleteDatabase(ATTACHMENT_DB);
+        request.onsuccess = () => location.reload();
+        request.onerror = () => location.reload();
+      }
+    });
   });
 
 document
@@ -7280,7 +7345,7 @@ document
 
 document
   .getElementById("clearFinanceButton")
-  .addEventListener("click", async () => {
+  .addEventListener("click", () => {
     const activeProfileId = window.activeFinancialUserId?.()
       || state.settings?.activeFinancialUserId
       || state.settings?.activeBookId
@@ -7300,60 +7365,63 @@ document
     const linkedTransferWarning = linkedTransferIds.size
       ? `\n\n${linkedTransferIds.size} transfer antar akun yang terhubung juga akan dihapus dari akun pasangannya agar saldo tetap konsisten.`
       : "";
-    const answer = prompt(
-      `Tindakan ini hanya menghapus seluruh data keuangan milik “${activeProfileName}” dan tidak menghapus akun keuangannya.${linkedTransferWarning}\n\nKetik "${confirmationText}" untuk melanjutkan.`
-    );
 
-    if (answer !== confirmationText) {
-      return;
-    }
+    showPromptModal({
+      title: `Kosongkan Data ${activeProfileName}`,
+      subtitle: `Tindakan ini hanya menghapus seluruh data keuangan milik “${activeProfileName}” dan tidak menghapus akun keuangannya.${linkedTransferWarning}`,
+      promptLabel: `Ketik "${confirmationText}" untuk melanjutkan:`,
+      placeholder: confirmationText,
+      confirmWord: confirmationText,
+      onConfirm: async () => {
+        const scopedCollections = [
+          "accounts",
+          "transactions",
+          "budgets",
+          "goals",
+          "recurring",
+          "debts",
+          "investments",
+          "sharedWallets",
+          "reconciliations",
+          "rules",
+          "transactionTemplates"
+        ];
 
-    const scopedCollections = [
-      "accounts",
-      "transactions",
-      "budgets",
-      "goals",
-      "recurring",
-      "debts",
-      "investments",
-      "sharedWallets",
-      "reconciliations",
-      "rules",
-      "transactionTemplates"
-    ];
-
-    await commit(
-      "Data akun keuangan dihapus",
-      `Seluruh data finansial milik ${activeProfileName} dikosongkan.`,
-      () => {
-        scopedCollections.forEach((collectionName) => {
-          if (!Array.isArray(state[collectionName])) return;
-          state[collectionName] = state[collectionName].filter((item) => {
-            if (collectionName === "transactions" && item.crossProfileTransferId) {
-              return !linkedTransferIds.has(item.crossProfileTransferId);
-            }
-            return item.profileId !== activeProfileId;
-          });
-        });
+        await commit(
+          "Data akun keuangan dihapus",
+          `Seluruh data finansial milik ${activeProfileName} dikosongkan.`,
+          () => {
+            scopedCollections.forEach((collectionName) => {
+              if (!Array.isArray(state[collectionName])) return;
+              state[collectionName] = state[collectionName].filter((item) => {
+                if (collectionName === "transactions" && item.crossProfileTransferId) {
+                  return !linkedTransferIds.has(item.crossProfileTransferId);
+                }
+                return item.profileId !== activeProfileId;
+              });
+            });
+          }
+        );
       }
-    );
+    });
   });
 
 document
   .getElementById("resetApplicationButton")
   .addEventListener("click", () => {
-    const answer = prompt(
-      'Ini hanya menghapus data pada browser ini; salinan cloud tetap aman. Ketik "RESET LOKAL" untuk melanjutkan.'
-    );
-
-    if (answer !== "RESET LOKAL") {
-      return;
-    }
-
-    localStorage.removeItem(STORAGE_KEY);
-    sessionStorage.removeItem(SESSION_KEY);
-    indexedDB.deleteDatabase(ATTACHMENT_DB);
-    location.reload();
+    showPromptModal({
+      title: "Reset Data Browser Lokal",
+      subtitle: "Ini hanya menghapus data pada perangkat/browser ini; salinan cloud tetap aman.",
+      promptLabel: 'Ketik "RESET LOKAL" untuk melanjutkan:',
+      placeholder: "RESET LOKAL",
+      confirmWord: "RESET LOKAL",
+      onConfirm: async () => {
+        localStorage.removeItem(STORAGE_KEY);
+        sessionStorage.removeItem(SESSION_KEY);
+        indexedDB.deleteDatabase(ATTACHMENT_DB);
+        location.reload();
+      }
+    });
   });
 
 [

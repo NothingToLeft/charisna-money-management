@@ -5,6 +5,8 @@
   "description": "Android wrapper for CHARISNA Money Management v14.1.1 Multi-User + Transfer + Auto PIN Unlock",
   "scripts": {
     "sync": "cap sync android",
+    "sync:platforms": "node scripts/sync-platforms.mjs",
+    "test": "node --test tests/*.test.mjs",
     "build:debug": "cd android && ./gradlew assembleDebug",
     "build:release": "cd android && ./gradlew assembleRelease"
   },

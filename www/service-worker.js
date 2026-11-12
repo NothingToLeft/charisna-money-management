@@ -1,10 +1,10 @@
 "use strict";
 
-const CACHE_NAME = "charisna-money-management-2026-11-07-cloud-password";
+const CACHE_NAME = "charisna-money-management-v14.1.2-ui-sync";
 const APP_FILES = [
   "./",
-  "./index.html?v=14.1.1-auto-pin-unlock",
-  "./styles.css?v=14.1.1-auto-pin-unlock",
+  "./index.html?v=14.1.2-ui-sync",
+  "./styles.css?v=14.1.2-ui-sync",
   "./styles-pro.css?v=14.1.1-auto-pin-unlock",
   "./styles-patch-v9.css?v=14.1.1-auto-pin-unlock",
   "./styles-patch-v10.css?v=14.1.1-auto-pin-unlock",
@@ -15,7 +15,7 @@ const APP_FILES = [
   "./styles-mobile-v13-1.css?v=14.1.1-auto-pin-unlock",
   "./styles-patch-v14.css?v=14.1.1-auto-pin-unlock",
   "./native-bootstrap.js?v=14.1.1-auto-pin-unlock",
-  "./app.js?v=14.1.1-auto-pin-unlock",
+  "./app.js?v=14.1.2-ui-sync",
   "./app-pro.js?v=2026-11-07-cloud-password",
   "./app-patch-v9.js?v=14.1.1-auto-pin-unlock",
   "./app-patch-v10.js?v=14.1.1-auto-pin-unlock",
@@ -24,7 +24,7 @@ const APP_FILES = [
   "./app-patch-v13.js?v=14.1.1-auto-pin-unlock",
   "./app-patch-v14.js?v=14.1.1-auto-pin-unlock",
   "./superapp-sync.js?v=14.1.2-superapp",
-  "./manifest.webmanifest?v=14.1.1-auto-pin-unlock",
+  "./manifest.webmanifest?v=14.1.2-ui-sync",
   "./PRIVACY-POLICY.html",
   "./CHANGELOG.html",
   "./icons/icon-192.png",
@@ -57,10 +57,10 @@ self.addEventListener("fetch", (event) => {
       fetch(event.request)
         .then((response) => {
           const copy = response.clone();
-          caches.open(CACHE_NAME).then((cache) => cache.put("./index.html?v=14.1.1-auto-pin-unlock", copy));
+          caches.open(CACHE_NAME).then((cache) => cache.put("./index.html?v=14.1.2-ui-sync", copy));
           return response;
         })
-        .catch(() => caches.match("./index.html?v=14.1.1-auto-pin-unlock"))
+        .catch(() => caches.match("./index.html?v=14.1.2-ui-sync"))
     );
     return;
   }
@@ -96,7 +96,7 @@ self.addEventListener("push", (event) => {
     requireInteraction: Boolean(payload.requireInteraction),
     timestamp: payload.timestamp || Date.now(),
     data: {
-      url: payload.url || "./index.html?v=14.1.1-auto-pin-unlock",
+      url: payload.url || "./index.html?v=14.1.2-ui-sync",
       scheduleId: payload.scheduleId || null,
       dueDate: payload.dueDate || null
     },
@@ -112,7 +112,7 @@ self.addEventListener("push", (event) => {
 self.addEventListener("notificationclick", (event) => {
   event.notification.close();
   if (event.action === "dismiss") return;
-  const targetUrl = new URL(event.notification.data?.url || "./index.html?v=14.1.1-auto-pin-unlock", self.location.origin).href;
+  const targetUrl = new URL(event.notification.data?.url || "./index.html?v=14.1.2-ui-sync", self.location.origin).href;
   event.waitUntil(
     clients.matchAll({ type: "window", includeUncontrolled: true }).then((list) => {
       const existing = list.find((client) => client.url.startsWith(self.location.origin) && "focus" in client);

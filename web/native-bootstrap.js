@@ -35,7 +35,7 @@
             allowWhileIdle: true
           },
           smallIcon: "ic_stat_charisna",
-          iconColor: "#7558ff"
+          iconColor: "#4f46e5"
         }]
       });
     }
@@ -81,7 +81,7 @@
               body: String(options.body || ""),
               schedule: { at: new Date(Date.now() + 250) },
               smallIcon: "ic_stat_charisna",
-              iconColor: "#7558ff",
+              iconColor: "#4f46e5",
               extra: options.data || {}
             }]
           }).catch(console.warn);
@@ -302,7 +302,7 @@
     }
 
     plugins.StatusBar?.setOverlaysWebView({ overlay: false }).catch(console.warn);
-    plugins.StatusBar?.setBackgroundColor({ color: "#7558ff" }).catch(console.warn);
+    plugins.StatusBar?.setBackgroundColor({ color: "#4f46e5" }).catch(console.warn);
     plugins.StatusBar?.setStyle({ style: "LIGHT" }).catch(console.warn);
 
     plugins.App?.addListener("backButton", () => {
