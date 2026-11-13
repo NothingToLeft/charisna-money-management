@@ -148,13 +148,15 @@
     if (!container) return;
     const migrations = state.settings.migrationHistory || [];
     const queue = localStorage.getItem(SYNC_QUEUE_KEY);
-    const swStatus = waitingServiceWorker ? "Pembaruan siap dipasang" : (navigator.serviceWorker?.controller ? "Service worker aktif" : "Belum dikontrol service worker");
+    const releaseVersion = "v14.1.2";
+    const isBundled = Boolean(window.CharisnaDesktop?.isDesktop || window.CHARISNA_NATIVE);
+    const swStatus = isBundled ? "Aplikasi berjalan dari paket lokal" : waitingServiceWorker ? "Pembaruan siap dipasang" : (navigator.serviceWorker?.controller ? "Service worker aktif" : "Belum dikontrol service worker");
     container.innerHTML = `
       <div class="v10-grid">
         <article class="panel v10-span-8">
           <header class="panel-header"><div><h4>Update Center</h4><p>Pembaruan aman dengan backup sebelum reload dan kontrol cache.</p></div></header>
           <div class="v10-update-banner">
-            <div><strong>${waitingServiceWorker ? "Versi baru siap dipasang" : "Aplikasi menggunakan v10"}</strong><p>${swStatus}. Cache: charisna-money-management-v10-production.</p></div>
+            <div><strong>${waitingServiceWorker ? "Versi baru siap dipasang" : `Aplikasi menggunakan ${releaseVersion}`}</strong><p>${swStatus}.</p></div>
             <div class="button-grid"><button class="button secondary" id="v10CheckUpdate" type="button">Periksa Update</button><button class="button primary" id="v10InstallUpdate" type="button" ${waitingServiceWorker ? "" : "disabled"}>Backup & Perbarui</button></div>
           </div>
           <div class="button-grid" style="margin-top:15px">
@@ -167,7 +169,7 @@
         <article class="panel v10-span-4">
           <header class="panel-header"><div><h4>Status Versi</h4><p>Ringkasan shell dan data.</p></div></header>
           <div class="v10-stat-grid" style="grid-template-columns:1fr 1fr">
-            <div class="v10-stat"><span>Aplikasi</span><strong>v10</strong><small>Production Update</small></div>
+            <div class="v10-stat"><span>Aplikasi</span><strong>${releaseVersion}</strong><small>Versi aplikasi</small></div>
             <div class="v10-stat"><span>Data</span><strong>v${safeNumber(state.appVersion)}</strong><small>Migrasi kompatibel</small></div>
             <div class="v10-stat"><span>Cloud queue</span><strong>${queue ? "1" : "0"}</strong><small>${queue ? "menunggu" : "bersih"}</small></div>
             <div class="v10-stat"><span>Mode</span><strong>${location.protocol === "https:" ? "HTTPS" : "LOCAL"}</strong><small>${navigator.onLine ? "online" : "offline"}</small></div>
