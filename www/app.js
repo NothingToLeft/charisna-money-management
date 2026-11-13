@@ -5666,12 +5666,20 @@ function saveRemoteVaultLocally(remote) {
 
 async function adoptNewestCloudVault(
   remote,
-  { notify = false, reason = "Cloud terbaru dipakai otomatis" } = {}
+  { notify = false, reason = "Cloud terbaru dipakai otomatis", replaceLocal = false } = {}
 ) {
   if (!remote?.encrypted_vault) {
     return false;
   }
 
+  const localVault = vault;
+  const baseChecksum = localVault?.cloud?.checksum;
+  if (!replaceLocal && baseChecksum && baseChecksum !== remote.checksum) {
+    const localChecksum = await sha256Base64(cloudVaultPayload());
+    if (vault !== localVault || localChecksum !== baseChecksum) {
+      throw new Error("Cloud dan perangkat ini punya perubahan berbeda. Ekspor cadangan lokal sebelum mengunduh versi cloud.");
+    }
+  }
   const wasUnlocked = Boolean(state && currentKey);
   saveEncryptedCloudRecovery(reason);
   saveRemoteVaultLocally(remote);
@@ -5933,25 +5941,27 @@ async function cloudPush({ force = false, silent = false } = {}) {
     const nextVersion = remote ? Number(remote.version) + 1 : 1;
     const now = new Date().toISOString();
 
-    const { data, error } = await supabaseClient
-      .from(CLOUD_TABLE)
-      .upsert(
-        {
-          user_id: cloudSession.user.id,
-          encrypted_vault: encryptedVault,
-          version: nextVersion,
-          device_id: getDeviceId(),
-          checksum,
-          updated_at: now
-        },
-        { onConflict: "user_id" }
-      )
-      .select("version, device_id, checksum, updated_at")
-      .single();
+    const userId = cloudSession.user.id;
+    const row = {
+      user_id: userId,
+      encrypted_vault: encryptedVault,
+      version: nextVersion,
+      device_id: getDeviceId(),
+      checksum,
+      updated_at: now
+    };
+    const table = supabaseClient.from(CLOUD_TABLE);
+    const write = remote
+      ? table.update(row).eq("user_id", userId).eq("version", remote.version)
+      : table.insert(row);
+    const { data, error } = await write
+      .select("version, device_id, checksum, updated_at").maybeSingle();
 
-    if (error) {
-      throw error;
+    if ((!remote && error?.code === "23505") || (!error && !data)) {
+      throw new Error("Cloud berubah saat menyimpan. Perubahan lokal tetap tersimpan. Ekspor cadangan sebelum mengunduh versi cloud.");
     }
+    if (error) throw error;
+    if (cloudSession?.user?.id !== userId || !vault) return false;
 
     vault.cloud = {
       userId: cloudSession.user.id,
@@ -6006,6 +6016,7 @@ async function cloudPull() {
 
   await adoptNewestCloudVault(remote, {
     notify: true,
+    replaceLocal: true,
     reason: `Download manual cloud v${remote.version}`
   });
   setCloudMessage(`Cloud terbaru versi ${remote.version} sudah aktif.`, "online");
@@ -6414,7 +6425,7 @@ async function registerServiceWorker() {
 
   if ("serviceWorker" in navigator) {
     try {
-      await navigator.serviceWorker.register("./service-worker.js?v=14.1.2-ui-sync");
+      await navigator.serviceWorker.register("./service-worker.js?v=14.1.2-audit-fix");
     } catch (error) {
       console.warn("Service worker gagal:", error);
     }

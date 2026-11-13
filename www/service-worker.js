@@ -1,34 +1,46 @@
 "use strict";
 
-const CACHE_NAME = "charisna-money-management-v14.1.2-ui-sync";
+const CACHE_NAME = "charisna-money-management-v14.1.2-audit-fix";
 const APP_FILES = [
   "./",
-  "./index.html?v=14.1.2-ui-sync",
-  "./styles.css?v=14.1.2-ui-sync",
-  "./styles-pro.css?v=14.1.2-ui-sync",
-  "./styles-patch-v9.css?v=14.1.2-ui-sync",
-  "./styles-patch-v10.css?v=14.1.2-ui-sync",
-  "./styles-patch-v11.css?v=14.1.2-ui-sync",
-  "./styles-patch-v12.css?v=14.1.2-ui-sync",
-  "./styles-native.css?v=14.1.2-ui-sync",
-  "./styles-cute-v13.css?v=14.1.2-ui-sync",
-  "./styles-mobile-v13-1.css?v=14.1.2-ui-sync",
-  "./styles-patch-v14.css?v=14.1.2-ui-sync",
-  "./native-bootstrap.js?v=14.1.2-ui-sync",
-  "./app.js?v=14.1.2-ui-sync",
+  "./index.html?v=14.1.2-audit-fix",
+  "./styles.css?v=14.1.2-audit-fix",
+  "./styles-pro.css?v=14.1.2-audit-fix",
+  "./styles-patch-v9.css?v=14.1.2-audit-fix",
+  "./styles-patch-v10.css?v=14.1.2-audit-fix",
+  "./styles-patch-v11.css?v=14.1.2-audit-fix",
+  "./styles-patch-v12.css?v=14.1.2-audit-fix",
+  "./styles-native.css?v=14.1.2-audit-fix",
+  "./styles-cute-v13.css?v=14.1.2-audit-fix",
+  "./styles-mobile-v13-1.css?v=14.1.2-audit-fix",
+  "./styles-patch-v14.css?v=14.1.2-audit-fix",
+  "./native-bootstrap.js?v=14.1.2-audit-fix",
+  "./app.js?v=14.1.2-audit-fix",
   "./app-pro.js?v=2026-11-07-cloud-password",
-  "./app-patch-v9.js?v=14.1.2-ui-sync",
-  "./app-patch-v10.js?v=14.1.2-ui-sync",
-  "./app-patch-v11.js?v=14.1.2-ui-sync",
-  "./app-patch-v12.js?v=14.1.2-ui-sync",
-  "./app-patch-v13.js?v=14.1.2-ui-sync",
-  "./app-patch-v14.js?v=14.1.2-ui-sync",
-  "./superapp-sync.js?v=14.1.2-superapp",
-  "./manifest.webmanifest?v=14.1.2-ui-sync",
+  "./app-patch-v9.js?v=14.1.2-audit-fix",
+  "./app-patch-v10.js?v=14.1.2-audit-fix",
+  "./app-patch-v11.js?v=14.1.2-audit-fix",
+  "./app-patch-v12.js?v=14.1.2-audit-fix",
+  "./app-patch-v13.js?v=14.1.2-audit-fix",
+  "./app-patch-v14.js?v=14.1.2-audit-fix",
+  "./superapp-sync.js?v=14.1.2-superapp-audit",
+  "./manifest.webmanifest?v=14.1.2-audit-fix",
   "./PRIVACY-POLICY.html",
   "./CHANGELOG.html",
   "./icons/icon-192.png",
-  "./icons/icon-512.png"
+  "./icons/icon-512.png",
+  "./vendor/chart.umd.js",
+  "./vendor/xlsx.full.min.js",
+  "./vendor/jspdf.umd.min.js",
+  "./vendor/tesseract.min.js",
+  "./vendor/supabase.js",
+  "./vendor/jszip.min.js",
+  "./vendor/exceljs.min.js",
+  "./vendor/worker.min.js",
+  "./vendor/tesseract-core-lstm.wasm.js",
+  "./vendor/tesseract-core-lstm.wasm",
+  "./ocr/eng.traineddata.gz",
+  "./ocr/ind.traineddata.gz"
 ];
 
 self.addEventListener("install", (event) => {
@@ -38,7 +50,7 @@ self.addEventListener("install", (event) => {
 self.addEventListener("activate", (event) => {
   event.waitUntil(
     caches.keys()
-      .then((names) => Promise.all(names.filter((name) => name !== CACHE_NAME).map((name) => caches.delete(name))))
+      .then((names) => Promise.all(names.filter((name) => name.startsWith("charisna-money-management-") && name !== CACHE_NAME).map((name) => caches.delete(name))))
       .then(() => self.clients.claim())
   );
 });
@@ -57,10 +69,10 @@ self.addEventListener("fetch", (event) => {
       fetch(event.request)
         .then((response) => {
           const copy = response.clone();
-          caches.open(CACHE_NAME).then((cache) => cache.put("./index.html?v=14.1.2-ui-sync", copy));
+          caches.open(CACHE_NAME).then((cache) => cache.put("./index.html?v=14.1.2-audit-fix", copy));
           return response;
         })
-        .catch(() => caches.match("./index.html?v=14.1.2-ui-sync"))
+        .catch(() => caches.match("./index.html?v=14.1.2-audit-fix"))
     );
     return;
   }
@@ -96,7 +108,7 @@ self.addEventListener("push", (event) => {
     requireInteraction: Boolean(payload.requireInteraction),
     timestamp: payload.timestamp || Date.now(),
     data: {
-      url: payload.url || "./index.html?v=14.1.2-ui-sync",
+      url: payload.url || "./index.html?v=14.1.2-audit-fix",
       scheduleId: payload.scheduleId || null,
       dueDate: payload.dueDate || null
     },
@@ -112,7 +124,7 @@ self.addEventListener("push", (event) => {
 self.addEventListener("notificationclick", (event) => {
   event.notification.close();
   if (event.action === "dismiss") return;
-  const targetUrl = new URL(event.notification.data?.url || "./index.html?v=14.1.2-ui-sync", self.location.origin).href;
+  const targetUrl = new URL(event.notification.data?.url || "./index.html?v=14.1.2-audit-fix", self.location.origin).href;
   event.waitUntil(
     clients.matchAll({ type: "window", includeUncontrolled: true }).then((list) => {
       const existing = list.find((client) => client.url.startsWith(self.location.origin) && "focus" in client);

@@ -21,7 +21,7 @@ test('source sends per-profile monthly summaries only after cloud save',async()=
     cloudPush:async()=>true,encryptState:async()=>{},accountBalance:a=>a.openingBalance,
     convertCurrency:(value,from,to)=>from===to?value:from==='USD'&&to==='IDR'?value*16000:null,
     fetch:async(_url,options)=>{requests.push(JSON.parse(options.body));return{ok:true,json:async()=>({syncKey:'K'.repeat(43)})};},
-    Intl,Date,Number,String,Array,Error};
+    Intl,Date,Number,String,Array,Error,AbortSignal};
   vm.runInNewContext(await readFile(new URL('../www/superapp-sync.js',import.meta.url),'utf8'),context);
   const button=elements.find(el=>el.textContent==='Hubungkan dan kirim ringkasan');
   elements.find(el=>el.id==='superAppCode').value='A'.repeat(24);
@@ -35,4 +35,19 @@ test('source sends per-profile monthly summaries only after cloud save',async()=
   ]);
   assert.equal(state.settings.superAppSyncKey,'K'.repeat(43));
   assert.equal('accessToken' in requests[0],false);
+
+  let finishFirst;
+  context.fetch = async (_url, options) => {
+    requests.push(JSON.parse(options.body));
+    if (requests.length === 2) await new Promise(resolve => { finishFirst = resolve; });
+    return {ok:true,json:async()=>({})};
+  };
+  await context.cloudPush();
+  state.transactions[0].amount = 80;
+  await context.cloudPush();
+  assert.equal(requests.length, 2);
+  finishFirst();
+  await new Promise(resolve => setImmediate(resolve));
+  assert.equal(requests.length, 3);
+  assert.equal(requests[2].snapshot.profiles[0].income_minor, '80');
 });

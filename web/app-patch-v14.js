@@ -1279,7 +1279,7 @@
     if (bannerP) {
       const isDesktop = Boolean(window.CharisnaDesktop?.isDesktop);
       const isNative = Boolean(window.CHARISNA_NATIVE);
-      const cacheName = "charisna-money-management-v14.1.2-ui-sync";
+      const cacheName = "charisna-money-management-v14.1.2-audit-fix";
       if (isDesktop) {
         bannerP.textContent = `Aplikasi Desktop Windows aktif (paket lokal offline). Cache shell: ${cacheName}.`;
       } else if (isNative) {
@@ -1320,15 +1320,28 @@
     const checkBtn = document.getElementById("v10CheckUpdate");
     if (checkBtn && !checkBtn.dataset.v14Safe) {
       checkBtn.dataset.v14Safe = "true";
-      checkBtn.addEventListener("click", (e) => {
-        if (window.CharisnaDesktop?.isDesktop || window.CHARISNA_NATIVE || !("serviceWorker" in navigator)) {
-          e.stopImmediatePropagation();
-          e.preventDefault();
-          if (typeof showToast === "function") {
-            showToast("Aplikasi Desktop Windows v14.1.2 sudah versi terbaru.", "✓");
-          } else {
-            alert("Aplikasi Desktop Windows v14.1.2 sudah versi terbaru.");
-          }
+      checkBtn.addEventListener("click", async (e) => {
+        const desktop = window.CharisnaDesktop;
+        if (!desktop?.isDesktop && !window.CHARISNA_NATIVE && "serviceWorker" in navigator) return;
+        e.stopImmediatePropagation();
+        e.preventDefault();
+        if (!desktop?.checkForUpdates) {
+          showToast("Periksa pembaruan melalui sumber instalasi aplikasi.", "ℹ️");
+          return;
+        }
+        checkBtn.disabled = true;
+        try {
+          const result = await desktop.checkForUpdates();
+          if (result?.error) throw new Error(result.error);
+          if (result?.development) showToast("Pembaruan tidak tersedia di mode pengembangan.", "ℹ️");
+          else if (result?.enabled === false) showToast("Kanal pembaruan belum aktif atau tidak dapat dijangkau.", "ℹ️");
+          else if (result?.available === false) showToast("Aplikasi sudah versi terbaru.", "✓");
+          else if (result?.available === true) showToast("Pembaruan ditemukan dan sedang disiapkan.", "⬇️");
+          else showToast("Status pembaruan belum tersedia.", "ℹ️");
+        } catch (error) {
+          showToast(`Pembaruan gagal diperiksa: ${error.message}`, "❗");
+        } finally {
+          checkBtn.disabled = false;
         }
       }, true);
     }
@@ -1344,7 +1357,7 @@
             const names = await caches.keys();
             await Promise.all(
               names
-                .filter((name) => name !== "charisna-money-management-v14.1.2-ui-sync")
+                .filter((name) => name !== "charisna-money-management-v14.1.2-audit-fix")
                 .map((name) => caches.delete(name))
             );
             if (typeof showToast === "function") {
