@@ -291,7 +291,8 @@
       changed = true;
     }
     state.settings.migrationHistory ||= [];
-    if (!state.settings.migrationHistory.some((item) => Number(item.version) === VERSION)) {
+    const v14Entry = state.settings.migrationHistory.find((item) => Number(item.version) === VERSION);
+    if (!v14Entry) {
       state.settings.migrationHistory.unshift({
         version: VERSION,
         label: VERSION_LABEL,
@@ -299,6 +300,10 @@
         status: "success"
       });
       state.settings.migrationHistory = state.settings.migrationHistory.slice(0, 30);
+      changed = true;
+    } else if (v14Entry.label !== VERSION_LABEL) {
+      v14Entry.label = VERSION_LABEL;
+      v14Entry.migratedAt = nowIsoV14();
       changed = true;
     }
     state.appVersion = Math.max(Number(state.appVersion) || 0, VERSION);
@@ -1247,6 +1252,126 @@
     container.querySelectorAll(".release-card:not(#v14ReleaseCard)").forEach((card) => card.classList.remove("latest"));
   }
 
+  function renderV14SystemCenter() {
+    window.v14SystemStatusPatched = true;
+
+    // Header toolbar badge
+    const systemBadge = document.querySelector("#system .section-header .version-badge");
+    if (systemBadge) {
+      systemBadge.textContent = "v14.1.2 — Multi-User + SuperApp Sync + UI Polish";
+    }
+
+    // System Hero section
+    const heroKicker = document.querySelector("#system .v10-hero .v10-kicker");
+    if (heroKicker) heroKicker.textContent = "CHARISNA v14.1.2";
+    const heroH3 = document.querySelector("#system .v10-hero h3");
+    if (heroH3) heroH3.textContent = "Sistem Keuangan Multi-User & Ekosistem Terpadu.";
+    const heroP = document.querySelector("#system .v10-hero p");
+    if (heroP) heroP.textContent = "Multi-User Financial Spaces, Transfer Antar Akun, sinkronisasi CHARISNA SuperApp, serta modal konfirmasi universal.";
+
+    // Update banner
+    const bannerStrong = document.querySelector("#v10PanelUpdate .v10-update-banner strong");
+    if (bannerStrong && !/baru siap/i.test(bannerStrong.textContent)) {
+      bannerStrong.textContent = "Aplikasi menggunakan v14.1.2";
+    }
+
+    const bannerP = document.querySelector("#v10PanelUpdate .v10-update-banner p");
+    if (bannerP) {
+      const isDesktop = Boolean(window.CharisnaDesktop?.isDesktop);
+      const isNative = Boolean(window.CHARISNA_NATIVE);
+      const cacheName = "charisna-money-management-v14.1.2-ui-sync";
+      if (isDesktop) {
+        bannerP.textContent = `Aplikasi Desktop Windows aktif (paket lokal offline). Cache shell: ${cacheName}.`;
+      } else if (isNative) {
+        bannerP.textContent = `Aplikasi Android Capacitor aktif (paket lokal offline). Cache shell: ${cacheName}.`;
+      } else {
+        const swStatus = navigator.serviceWorker?.controller ? "Service worker aktif" : "Belum dikontrol service worker";
+        bannerP.textContent = `${swStatus}. Cache: ${cacheName}.`;
+      }
+    }
+
+    // Status Versi stats
+    const versionCards = document.querySelectorAll("#v10PanelUpdate .v10-stat");
+    if (versionCards[0]) {
+      const strong = versionCards[0].querySelector("strong");
+      const small = versionCards[0].querySelector("small");
+      if (strong) strong.textContent = "v14.1.2";
+      if (small) small.textContent = "Multi-User · Transfer · SuperApp";
+    }
+    if (versionCards[1]) {
+      const strong = versionCards[1].querySelector("strong");
+      const small = versionCards[1].querySelector("small");
+      if (strong) strong.textContent = "v14";
+      if (small) small.textContent = "Migrasi kompatibel";
+    }
+
+    // Riwayat Migrasi list
+    const migrationContainer = document.querySelector("#v10PanelUpdate .v10-migration-list");
+    if (migrationContainer && state?.settings?.migrationHistory?.length) {
+      migrationContainer.innerHTML = state.settings.migrationHistory.map((item) => `
+        <div class="v10-migration">
+          <span><strong>v${item.version}</strong> · ${escapeHTML(item.label || "Migrasi")}</span>
+          <span class="v10-badge good">${formatDateTime(item.migratedAt)}</span>
+        </div>
+      `).join("");
+    }
+
+    // Safe button handlers for Desktop / Native environment
+    const checkBtn = document.getElementById("v10CheckUpdate");
+    if (checkBtn && !checkBtn.dataset.v14Safe) {
+      checkBtn.dataset.v14Safe = "true";
+      checkBtn.addEventListener("click", (e) => {
+        if (window.CharisnaDesktop?.isDesktop || window.CHARISNA_NATIVE || !("serviceWorker" in navigator)) {
+          e.stopImmediatePropagation();
+          e.preventDefault();
+          if (typeof showToast === "function") {
+            showToast("Aplikasi Desktop Windows v14.1.2 sudah versi terbaru.", "✓");
+          } else {
+            alert("Aplikasi Desktop Windows v14.1.2 sudah versi terbaru.");
+          }
+        }
+      }, true);
+    }
+
+    const clearCacheBtn = document.getElementById("v10ClearCaches");
+    if (clearCacheBtn && !clearCacheBtn.dataset.v14Safe) {
+      clearCacheBtn.dataset.v14Safe = "true";
+      clearCacheBtn.addEventListener("click", async (e) => {
+        if ("caches" in window) {
+          e.stopImmediatePropagation();
+          e.preventDefault();
+          try {
+            const names = await caches.keys();
+            await Promise.all(
+              names
+                .filter((name) => name !== "charisna-money-management-v14.1.2-ui-sync")
+                .map((name) => caches.delete(name))
+            );
+            if (typeof showToast === "function") {
+              showToast("Cache versi lama berhasil dibersihkan.", "🧹");
+            }
+          } catch (err) {
+            console.warn("Gagal membersihkan cache:", err);
+          }
+        }
+      }, true);
+    }
+  }
+
+  function installSystemPanelObserver() {
+    const updatePanel = document.getElementById("v10PanelUpdate");
+    if (!updatePanel || updatePanel.dataset.v14Observed) return;
+    updatePanel.dataset.v14Observed = "true";
+    let debounceTimer = null;
+    const observer = new MutationObserver(() => {
+      if (debounceTimer) clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(() => {
+        renderV14SystemCenter();
+      }, 50);
+    });
+    observer.observe(updatePanel, { childList: true, subtree: false });
+  }
+
   function openUserMenu() {
     const menu = document.getElementById("v14UserMenu");
     const trigger = document.getElementById("v14UserTrigger");
@@ -1465,10 +1590,13 @@
     normalizeRenderedCrossProfileTransfers();
     renderFinancialUserChrome();
     renderV14Changelog();
+    renderV14SystemCenter();
+    installSystemPanelObserver();
     window.setTimeout(() => {
       normalizeRenderedCrossProfileTransfers();
       renderFinancialUserChrome();
       renderV14Changelog();
+      renderV14SystemCenter();
     }, 120);
     if (changed) queueMigrationSave();
   };
@@ -1477,6 +1605,7 @@
   renderSettings = function v14RenderSettings() {
     previousRenderSettings();
     renderFinancialUserChrome();
+    renderV14SystemCenter();
   };
 
   const previousChangeSection = changeSection;
@@ -1484,6 +1613,10 @@
     previousChangeSection(sectionId);
     renderFinancialUserChrome();
     if (sectionId === "updates") renderV14Changelog();
+    if (sectionId === "system" || sectionId === "tools") {
+      renderV14SystemCenter();
+      window.setTimeout(renderV14SystemCenter, 60);
+    }
   };
 
   window.addEventListener("beforeunload", saveActiveProfilePreferences);
@@ -1491,10 +1624,12 @@
   document.addEventListener("DOMContentLoaded", () => {
     injectFinancialUserUI();
     installFinancialModalObserver();
+    installSystemPanelObserver();
     if (state) {
       const changed = ensureV14State();
       renderFinancialUserChrome();
       renderV14Changelog();
+      renderV14SystemCenter();
       if (changed) queueMigrationSave();
     }
   });

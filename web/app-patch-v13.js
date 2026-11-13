@@ -430,14 +430,16 @@
     if (chip) chip.textContent = monthLabel();
     const title = document.getElementById("pageTitle");
     if (title && currentSection === "dashboard") title.textContent = `Halo, ${state?.settings?.userName || "Coco"}!`;
-    const systemBadge = document.querySelector("#system .section-header .version-badge");
-    if (systemBadge) systemBadge.textContent = VERSION_LABEL;
-    const bannerStrong = document.querySelector("#v10PanelUpdate .v10-update-banner strong");
-    if (bannerStrong && !/baru siap/i.test(bannerStrong.textContent)) bannerStrong.textContent = "Aplikasi menggunakan v13";
-    const versionCards = document.querySelectorAll("#v10PanelUpdate .v10-stat strong");
-    if (versionCards[0]) versionCards[0].textContent = "v13";
-    const versionSmall = versionCards[0]?.parentElement?.querySelector("small");
-    if (versionSmall) versionSmall.textContent = "Cute Complete · multi-device";
+    if (!window.v14SystemStatusPatched) {
+      const systemBadge = document.querySelector("#system .section-header .version-badge");
+      if (systemBadge) systemBadge.textContent = VERSION_LABEL;
+      const bannerStrong = document.querySelector("#v10PanelUpdate .v10-update-banner strong");
+      if (bannerStrong && !/baru siap/i.test(bannerStrong.textContent)) bannerStrong.textContent = "Aplikasi menggunakan v13";
+      const versionCards = document.querySelectorAll("#v10PanelUpdate .v10-stat strong");
+      if (versionCards[0]) versionCards[0].textContent = "v13";
+      const versionSmall = versionCards[0]?.parentElement?.querySelector("small");
+      if (versionSmall) versionSmall.textContent = "Cute Complete · multi-device";
+    }
   }
 
   function injectV13UI() {

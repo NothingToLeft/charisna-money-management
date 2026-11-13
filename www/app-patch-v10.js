@@ -767,6 +767,10 @@
   }
 
   async function checkForUpdate() {
+    if (window.CharisnaDesktop?.isDesktop || window.CHARISNA_NATIVE || !("serviceWorker" in navigator)) {
+      showToast("Aplikasi Desktop/Native v14.1.2 sudah versi terbaru.", "✓");
+      return;
+    }
     const registration = await navigator.serviceWorker.getRegistration();
     if (!registration) throw new Error("Service worker belum terdaftar.");
     await registration.update();
@@ -784,7 +788,7 @@
   async function clearOldCaches() {
     if (!("caches" in window)) return;
     const names = await caches.keys();
-    await Promise.all(names.filter((name) => name !== "charisna-money-management-v10-production").map((name) => caches.delete(name)));
+    await Promise.all(names.filter((name) => !name.includes("v14.1.2")).map((name) => caches.delete(name)));
     showToast("Cache versi lama dihapus.", "🧹");
   }
 
