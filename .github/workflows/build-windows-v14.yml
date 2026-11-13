@@ -1,4 +1,4 @@
-name: Build Windows EXE v14.1.1
+name: Build Windows EXE v14.1.2
 
 on:
   workflow_dispatch:
@@ -14,7 +14,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: windows-v14.1.1-${{ github.ref }}
+  group: windows-v14.1.2-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -37,8 +37,8 @@ jobs:
         shell: pwsh
         run: |
           $package = Get-Content "windows/package.json" -Raw | ConvertFrom-Json
-          if ($package.version -ne "14.1.1") {
-            throw "Versi windows/package.json harus 14.1.1, ditemukan $($package.version)."
+          if ($package.version -ne "14.1.2") {
+            throw "Versi windows/package.json harus 14.1.2, ditemukan $($package.version)."
           }
 
       - name: Install Windows desktop dependencies
@@ -58,7 +58,7 @@ jobs:
           $release = Join-Path $env:GITHUB_WORKSPACE "release-windows"
           New-Item -ItemType Directory -Force -Path $release | Out-Null
 
-          $setup = Get-ChildItem $dist -File -Filter "CHARISNA-Money-Management-Setup-v14.1.1-x64.exe" | Select-Object -First 1
+          $setup = Get-ChildItem $dist -File -Filter "CHARISNA-Money-Management-Setup-v14.1.2-x64.exe" | Select-Object -First 1
           if (-not $setup) {
             throw "Installer EXE tidak ditemukan di windows/dist."
           }
@@ -87,21 +87,21 @@ jobs:
         shell: pwsh
         env:
           GH_TOKEN: ${{ github.token }}
-          TAG_NAME: v14.1.1
+          TAG_NAME: v14.1.2
         run: |
           $ErrorActionPreference = "Stop"
           gh release view $env:TAG_NAME 2>$null | Out-Null
           if ($LASTEXITCODE -ne 0) {
             gh release create $env:TAG_NAME `
               --target $env:GITHUB_SHA `
-              --title "CHARISNA Money Management v14.1.1" `
-              --notes "CHARISNA Money Management v14.1.1 untuk Android dan Windows. Fitur: multi-akun keuangan, transfer antar akun, dan buka dashboard otomatis setelah PIN benar."
+              --title "CHARISNA Money Management v14.1.2" `
+              --notes "CHARISNA Money Management v14.1.2 untuk Android dan Windows. Fitur: UI polish, universal modal prompts, multi-user sync, superapp ecosystem, hardening build & keamanan."
 
             if ($LASTEXITCODE -ne 0) {
               Start-Sleep -Seconds 5
               gh release view $env:TAG_NAME | Out-Null
               if ($LASTEXITCODE -ne 0) {
-                throw "GitHub Release v14.1.1 tidak dapat dibuat atau ditemukan."
+                throw "GitHub Release v14.1.2 tidak dapat dibuat atau ditemukan."
               }
             }
           }
@@ -126,5 +126,5 @@ jobs:
 
           Checksum: ``$env:CHECKSUM_NAME``
 
-          Unduh dari menu **Releases** pada tag **v14.1.1**.
+          Unduh dari menu **Releases** pada tag **v14.1.2**.
           "@ | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append -Encoding utf8

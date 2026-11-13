@@ -1,5 +1,5 @@
-CHARISNA MONEY MANAGEMENT v14.1.1
-MULTI-USER + TRANSFER ANTAR AKUN + AUTO PIN UNLOCK
+CHARISNA MONEY MANAGEMENT v14.1.2
+MULTI-USER + TRANSFER ANTAR AKUN + SUPERAPP SYNC + UI POLISH
 
 CARA MENGGUNAKAN
 1. Pilih akun keuangan sumber, misalnya "Usaha Kos".
@@ -9,9 +9,11 @@ CARA MENGGUNAKAN
 5. Isi nominal, biaya transfer bila ada, tanggal, dan catatan.
 6. Simpan. Aplikasi membuat catatan keluar dan masuk yang saling terhubung.
 
-FITUR LOGIN v14.1.1
-- Masukkan PIN sampai lengkap. Jika benar, dashboard terbuka otomatis tanpa menekan tombol.
-- Jika PIN salah, kolom dikosongkan agar dapat langsung mencoba lagi.
+FITUR BARU v14.1.2
+- Penyelarasan UI modern: palet warna indigo (#4f46e5) & pink lembut (#ec4899), radius kartu konsisten.
+- Universal Modal Prompts: menggantikan window.prompt() dengan showPromptModal() native HTML agar aman dan kompatibel di Windows Electron, Android Capacitor, dan Web PWA tanpa crash.
+- SuperApp Integration & Event Sync: modul sinkronisasi lintas ekosistem CHARISNA SuperApp, Bumi Makmur POS, dan Homestay.
+- Sesi & Keamanan: auto-lock membuang passkey sesi, webhook keluar dibatasi timeout 4s (AbortController), Android backup protection & notification channels.
 
 CATATAN PENTING
 - Transfer tidak menambah omzet dan tidak dihitung sebagai pengeluaran operasional.

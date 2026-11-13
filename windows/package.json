@@ -1,8 +1,8 @@
 {
   "name": "charisna-money-management-desktop",
-  "version": "14.1.1",
+  "version": "14.1.2",
   "private": true,
-  "description": "CHARISNA Money Management v14.1.1 desktop app with multi-user financial spaces, cross-profile transfers, and automatic PIN unlock",
+  "description": "CHARISNA Money Management v14.1.2 desktop app with multi-user financial spaces, cross-profile transfers, and universal modal security",
   "main": "main.cjs",
   "author": "CHARISNA",
   "license": "UNLICENSED",

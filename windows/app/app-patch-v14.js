@@ -2,10 +2,10 @@
 
 (() => {
   const VERSION = 14;
-  const VERSION_LABEL = "v14.1.1 — Multi-User + Transfer + Auto PIN";
-  const RELEASE_VERSION = "14.1.1";
+  const VERSION_LABEL = "v14.1.2 — Multi-User + SuperApp Sync + UI Polish";
+  const RELEASE_VERSION = "14.1.2";
   const CROSS_PROFILE_TRANSFER_SCHEMA_VERSION = 1;
-  const PRIMARY_COLOR = "#ee5d92";
+  const PRIMARY_COLOR = "#4f46e5";
   const USER_SETTING_KEYS = [
     "baseCurrency",
     "dashboardWidgets",
@@ -1231,17 +1231,18 @@
     if (!container || document.getElementById("v14ReleaseCard")) return;
     container.insertAdjacentHTML("afterbegin", `
       <article class="release-card latest" id="v14ReleaseCard">
-        <div class="release-head"><div><span class="release-kicker">VERSI TERBARU</span><h3>${VERSION_LABEL}</h3><p>Satu login cloud kini dapat mengelola akun keuangan terpisah dan memindahkan uang antar akun melalui transfer terhubung dua arah.</p></div><span class="version-badge">v14</span></div>
+        <div class="release-head"><div><span class="release-kicker">VERSI TERBARU</span><h3>${VERSION_LABEL}</h3><p>Penyelarasan palet indigo bersih, sinkronisasi ringkasan bulanan ke CHARISNA SuperApp, modal konfirmasi universal, dan sinkronisasi lintas platform 100%.</p></div><span class="version-badge">v14.1.2</span></div>
         <div class="release-feature-grid">
-          <div><span>👥</span><p><strong>Multi-user internal</strong>Tambah, edit, pilih, arsipkan, dan jadikan akun utama tanpa login ulang.</p></div>
-          <div><span>🔒</span><p><strong>Isolasi menyeluruh</strong>Dompet, transaksi, budget, target, utang, investasi, langganan, kategori, tag, kalender, dan laporan dipisahkan.</p></div>
-          <div><span>🏪</span><p><strong>Siap banyak usaha</strong>Buat akun khusus toko, cabang, proyek, pasangan, atau kebutuhan keluarga.</p></div>
-          <div><span>↻</span><p><strong>Migrasi aman</strong>Data v6–v13 otomatis masuk ke akun utama dan tetap kompatibel dengan cloud lama.</p></div>
-          <div><span>🧾</span><p><strong>Ekspor sesuai konteks</strong>PDF, Excel, pencarian, dan rincian kategori hanya memakai akun aktif.</p></div>
-          <div><span>⇄</span><p><strong>Transfer antar akun</strong>Pindahkan dana dari usaha ke personal atau akun lain dengan saldo dan histori yang tetap konsisten.</p></div>
-          <div><span>⚡</span><p><strong>Auto PIN Unlock</strong>Begitu PIN lengkap dan benar, dashboard terbuka otomatis tanpa menekan tombol lagi.</p></div>
+          <div><span>🎨</span><p><strong>UI Polish & Palette</strong>Palet indigo coherent (#4f46e5), border-radius lebih lembut, dan visual bersih tanpa blob dekoratif berlebih.</p></div>
+          <div><span>📲</span><p><strong>CHARISNA SuperApp</strong>Kirim agregat saldo bersih dan cashflow bulanan otomatis ke SuperApp tanpa membocorkan PIN/transaksi mentah.</p></div>
+          <div><span>👥</span><p><strong>Multi-user internal</strong>Kelola akun keuangan terpisah untuk pribadi, keluarga, dan berbagai unit usaha.</p></div>
+          <div><span>⇄</span><p><strong>Transfer antar akun</strong>Pindahkan uang antar akun keuangan berbeda dengan saldo dan histori yang selalu konsisten.</p></div>
+          <div><span>🛡️</span><p><strong>Universal Modals</strong>Dialog konfirmasi reset brankas dan hapus data bekerja sempurna di Desktop Electron dan Android.</p></div>
+          <div><span>⚡</span><p><strong>Auto PIN Unlock</strong>Dashboard terbuka otomatis seketika saat PIN angka yang dimasukkan benar.</p></div>
+          <div><span>🔑</span><p><strong>Ubah Password Cloud</strong>Ganti kata sandi login cloud Supabase langsung dari panel pengaturan akun.</p></div>
+          <div><span>📱</span><p><strong>Android SDK 34 Ready</strong>Dukungan penuh notifikasi runtime Android 13/14 dan pengerasan keamanan brankas.</p></div>
         </div>
-        <div class="release-notes"><span>Kompatibilitas</span><p>Tidak memerlukan SQL atau tabel Supabase baru. Seluruh pemisahan disimpan di dalam brankas cloud terenkripsi.</p></div>
+        <div class="release-notes"><span>Kompatibilitas</span><p>Kompatibel penuh dengan seluruh versi brankas cloud sebelumnya. Tersinkronisasi identik di Web, Android, dan Windows Desktop.</p></div>
       </article>`);
     container.querySelectorAll(".release-card:not(#v14ReleaseCard)").forEach((card) => card.classList.remove("latest"));
   }

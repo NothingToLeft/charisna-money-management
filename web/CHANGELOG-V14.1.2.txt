@@ -1,0 +1,21 @@
+CHARISNA MONEY MANAGEMENT v14.1.2
+RILIS: UI POLISH, SUPERAPP SYNC, UNIVERSAL MODALS & CI HARDENING
+TANGGAL: 13 NOVEMBER 2026
+
+PERUBAHAN UTAMA
+- Penyelarasan Desain & Palet Warna: Palet modern indigo (#4f46e5), border-radius lebih lembut (9px/12px/14px/16px), penghapusan blob dekoratif, background bersih (#f7f6f9), dan keseragaman status bar serta splash screen di Android, Windows, dan Web.
+- Sinkronisasi Multi-Platform Penuh: PWA (web/), Android APK (www/), dan Windows Desktop (windows/app/) kini 100% sinkron dan terverifikasi secara bit-for-bit dengan skrip sync:platforms.
+- Integrasi CHARISNA SuperApp: Pengiriman otomatis ringkasan bulanan agregat (net balance, cashflow, kualitas data) ke endpoint worker CHARISNA SuperApp setelah penyimpanan cloud berhasil, tanpa mengekspos PIN atau transaksi mentah.
+- Universal Confirmation Modals: Dialog destruktif (Reset Brankas Lupa PIN, Kosongkan Akun Keuangan, Reset Data Browser) menggantikan window.prompt() dengan modal form HTML native berlatar z-index 1100, sehingga berfungsi sempurna di Electron Desktop Windows dan Android.
+- Keamanan Kunci Sesi: SESSION_KEY otomatis dibersihkan dari sessionStorage saat aplikasi dikunci jika pengguna tidak mendaftarkan Passkey/Quick Unlock.
+- Resilience Webhook: Pemanggilan webhook kini dilindungi dengan AbortController timeout 4 detik sehingga webhook lambat tidak menghambat enkripsi brankas maupun sinkronisasi cloud.
+- Form Ubah Password Cloud: Penambahan form ganti password login Supabase langsung dari panel Akun Cloud.
+- Pengerasan Android SDK 34: Deklarasi android:allowBackup="false" dan izin runtime POST_NOTIFICATIONS untuk Android 13/14.
+- Upgrade CI/CD: Pipeline release.yml dan build-android-v14.yml menggunakan android-actions/setup-android@v4 dan penerbitan rilis tag v14.1.2.
+- Test Suite Terpadu: Penambahan automated test suite finance-core (perhitungan saldo, transfer antar akun v14, WebCrypto PBKDF2/AES-GCM, dan abort timeout) dengan hasil 4/4 passed.
+
+KOMPATIBILITAS
+- Kompatibel penuh dengan seluruh versi brankas v6 sampai v14.1.1.
+- Tidak memerlukan migrasi database SQL Supabase tambahan.
+- Android versionCode: 140102.
+- Versi aplikasi: 14.1.2.

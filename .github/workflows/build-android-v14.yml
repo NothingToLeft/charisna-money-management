@@ -1,4 +1,4 @@
-name: Build Android APK v14.1.1
+name: Build Android APK v14.1.2
 
 on:
   workflow_dispatch:
@@ -19,7 +19,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: android-v14.1.1-${{ github.ref }}
+  group: android-v14.1.2-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -73,7 +73,7 @@ jobs:
           set -euo pipefail
           SOURCE_APK="android/app/build/outputs/apk/debug/app-debug.apk"
           RELEASE_DIR="release"
-          APK_NAME="CHARISNA-Money-Management-v14.1.1-Multi-User-Transfer-debug.apk"
+          APK_NAME="CHARISNA-Money-Management-v14.1.2-Multi-User-Transfer-debug.apk"
           APK_PATH="$RELEASE_DIR/$APK_NAME"
           SHA_PATH="$APK_PATH.sha256"
 
@@ -89,7 +89,7 @@ jobs:
       - name: Publish APK to GitHub Release
         env:
           GH_TOKEN: ${{ github.token }}
-          TAG_NAME: v14.1.1
+          TAG_NAME: v14.1.2
           APK_PATH: ${{ steps.package.outputs.apk_path }}
           SHA_PATH: ${{ steps.package.outputs.sha_path }}
         shell: bash
@@ -101,13 +101,13 @@ jobs:
           else
             gh release create "$TAG_NAME" "$APK_PATH" "$SHA_PATH" \
               --target "$GITHUB_SHA" \
-              --title "CHARISNA Money Management v14.1.1" \
-              --notes "Android debug APK v14.1.1. Fitur: multi-akun keuangan, transfer antar akun, dan buka dashboard otomatis setelah PIN benar."
+              --title "CHARISNA Money Management v14.1.2" \
+              --notes "Android debug APK v14.1.2. Fitur: UI polish, universal modal prompts, multi-user sync, superapp ecosystem, hardening build & keamanan."
           fi
 
       - name: Write build summary
         env:
-          TAG_NAME: v14.1.1
+          TAG_NAME: v14.1.2
           APK_NAME: ${{ steps.package.outputs.apk_name }}
         shell: bash
         run: |

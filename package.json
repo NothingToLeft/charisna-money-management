@@ -1,8 +1,8 @@
 {
   "name": "charisna-money-management-android",
-  "version": "14.1.1",
+  "version": "14.1.2",
   "private": true,
-  "description": "Android wrapper for CHARISNA Money Management v14.1.1 Multi-User + Transfer + Auto PIN Unlock",
+  "description": "Android wrapper for CHARISNA Money Management v14.1.2 Multi-User + Transfer + Cloud Sync + Universal Modals",
   "scripts": {
     "sync": "cap sync android",
     "sync:platforms": "node scripts/sync-platforms.mjs",
