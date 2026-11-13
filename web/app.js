@@ -6425,7 +6425,7 @@ async function registerServiceWorker() {
 
   if ("serviceWorker" in navigator) {
     try {
-      await navigator.serviceWorker.register("./service-worker.js?v=14.1.2-update-center");
+      await navigator.serviceWorker.register("./service-worker.js?v=14.1.2-mint");
     } catch (error) {
       console.warn("Service worker gagal:", error);
     }

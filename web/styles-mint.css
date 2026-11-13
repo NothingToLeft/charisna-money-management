@@ -1,0 +1,171 @@
+/* CHARISNA mint theme. Account colors and financial status colors remain distinct. */
+:root {
+  --background: #f3f7f4;
+  --surface: #fff;
+  --surface-solid: #fff;
+  --surface-soft: #f0f6f1;
+  --surface-hover: #e7f2e9;
+  --text: #183229;
+  --muted: #51695e;
+  --border: #d5e3d9;
+  --primary: #196347;
+  --primary-hover: #114b36;
+  --primary-soft: #e0f3e6;
+  --accent: #196347;
+  --accent-soft: #e0f3e6;
+  --cute-plum: var(--text);
+  --shadow: 0 2px 9px #153e2510;
+  --shadow-lg: 0 12px 30px #153e2519;
+  --radius-xl: 20px;
+  --radius-lg: 16px;
+  --radius-md: 12px;
+  --mint-hero: linear-gradient(125deg, #fff 8%, #def3e4);
+  --mint-action: #196347;
+  --mint-focus: #196347;
+  --mint-on-action: #fff;
+}
+[data-theme="dark"] {
+  --background: #111e18;
+  --surface: #1a2a22;
+  --surface-solid: #1a2a22;
+  --surface-soft: #23382d;
+  --surface-hover: #2b4537;
+  --text: #eef8f0;
+  --muted: #b6cbbd;
+  --border: #395446;
+  --primary: #a8e5be;
+  --primary-hover: #c1efd1;
+  --primary-soft: #294537;
+  --accent: #a8e5be;
+  --accent-soft: #294537;
+  --mint-hero: linear-gradient(125deg, #1a2a22, #294537);
+  --mint-action: #a8e5be;
+  --mint-focus: #a8e5be;
+  --mint-on-action: #15291e;
+}
+html.charisna-cute-v13 body {
+  background: var(--background);
+  font-family: "Geist", "Segoe UI", system-ui, sans-serif;
+}
+.app-shell .sidebar, .app-shell .panel, .app-shell .card {
+  background: var(--surface-solid);
+  border-color: var(--border);
+  box-shadow: var(--shadow);
+}
+.auth-screen { background: var(--mint-hero); }
+.auth-screen .auth-card {
+  background: var(--surface-solid);
+  border-color: var(--border);
+  color: var(--text);
+  box-shadow: var(--shadow-lg);
+}
+.auth-card :is(h1, h2, h3, label) { color: var(--text); }
+.auth-card :is(p, small) { color: var(--muted); }
+.brand-logo { transform: none; }
+.brand-logo, .auth-tab.active, .button.primary, .topbar .button.primary,
+.cute-calendar-modes button.active, .cute-tx-tabs button.active,
+.cute-calculator-grid .equals, .pro-fab {
+  background: var(--mint-action);
+  color: var(--mint-on-action);
+  box-shadow: var(--shadow);
+}
+.topbar, .cute-balance-card, .v10-hero {
+  background: var(--mint-hero);
+  color: var(--text);
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+}
+.topbar::after, .cute-balance-card::after { content: none; }
+.topbar h2, .cute-balance-main > strong { color: var(--text); }
+.topbar p, .cute-balance-main > :is(span, small), .cute-trend-bar { color: var(--muted); }
+.topbar :is(.icon-button, .pro-reminder-button, .pro-status-pill, .cute-period-chip),
+.cute-book.active, .nav-button.active, .nav-button.active > span,
+.sidebar-tip, .cute-more-intro, .v10-update-banner, .v10-push-banner {
+  background: var(--primary-soft);
+  color: var(--text);
+  border-color: var(--border);
+  box-shadow: none;
+}
+.cute-balance-stats > *, .cute-budget-icon {
+  background: var(--surface-solid);
+  color: var(--text);
+  border-color: var(--border);
+}
+.cute-balance-stats :is(strong, b) { color: var(--text); }
+.cute-balance-stats :is(span, small) { color: var(--muted); }
+.cute-trend-bar i, .progress-bar, .cute-progress i, .v10-progress > span {
+  background: var(--primary);
+}
+.cute-trend-bar.positive i { background: #2c835e; }
+.cute-trend-bar.negative i { background: #b54c56; }
+.cute-balance-main > strong, .money, .v10-stat strong {
+  font-variant-numeric: tabular-nums;
+}
+:where(button, a, input, select, textarea, [tabindex]):focus-visible {
+  outline: 2px solid var(--mint-focus);
+  outline-offset: 3px;
+}
+:is(.button, .icon-button, .nav-button, .mini-button, .cute-book):not(:disabled) {
+  transition: background-color 160ms ease, border-color 160ms ease, transform 120ms ease;
+}
+@media (hover: hover) {
+  :is(.button.secondary, .icon-button, .nav-button, .mini-button, .cute-book):not(:disabled):hover {
+    border-color: var(--primary);
+  }
+}
+:is(.button, .icon-button, .nav-button, .mini-button):not(:disabled):active {
+  transform: translateY(1px);
+}
+#loginForm[aria-busy="true"] button[type="submit"]::before,
+.cloud-status-dot.syncing {
+  box-sizing: border-box;
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  border: 2px solid currentColor;
+  border-inline-end-color: transparent;
+  border-radius: 50%;
+  background: transparent;
+  box-shadow: none;
+  animation: mint-spin 850ms linear infinite;
+}
+#loginForm[aria-busy="true"] button[type="submit"]::before {
+  content: "";
+  margin-inline-end: .55em;
+  vertical-align: -.1em;
+}
+.cloud-status-dot.syncing { color: var(--primary); }
+@keyframes mint-spin { to { transform: rotate(360deg); } }
+
+@media (max-width: 900px) {
+  .cute-dashboard-grid { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 680px) {
+  .topbar-actions { flex-wrap: wrap; overflow: visible; gap: 8px; }
+  .topbar :is(.icon-button, .pro-reminder-button, .button), .v10-update-banner .button {
+    min-height: 44px;
+  }
+  .topbar :is(.icon-button, .pro-reminder-button) { min-width: 44px; }
+  .cute-balance-card { grid-template-columns: minmax(0, 1fr); min-height: auto; padding: 20px; }
+  .cute-trend { justify-content: flex-start; }
+  .cute-balance-stats { grid-template-columns: repeat(auto-fit, minmax(min(100%, 110px), 1fr)); }
+  .v10-update-banner .button-grid { width: 100%; }
+  .v10-update-banner .button { flex: 1 1 130px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  :is(.button, .icon-button, .nav-button, .mini-button, .cute-book) { transition: none; }
+  #loginForm[aria-busy="true"] button[type="submit"]::before,
+  .cloud-status-dot.syncing { animation: none; }
+}
+.topbar-actions #addTransactionButton,
+.topbar-actions .button.primary {
+  width: auto;
+  min-width: 88px;
+  padding-inline: 12px;
+  white-space: nowrap;
+}
+.cute-balance-card .cute-balance-stats > * {
+  background: var(--surface-solid);
+  border: 1px solid var(--border);
+}
+.v10-hero :is(h3, p, .v10-kicker) { color: var(--text); }
