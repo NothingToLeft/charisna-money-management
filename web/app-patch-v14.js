@@ -1279,7 +1279,7 @@
     if (bannerP) {
       const isDesktop = Boolean(window.CharisnaDesktop?.isDesktop);
       const isNative = Boolean(window.CHARISNA_NATIVE);
-      const cacheName = "charisna-money-management-v14.1.2-update-center";
+      const cacheName = "charisna-money-management-v14.1.2-mint";
       if (isDesktop) {
         bannerP.textContent = `Aplikasi Desktop Windows aktif (paket lokal offline). Cache shell: ${cacheName}.`;
       } else if (isNative) {
@@ -1357,7 +1357,7 @@
             const names = await caches.keys();
             await Promise.all(
               names
-                .filter((name) => name !== "charisna-money-management-v14.1.2-update-center")
+                .filter((name) => name !== "charisna-money-management-v14.1.2-mint")
                 .map((name) => caches.delete(name))
             );
             if (typeof showToast === "function") {
