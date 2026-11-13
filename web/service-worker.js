@@ -1,31 +1,31 @@
 "use strict";
 
-const CACHE_NAME = "charisna-money-management-v14.1.2-mint";
+const CACHE_NAME = "charisna-money-management-v14.1.2-mint-palette";
 const APP_FILES = [
   "./",
-  "./index.html?v=14.1.2-mint",
-  "./styles.css?v=14.1.2-mint",
-  "./styles-pro.css?v=14.1.2-mint",
-  "./styles-patch-v9.css?v=14.1.2-mint",
-  "./styles-patch-v10.css?v=14.1.2-mint",
-  "./styles-patch-v11.css?v=14.1.2-mint",
-  "./styles-patch-v12.css?v=14.1.2-mint",
-  "./styles-native.css?v=14.1.2-mint",
-  "./styles-cute-v13.css?v=14.1.2-mint",
-  "./styles-mobile-v13-1.css?v=14.1.2-mint",
-  "./styles-patch-v14.css?v=14.1.2-mint",
-  "./styles-mint.css?v=14.1.2-mint",
-  "./native-bootstrap.js?v=14.1.2-mint",
-  "./app.js?v=14.1.2-mint",
+  "./index.html?v=14.1.2-mint-palette",
+  "./styles.css?v=14.1.2-mint-palette",
+  "./styles-pro.css?v=14.1.2-mint-palette",
+  "./styles-patch-v9.css?v=14.1.2-mint-palette",
+  "./styles-patch-v10.css?v=14.1.2-mint-palette",
+  "./styles-patch-v11.css?v=14.1.2-mint-palette",
+  "./styles-patch-v12.css?v=14.1.2-mint-palette",
+  "./styles-native.css?v=14.1.2-mint-palette",
+  "./styles-cute-v13.css?v=14.1.2-mint-palette",
+  "./styles-mobile-v13-1.css?v=14.1.2-mint-palette",
+  "./styles-patch-v14.css?v=14.1.2-mint-palette",
+  "./styles-mint.css?v=14.1.2-mint-palette",
+  "./native-bootstrap.js?v=14.1.2-mint-palette",
+  "./app.js?v=14.1.2-mint-palette",
   "./app-pro.js?v=2026-11-07-cloud-password",
-  "./app-patch-v9.js?v=14.1.2-mint",
-  "./app-patch-v10.js?v=14.1.2-mint",
-  "./app-patch-v11.js?v=14.1.2-mint",
-  "./app-patch-v12.js?v=14.1.2-mint",
-  "./app-patch-v13.js?v=14.1.2-mint",
-  "./app-patch-v14.js?v=14.1.2-mint",
+  "./app-patch-v9.js?v=14.1.2-mint-palette",
+  "./app-patch-v10.js?v=14.1.2-mint-palette",
+  "./app-patch-v11.js?v=14.1.2-mint-palette",
+  "./app-patch-v12.js?v=14.1.2-mint-palette",
+  "./app-patch-v13.js?v=14.1.2-mint-palette",
+  "./app-patch-v14.js?v=14.1.2-mint-palette",
   "./superapp-sync.js?v=14.1.2-superapp-audit",
-  "./manifest.webmanifest?v=14.1.2-mint",
+  "./manifest.webmanifest?v=14.1.2-mint-palette",
   "./PRIVACY-POLICY.html",
   "./CHANGELOG.html",
   "./icons/icon-192.png",
@@ -70,10 +70,10 @@ self.addEventListener("fetch", (event) => {
       fetch(event.request)
         .then((response) => {
           const copy = response.clone();
-          caches.open(CACHE_NAME).then((cache) => cache.put("./index.html?v=14.1.2-mint", copy));
+          caches.open(CACHE_NAME).then((cache) => cache.put("./index.html?v=14.1.2-mint-palette", copy));
           return response;
         })
-        .catch(() => caches.match("./index.html?v=14.1.2-mint"))
+        .catch(() => caches.match("./index.html?v=14.1.2-mint-palette"))
     );
     return;
   }
@@ -109,7 +109,7 @@ self.addEventListener("push", (event) => {
     requireInteraction: Boolean(payload.requireInteraction),
     timestamp: payload.timestamp || Date.now(),
     data: {
-      url: payload.url || "./index.html?v=14.1.2-mint",
+      url: payload.url || "./index.html?v=14.1.2-mint-palette",
       scheduleId: payload.scheduleId || null,
       dueDate: payload.dueDate || null
     },
@@ -125,7 +125,7 @@ self.addEventListener("push", (event) => {
 self.addEventListener("notificationclick", (event) => {
   event.notification.close();
   if (event.action === "dismiss") return;
-  const targetUrl = new URL(event.notification.data?.url || "./index.html?v=14.1.2-mint", self.location.origin).href;
+  const targetUrl = new URL(event.notification.data?.url || "./index.html?v=14.1.2-mint-palette", self.location.origin).href;
   event.waitUntil(
     clients.matchAll({ type: "window", includeUncontrolled: true }).then((list) => {
       const existing = list.find((client) => client.url.startsWith(self.location.origin) && "focus" in client);
