@@ -11,7 +11,7 @@
     "build:release": "cd android && ./gradlew assembleRelease"
   },
   "dependencies": {
-    "@capacitor/android": "6.2.1",
+    "@capacitor/android": "6.2.3",
     "@capacitor/app": "6.0.3",
     "@capacitor/core": "6.2.1",
     "@capacitor/filesystem": "6.0.4",
@@ -24,10 +24,10 @@
     "@tesseract.js-data/ind": "1.0.0",
     "chart.js": "4.4.9",
     "exceljs": "4.4.0",
-    "jspdf": "2.5.2",
+    "jspdf": "4.2.1",
     "jszip": "3.10.1",
     "tesseract.js": "5.1.1",
-    "xlsx": "0.18.5"
+    "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz"
   },
   "devDependencies": {
     "@capacitor/cli": "6.2.1"

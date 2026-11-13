@@ -49,17 +49,21 @@
     return {schema:1,month,profiles};
   }
   const status = message => {const el=document.getElementById("superAppStatus");if(el)el.textContent=message;};
-  let sending = false;
-  async function sendSnapshot(pairCode = "") {
-    if (sending || !navigator.onLine || !state || !vault || !cloudSession?.user) return null;
-    sending = true;
-    try {
+  let pendingSend = Promise.resolve();
+  function sendSnapshot(pairCode = "") {
+    const userId = cloudSession?.user?.id;
+    if (!navigator.onLine || !state || !vault || !userId) return Promise.resolve(null);
+    const body = JSON.stringify({pairCode,syncKey:state.settings.superAppSyncKey || "",snapshot:snapshot()});
+    const send = pendingSend.then(async () => {
+      if (!navigator.onLine || !state || cloudSession?.user?.id !== userId) return null;
       const response = await fetch(ENDPOINT, {method:"POST",headers:{"Content-Type":"application/json"},
-        body:JSON.stringify({pairCode,syncKey:state.settings.superAppSyncKey || "",snapshot:snapshot()}),cache:"no-store"});
+        body,cache:"no-store",signal:AbortSignal.timeout(15000)});
       if (!response.ok) throw Error(response.status === 409 ? "Hubungkan kembali dari SuperApp." : "Ringkasan belum terkirim.");
       status("Ringkasan terkirim ke SuperApp.");
       return await response.json();
-    } finally {sending = false;}
+    });
+    pendingSend = send.catch(() => {});
+    return send;
   }
   const previousCloudPush = cloudPush;
   cloudPush = async function superAppCloudPush(options) {

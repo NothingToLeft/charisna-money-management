@@ -259,7 +259,8 @@ async function checkForUpdates() {
       activeUpdateUrl = updateUrl;
       autoUpdater.setFeedURL({ provider: "generic", url: activeUpdateUrl });
     }
-    return await autoUpdater.checkForUpdates();
+    const result = await autoUpdater.checkForUpdates();
+    return result ? { available: Boolean(result.isUpdateAvailable) } : null;
   } catch (error) {
     sendUpdateStatus({ state: "error", message: error.message });
     return { error: error.message };
