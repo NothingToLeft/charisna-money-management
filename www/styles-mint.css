@@ -169,3 +169,28 @@ html.charisna-cute-v13 body {
   border: 1px solid var(--border);
 }
 .v10-hero :is(h3, p, .v10-kicker) { color: var(--text); }
+
+/* Shared control colors override the legacy palette in both display modes. */
+html :is(.sidebar-tip, .cute-more-intro, .cute-book.active, .v14-user-trigger) {
+  background: var(--primary-soft);
+  color: var(--text);
+  border-color: var(--border);
+  box-shadow: none;
+}
+.budget-card .progress-bar, .goal-card .progress-bar {
+  background: var(--primary);
+}
+#lockButton.button {
+  background: var(--primary-soft);
+  color: var(--primary);
+  border: 1px solid var(--primary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5em;
+}
+#lockButton.button:hover { background: var(--surface-hover); }
+#lockButton svg { width: 1.15em; height: 1.15em; flex: none; }
+@media (max-width: 680px) {
+  #lockButton.button { min-height: 44px; }
+}
