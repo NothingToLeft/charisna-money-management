@@ -1,30 +1,30 @@
 "use strict";
 
-const CACHE_NAME = "charisna-money-management-v14.1.2-audit-fix";
+const CACHE_NAME = "charisna-money-management-v14.1.2-update-center";
 const APP_FILES = [
   "./",
-  "./index.html?v=14.1.2-audit-fix",
-  "./styles.css?v=14.1.2-audit-fix",
-  "./styles-pro.css?v=14.1.2-audit-fix",
-  "./styles-patch-v9.css?v=14.1.2-audit-fix",
-  "./styles-patch-v10.css?v=14.1.2-audit-fix",
-  "./styles-patch-v11.css?v=14.1.2-audit-fix",
-  "./styles-patch-v12.css?v=14.1.2-audit-fix",
-  "./styles-native.css?v=14.1.2-audit-fix",
-  "./styles-cute-v13.css?v=14.1.2-audit-fix",
-  "./styles-mobile-v13-1.css?v=14.1.2-audit-fix",
-  "./styles-patch-v14.css?v=14.1.2-audit-fix",
-  "./native-bootstrap.js?v=14.1.2-audit-fix",
-  "./app.js?v=14.1.2-audit-fix",
+  "./index.html?v=14.1.2-update-center",
+  "./styles.css?v=14.1.2-update-center",
+  "./styles-pro.css?v=14.1.2-update-center",
+  "./styles-patch-v9.css?v=14.1.2-update-center",
+  "./styles-patch-v10.css?v=14.1.2-update-center",
+  "./styles-patch-v11.css?v=14.1.2-update-center",
+  "./styles-patch-v12.css?v=14.1.2-update-center",
+  "./styles-native.css?v=14.1.2-update-center",
+  "./styles-cute-v13.css?v=14.1.2-update-center",
+  "./styles-mobile-v13-1.css?v=14.1.2-update-center",
+  "./styles-patch-v14.css?v=14.1.2-update-center",
+  "./native-bootstrap.js?v=14.1.2-update-center",
+  "./app.js?v=14.1.2-update-center",
   "./app-pro.js?v=2026-11-07-cloud-password",
-  "./app-patch-v9.js?v=14.1.2-audit-fix",
-  "./app-patch-v10.js?v=14.1.2-audit-fix",
-  "./app-patch-v11.js?v=14.1.2-audit-fix",
-  "./app-patch-v12.js?v=14.1.2-audit-fix",
-  "./app-patch-v13.js?v=14.1.2-audit-fix",
-  "./app-patch-v14.js?v=14.1.2-audit-fix",
+  "./app-patch-v9.js?v=14.1.2-update-center",
+  "./app-patch-v10.js?v=14.1.2-update-center",
+  "./app-patch-v11.js?v=14.1.2-update-center",
+  "./app-patch-v12.js?v=14.1.2-update-center",
+  "./app-patch-v13.js?v=14.1.2-update-center",
+  "./app-patch-v14.js?v=14.1.2-update-center",
   "./superapp-sync.js?v=14.1.2-superapp-audit",
-  "./manifest.webmanifest?v=14.1.2-audit-fix",
+  "./manifest.webmanifest?v=14.1.2-update-center",
   "./PRIVACY-POLICY.html",
   "./CHANGELOG.html",
   "./icons/icon-192.png",
@@ -69,10 +69,10 @@ self.addEventListener("fetch", (event) => {
       fetch(event.request)
         .then((response) => {
           const copy = response.clone();
-          caches.open(CACHE_NAME).then((cache) => cache.put("./index.html?v=14.1.2-audit-fix", copy));
+          caches.open(CACHE_NAME).then((cache) => cache.put("./index.html?v=14.1.2-update-center", copy));
           return response;
         })
-        .catch(() => caches.match("./index.html?v=14.1.2-audit-fix"))
+        .catch(() => caches.match("./index.html?v=14.1.2-update-center"))
     );
     return;
   }
@@ -108,7 +108,7 @@ self.addEventListener("push", (event) => {
     requireInteraction: Boolean(payload.requireInteraction),
     timestamp: payload.timestamp || Date.now(),
     data: {
-      url: payload.url || "./index.html?v=14.1.2-audit-fix",
+      url: payload.url || "./index.html?v=14.1.2-update-center",
       scheduleId: payload.scheduleId || null,
       dueDate: payload.dueDate || null
     },
@@ -124,7 +124,7 @@ self.addEventListener("push", (event) => {
 self.addEventListener("notificationclick", (event) => {
   event.notification.close();
   if (event.action === "dismiss") return;
-  const targetUrl = new URL(event.notification.data?.url || "./index.html?v=14.1.2-audit-fix", self.location.origin).href;
+  const targetUrl = new URL(event.notification.data?.url || "./index.html?v=14.1.2-update-center", self.location.origin).href;
   event.waitUntil(
     clients.matchAll({ type: "window", includeUncontrolled: true }).then((list) => {
       const existing = list.find((client) => client.url.startsWith(self.location.origin) && "focus" in client);
