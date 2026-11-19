@@ -82,33 +82,69 @@ html.charisna-cute-v13 body {
   font-size: 0.92rem !important;
   font-weight: 400 !important;
 }
-.pin-visual-dots {
+.auth-card .password-field {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+.auth-card .password-field .pin-visual-dots {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 14px;
+  right: 48px;
+  margin: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 12px;
-  margin: 10px 0 8px;
-  min-height: 24px;
+  pointer-events: none;
+  z-index: 2;
 }
-.pin-visual-dot {
+.auth-card .password-field .pin-visual-dot {
   width: 14px;
   height: 14px;
   border-radius: 50%;
-  border: 2px solid color-mix(in srgb, var(--text) 28%, transparent);
-  background: transparent;
+  border: 2px solid color-mix(in srgb, var(--text) 32%, transparent);
+  background: color-mix(in srgb, var(--surface-solid) 70%, transparent);
   transition: all 180ms cubic-bezier(0.34, 1.56, 0.64, 1);
   box-sizing: border-box;
+  flex-shrink: 0;
 }
-.pin-visual-dot.filled {
+.auth-card .password-field .pin-visual-dot.filled {
   border-color: var(--primary);
   background: var(--primary);
   transform: scale(1.22);
   box-shadow: 0 0 10px color-mix(in srgb, var(--primary) 45%, transparent);
 }
-.pin-visual-dots.error .pin-visual-dot {
+.auth-card .password-field.error-shake,
+.auth-card .password-field .pin-visual-dots.error {
+  animation: pin-shake 400ms ease;
+}
+.auth-card .password-field .pin-visual-dots.error .pin-visual-dot {
   border-color: #b54c56;
   background: #b54c56;
-  animation: pin-shake 400ms ease;
+}
+.auth-card .password-field.pin-mode-active input.pin-input-masked {
+  color: transparent !important;
+  caret-color: transparent !important;
+  user-select: none;
+}
+.auth-card .password-field.pin-mode-active input.pin-input-masked::placeholder {
+  color: transparent !important;
+  opacity: 0 !important;
+}
+.auth-card .password-field.pin-mode-active input.pin-input-masked::-webkit-input-placeholder {
+  color: transparent !important;
+  opacity: 0 !important;
+}
+.auth-card .password-field.pin-mode-reveal .pin-visual-dots {
+  display: none !important;
+}
+.auth-card .password-field.pin-mode-reveal input {
+  color: var(--text) !important;
+  caret-color: var(--primary) !important;
 }
 .brand-logo { transform: none; }
 .brand-logo, .auth-tab.active, .button.primary, .topbar .button.primary,

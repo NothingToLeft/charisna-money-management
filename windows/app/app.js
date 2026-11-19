@@ -844,19 +844,40 @@ function configureCredentialUI() {
 function updateLoginPinVisualizer() {
   const visualizer = document.getElementById("loginPinVisualizer");
   const input = document.getElementById("loginPassword");
-  if (!visualizer) return;
+  const fieldContainer = document.getElementById("loginPasswordField") || input?.closest(".password-field");
+  if (!visualizer || !input) return;
 
   const isPin = vaultUsesPin();
   if (!isPin) {
     visualizer.hidden = true;
+    visualizer.style.display = "none";
+    if (fieldContainer) {
+      fieldContainer.classList.remove("pin-mode-active", "pin-mode-reveal");
+    }
+    input.classList.remove("pin-input-masked");
+    return;
+  }
+
+  const isRevealed = input.type !== "password";
+  if (fieldContainer) {
+    fieldContainer.classList.add("pin-mode-active");
+    fieldContainer.classList.toggle("pin-mode-reveal", isRevealed);
+  }
+  input.classList.toggle("pin-input-masked", !isRevealed);
+
+  if (isRevealed) {
+    visualizer.hidden = true;
+    visualizer.style.display = "none";
     return;
   }
 
   visualizer.hidden = false;
+  visualizer.style.display = "flex";
+
   const pinLength = PIN_LENGTHS.includes(Number(vault?.pinLength))
     ? Number(vault.pinLength)
     : 6;
-  const currentLength = (input?.value || "").length;
+  const currentLength = (input.value || "").length;
 
   if (visualizer.children.length !== pinLength) {
     visualizer.innerHTML = "";
@@ -879,10 +900,20 @@ function updateLoginPinVisualizer() {
 
 function triggerPinVisualizerError() {
   const visualizer = document.getElementById("loginPinVisualizer");
-  if (!visualizer) return;
-  visualizer.classList.add("error");
+  const fieldContainer = document.getElementById("loginPasswordField") || document.getElementById("loginPassword")?.closest(".password-field");
+  if (visualizer) {
+    visualizer.classList.add("error");
+  }
+  if (fieldContainer) {
+    fieldContainer.classList.add("error-shake");
+  }
   window.setTimeout(() => {
-    visualizer.classList.remove("error");
+    if (visualizer) {
+      visualizer.classList.remove("error");
+    }
+    if (fieldContainer) {
+      fieldContainer.classList.remove("error-shake");
+    }
     updateLoginPinVisualizer();
   }, 450);
 }

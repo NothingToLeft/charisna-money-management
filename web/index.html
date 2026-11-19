@@ -253,7 +253,7 @@
           <label class="field">
             <span id="loginCredentialLabel">PIN brankas</span>
 
-            <div class="password-field">
+            <div class="password-field" id="loginPasswordField">
               <input
                 id="loginPassword"
                 type="password"
@@ -265,6 +265,8 @@
                 required
               />
 
+              <div class="pin-visual-dots" id="loginPinVisualizer" aria-hidden="true"></div>
+
               <button
                 type="button"
                 class="password-toggle"
@@ -275,8 +277,6 @@
               </button>
             </div>
           </label>
-
-          <div class="pin-visual-dots" id="loginPinVisualizer" aria-hidden="true"></div>
 
           <div class="pin-pad" id="loginPinPad" aria-label="Panel angka PIN">
             <button type="button" data-pin-key="1">1</button>
