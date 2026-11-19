@@ -74,9 +74,16 @@ html.charisna-cute-v13 body {
 }
 
 .auth-card {
-  border-color: rgba(255,255,255,.16);
-  background: rgba(82, 34, 57, .78);
-  box-shadow: 0 32px 90px rgba(40, 16, 28, .36);
+  border-color: var(--border);
+  background: var(--surface-solid);
+  color: var(--text);
+  box-shadow: 0 20px 60px rgba(92, 45, 70, 0.14);
+}
+
+.auth-card .field input {
+  border-color: var(--border);
+  color: var(--text);
+  background: var(--surface-soft);
 }
 
 .auth-tab.active,

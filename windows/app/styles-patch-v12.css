@@ -46,7 +46,71 @@
   transform: scale(0.96);
 }
 
-#loginPassword,
+#loginPassword {
+  color: var(--text) !important;
+  background: var(--surface-soft) !important;
+  border: 1.5px solid var(--border) !important;
+  border-radius: var(--radius-md) !important;
+  font-size: 1.45rem !important;
+  font-weight: 750 !important;
+  letter-spacing: 0.35em !important;
+  text-align: center !important;
+  caret-color: var(--primary) !important;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.03) !important;
+  transition: all 150ms ease !important;
+}
+
+#loginPassword:focus {
+  border-color: var(--primary) !important;
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--primary) 18%, transparent), inset 0 2px 4px rgba(0, 0, 0, 0.03) !important;
+}
+
+#loginPassword::placeholder {
+  color: var(--muted) !important;
+  opacity: 0.65 !important;
+  letter-spacing: normal !important;
+  font-size: 0.92rem !important;
+  font-weight: 400 !important;
+}
+
+.pin-visual-dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin: 10px 0 8px;
+  min-height: 24px;
+}
+
+.pin-visual-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2px solid color-mix(in srgb, var(--text, #1c1b2a) 28%, transparent);
+  background: transparent;
+  transition: all 180ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-sizing: border-box;
+}
+
+.pin-visual-dot.filled {
+  border-color: var(--primary, #4f46e5);
+  background: var(--primary, #4f46e5);
+  transform: scale(1.22);
+  box-shadow: 0 0 10px color-mix(in srgb, var(--primary, #4f46e5) 45%, transparent);
+}
+
+.pin-visual-dots.error .pin-visual-dot {
+  border-color: var(--red, #dc2626);
+  background: var(--red, #dc2626);
+  animation: pin-shake 400ms ease;
+}
+
+@keyframes pin-shake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-6px); }
+  40%, 80% { transform: translateX(6px); }
+}
+
 #setupPassword,
 #setupPasswordConfirm,
 #oldPassword,
@@ -56,6 +120,9 @@
 #migrationPinConfirm {
   letter-spacing: 0.16em;
   font-variant-numeric: tabular-nums;
+  color: var(--text) !important;
+  background: var(--surface-soft) !important;
+  border: 1px solid var(--border) !important;
 }
 
 .cloud-always-latest-badge {

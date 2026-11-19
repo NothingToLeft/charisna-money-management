@@ -837,6 +837,54 @@ function configureCredentialUI() {
   if (oldLabel) {
     oldLabel.textContent = isPin ? "PIN lama" : "Sandi lama";
   }
+
+  updateLoginPinVisualizer();
+}
+
+function updateLoginPinVisualizer() {
+  const visualizer = document.getElementById("loginPinVisualizer");
+  const input = document.getElementById("loginPassword");
+  if (!visualizer) return;
+
+  const isPin = vaultUsesPin();
+  if (!isPin) {
+    visualizer.hidden = true;
+    return;
+  }
+
+  visualizer.hidden = false;
+  const pinLength = PIN_LENGTHS.includes(Number(vault?.pinLength))
+    ? Number(vault.pinLength)
+    : 6;
+  const currentLength = (input?.value || "").length;
+
+  if (visualizer.children.length !== pinLength) {
+    visualizer.innerHTML = "";
+    for (let i = 0; i < pinLength; i++) {
+      const dot = document.createElement("span");
+      dot.className = "pin-visual-dot";
+      visualizer.appendChild(dot);
+    }
+  }
+
+  const dots = visualizer.querySelectorAll(".pin-visual-dot");
+  dots.forEach((dot, index) => {
+    if (index < currentLength) {
+      dot.classList.add("filled");
+    } else {
+      dot.classList.remove("filled");
+    }
+  });
+}
+
+function triggerPinVisualizerError() {
+  const visualizer = document.getElementById("loginPinVisualizer");
+  if (!visualizer) return;
+  visualizer.classList.add("error");
+  window.setTimeout(() => {
+    visualizer.classList.remove("error");
+    updateLoginPinVisualizer();
+  }, 450);
 }
 
 function updatePinFieldLengths(selectId, inputIds) {
@@ -944,6 +992,7 @@ function bindPinControls() {
       if (errorElement && !/terlalu banyak percobaan/i.test(errorElement.textContent)) {
         errorElement.textContent = "";
       }
+      updateLoginPinVisualizer();
       requestAutomaticPinUnlock(input);
     }
   });
@@ -963,6 +1012,7 @@ function bindPinControls() {
 
     input.focus();
     input.dispatchEvent(new Event("input", { bubbles: true }));
+    updateLoginPinVisualizer();
   });
 
   syncSetupLength();
@@ -6641,6 +6691,7 @@ document
       if (vaultUsesPin()) {
         input.value = "";
         window.setTimeout(() => input.focus(), 0);
+        triggerPinVisualizerError();
       }
     } finally {
       setLoginAttemptBusy(false);
@@ -6692,6 +6743,10 @@ document
 
       button.textContent =
         input.type === "password" ? "👁️" : "🙈";
+
+      if (input.id === "loginPassword") {
+        updateLoginPinVisualizer();
+      }
     });
   });
 
