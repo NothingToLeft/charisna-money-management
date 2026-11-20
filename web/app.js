@@ -7097,6 +7097,17 @@ document
 document
   .getElementById("themeButton")
   .addEventListener("click", async () => {
+    if (!state) {
+      const dark = !applyPersistedTheme();
+      try {
+        localStorage.setItem(THEME_KEY, dark ? "dark" : "light");
+      } catch (error) {
+        console.warn("Theme persistence gagal:", error);
+      }
+      document.documentElement.dataset.theme = dark ? "dark" : "light";
+      document.getElementById("themeButton").textContent = dark ? "☀️" : "🌙";
+      return;
+    }
     state.settings.darkMode = !state.settings.darkMode;
     await encryptState();
     applyTheme();

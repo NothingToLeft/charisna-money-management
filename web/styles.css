@@ -400,7 +400,12 @@ hr {
 }
 
 .text-button {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
   margin-top: 18px;
+  padding: 8px 12px;
   color: rgba(255, 255, 255, 0.58);
   background: transparent;
   font-size: 11px;
@@ -1315,7 +1320,7 @@ td {
 }
 
 .auth-tab {
-  min-height: 40px;
+  min-height: 44px;
   border: 0;
   border-radius: var(--radius-md);
   color: var(--muted);
