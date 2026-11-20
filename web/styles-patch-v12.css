@@ -123,18 +123,18 @@
   background: var(--red, #dc2626);
 }
 
-.password-field.pin-mode-active input.pin-input-masked {
+.password-field.pin-mode-active #loginPassword.pin-input-masked {
   color: transparent !important;
   caret-color: transparent !important;
   user-select: none;
 }
 
-.password-field.pin-mode-active input.pin-input-masked::placeholder {
+.password-field.pin-mode-active #loginPassword.pin-input-masked::placeholder {
   color: transparent !important;
   opacity: 0 !important;
 }
 
-.password-field.pin-mode-active input.pin-input-masked::-webkit-input-placeholder {
+.password-field.pin-mode-active #loginPassword.pin-input-masked::-webkit-input-placeholder {
   color: transparent !important;
   opacity: 0 !important;
 }

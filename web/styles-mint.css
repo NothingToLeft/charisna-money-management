@@ -126,16 +126,16 @@ html.charisna-cute-v13 body {
   border-color: #b54c56;
   background: #b54c56;
 }
-.auth-card .password-field.pin-mode-active input.pin-input-masked {
+.auth-card .password-field.pin-mode-active #loginPassword.pin-input-masked {
   color: transparent !important;
   caret-color: transparent !important;
   user-select: none;
 }
-.auth-card .password-field.pin-mode-active input.pin-input-masked::placeholder {
+.auth-card .password-field.pin-mode-active #loginPassword.pin-input-masked::placeholder {
   color: transparent !important;
   opacity: 0 !important;
 }
-.auth-card .password-field.pin-mode-active input.pin-input-masked::-webkit-input-placeholder {
+.auth-card .password-field.pin-mode-active #loginPassword.pin-input-masked::-webkit-input-placeholder {
   color: transparent !important;
   opacity: 0 !important;
 }
