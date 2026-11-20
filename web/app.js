@@ -13,6 +13,7 @@ const SUPABASE_URL = "https://ankctkfybpepwpdnswwe.supabase.co";
 const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_M-qTmK2xHIkxr3M6TaJKmw_p6mEZsmF";
 const CLOUD_TABLE = "moniflow_vaults";
 const DEVICE_ID_KEY = "moniflow-cloud-device-id";
+const THEME_KEY = "moniflow-v3-theme";
 
 const encoder = new TextEncoder();
 const decoder = new TextDecoder();
@@ -1615,12 +1616,16 @@ function showPromptModal({
 }
 
 function applyTheme() {
-  document.documentElement.dataset.theme = state.settings.darkMode
-    ? "dark"
-    : "light";
+  const dark = state.settings.darkMode;
+  document.documentElement.dataset.theme = dark ? "dark" : "light";
+  try {
+    localStorage.setItem(THEME_KEY, dark ? "dark" : "light");
+  } catch (error) {
+    console.warn("Theme persistence gagal:", error);
+  }
 
   document.getElementById("themeButton").textContent =
-    state.settings.darkMode ? "☀️" : "🌙";
+    dark ? "☀️" : "🌙";
 
   document.body.classList.toggle(
     "privacy-mode",
@@ -1629,6 +1634,22 @@ function applyTheme() {
 
   document.getElementById("privacyButton").textContent =
     state.settings.privacyMode ? "🙈" : "👁️";
+}
+
+function applyPersistedTheme() {
+  const dark = (() => {
+    try {
+      return localStorage.getItem(THEME_KEY) === "dark";
+    } catch (error) {
+      return false;
+    }
+  })();
+  document.documentElement.dataset.theme = dark ? "dark" : "light";
+  const themeButton = document.getElementById("themeButton");
+  if (themeButton) {
+    themeButton.textContent = dark ? "☀️" : "🌙";
+  }
+  return dark;
 }
 
 function renderHeader() {
@@ -6441,6 +6462,7 @@ function recordActivity() {
 
 async function initialize() {
   vault = loadVault();
+  applyPersistedTheme();
   registerServiceWorker();
 
   if (!window.supabase?.createClient) {
