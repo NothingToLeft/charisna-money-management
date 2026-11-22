@@ -21,7 +21,8 @@
   };
   let pending=false;
   async function sync() {
-    if (pending || !state || !vault || !state.settings?.kostFeedToken) return;
+    if (!state || !vault || !state.settings?.kostFeedToken) {output.replaceChildren();return;}
+    if (pending) return;
     pending=true;
     try {
       const token=state.settings.kostFeedToken;
@@ -29,8 +30,10 @@
       const response=await fetch('https://firestore.googleapis.com/v1/projects/charisna-kost-manager/databases/(default)/documents/moneyFeeds/'+token,{cache:'no-store',signal:AbortSignal.timeout(15000)});
       if (!response.ok) throw Error('Ringkasan belum tersedia, kedaluwarsa atau koneksi dicabut.');
       const document=await response.json();const data=decode({mapValue:{fields:document.fields}});
+      if (!state || !vault || state.settings?.kostFeedToken !== token) return;
       if (!Array.isArray(data.properties)) throw Error('Format ringkasan tidak valid.');
       output.replaceChildren();
+      if (Number(data.unassignedExpenses)>0) {const warning=document.createElement('p');warning.textContent='Pengeluaran belum dialokasikan ke properti: Rp '+Number(data.unassignedExpenses).toLocaleString('id-ID');output.append(warning);}
       const heading=document.createElement('p');heading.textContent='Bulan '+data.month+' · diperbarui '+data.updatedAt;output.append(heading);
       for (const property of data.properties) {
         const row=document.createElement('p');
