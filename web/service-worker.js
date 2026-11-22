@@ -1,7 +1,8 @@
 "use strict";
 
-const CACHE_NAME = "charisna-money-management-v14.1.2-mint-palette";
+const CACHE_NAME = "charisna-money-management-v14.1.2-kost-feed";
 const APP_FILES = [
+  "./kost-feed.js?v=20261122",
   "./",
   "./index.html?v=14.1.2-mint-palette",
   "./styles.css?v=14.1.2-mint-palette",
