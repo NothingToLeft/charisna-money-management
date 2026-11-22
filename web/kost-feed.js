@@ -29,7 +29,7 @@
       if (!/^[a-f0-9]{64}$/.test(token)) throw Error('Kode KOST tidak valid.');
       const response=await fetch('https://firestore.googleapis.com/v1/projects/charisna-kost-manager/databases/(default)/documents/moneyFeeds/'+token,{cache:'no-store',signal:AbortSignal.timeout(15000)});
       if (!response.ok) throw Error('Ringkasan belum tersedia, kedaluwarsa atau koneksi dicabut.');
-      const document=await response.json();const data=decode({mapValue:{fields:document.fields}});
+      const responseDocument=await response.json();const data=decode({mapValue:{fields:responseDocument.fields}});
       if (!state || !vault || state.settings?.kostFeedToken !== token) return;
       if (!Array.isArray(data.properties)) throw Error('Format ringkasan tidak valid.');
       output.replaceChildren();
